@@ -4,8 +4,9 @@ public class Checker {
 
     private static final String RED_COLOR="\033[0;31m";
     private static final String BLACK_COLOR="\033[0m";
+    private static final String CYAN_COLOR="\033[0;36m";
 
-    public enum Color{RED(RED_COLOR), WHITE(BLACK_COLOR);
+    public enum Color{RED(RED_COLOR), WHITE(BLACK_COLOR), INVALID(CYAN_COLOR);
         private String color;
         private Color(String color)
         {
@@ -38,5 +39,14 @@ public class Checker {
     public String toString()
     {
         return String.format("%s%s%s", this.color, "⬤", BLACK_COLOR);
+    }
+
+    public boolean isValid()
+    {
+        if (this.color != Color.INVALID)
+        {
+            return true;
+        }
+        return false;
     }
 }
