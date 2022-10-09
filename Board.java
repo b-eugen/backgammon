@@ -1,9 +1,11 @@
 package backgammon;
 
+import javax.print.attribute.standard.Destination;
+
 public class Board {
     private Bar bar;
     private Point[] points;
-    // private Player[] players;
+    private Player[] players;
 
     public Board()
     {
@@ -14,8 +16,16 @@ public class Board {
             this.points[ind]=new Point(ind+1);
             this.points[ind].prepareForGame();
         }
+
+        this.players = new Player[] {new Player("Jack", Checker.Color.RED), new Player("John", Checker.Color.BLACK)};
     }
 
+
+    public boolean moveColumns(int source, int destination)
+    {
+        boolean result = points[source - 1].moveTo(points[destination-1]);
+        return result;
+    }
     /*
      * Method which concantenates 2 arrays of strings
      * @param base - first string array

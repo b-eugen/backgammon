@@ -49,5 +49,7 @@ public class BackgammonGame {
 
         Board board = new Board();
         System.out.println(board);
+        board.moveColumns(13, 14);
+        System.out.println(board);
     }
 }

@@ -55,6 +55,7 @@ public class Point extends CheckerColumn{
         return String.format("Point %s - %s", this.getNumber(), super.toString());
     }
 
+    
 
     // _____________PRINTER_______________
     private String[] toArrayOfStringsTemplate()

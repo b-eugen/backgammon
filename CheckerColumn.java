@@ -60,4 +60,17 @@ public abstract class CheckerColumn {
     {
         return String.format("%s%s", this.getSize(), this.getTop());
     }
+
+    public boolean moveTo(CheckerColumn destination)
+    {
+        if (this.getColor()==destination.getColor() || destination.getColor()==Checker.Color.INVALID)
+        {
+            Checker popped = this.pop();
+            if (popped.getColor() != Checker.Color.INVALID)
+            {
+                return destination.append(popped);
+            }
+        }
+        return false;
+    }
 }
