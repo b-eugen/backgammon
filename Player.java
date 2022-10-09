@@ -7,7 +7,7 @@ public class Player {
     public Player()
     {
         this.name = "Player";
-        this.color = Checker.Color.WHITE;
+        this.color = Checker.Color.BLACK;
     }
 
     public Player(Checker.Color color)

@@ -28,5 +28,20 @@ public class BackgammonGame {
         // System.out.println(col);
         // System.out.println(col.pop());
         // System.out.println(col);
+
+        Point point = new Point();
+        Point point2 = new Point(24);
+        System.out.println(point);
+        System.out.println(point2);
+        for (String line : point.toArrayOfStrings())
+        {
+            System.out.println(line);
+        }
+
+        for (String line : point2.toArrayOfStrings())
+        {
+            System.out.println(line);
+        }
+
     }
 }

@@ -6,7 +6,7 @@ public class Checker {
     private static final String BLACK_COLOR="\033[0m";
     private static final String CYAN_COLOR="\033[0;36m";
 
-    public enum Color{RED(RED_COLOR), WHITE(BLACK_COLOR), INVALID(CYAN_COLOR);
+    public enum Color{RED(RED_COLOR), BLACK(BLACK_COLOR), INVALID(CYAN_COLOR);
         private String color;
         private Color(String color)
         {
@@ -23,7 +23,7 @@ public class Checker {
 
     public Checker()
     {
-        this.color = Color.WHITE;
+        this.color = Color.BLACK;
     }
 
     public Checker(Color color)
