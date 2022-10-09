@@ -14,6 +14,16 @@ public class Bar extends CheckerColumn{
 
     public String[] toArrayOfStrings()
     {
-        return new String[] {"| Bar |", String.format("|  %s  |", super.getTop()), String.format("|%3d  |", super.getSize())};
+        return new String[] {"|‾‾‾‾‾|",
+                            "|     |", 
+                            "|     |", 
+                            "|     |", 
+                            "| Bar |", 
+                            String.format("|  %s  |", super.getTop()), 
+                            String.format("|%3d  |", super.getSize()), 
+                            "|     |", 
+                            "|     |",
+                            "|     |",
+                            "|_____|"};
     }
 }
