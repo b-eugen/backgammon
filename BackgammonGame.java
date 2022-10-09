@@ -51,5 +51,15 @@ public class BackgammonGame {
         System.out.println(board);
         board.moveColumns(13, 14);
         System.out.println(board);
+        board.moveColumns(12, 14);
+        System.out.println(board);
+        board.moveFromBar(1, Checker.Color.BLACK);
+        System.out.println(board);
+        board.moveFromBar(2, Checker.Color.BLACK);
+        System.out.println(board);
+        board.moveColumns(13, 14);
+        System.out.println(board);
+        board.moveFromBar(2, Checker.Color.RED);
+        System.out.println(board);
     }
 }

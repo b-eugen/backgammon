@@ -10,9 +10,13 @@ public abstract class CheckerColumn {
         this.checkers = new ArrayList<Checker>();
     }
 
+    public ArrayList<Checker> getCheckers() {
+        return this.checkers;
+    }
+
     public int getSize()
     {
-        return checkers.size();
+        return this.checkers.size();
     }
 
     public Checker.Color getColor()
@@ -30,6 +34,24 @@ public abstract class CheckerColumn {
         if (this.getSize()>0)
         {
             return checkers.remove(this.getSize()-1);
+        }
+        return new Checker(Checker.Color.INVALID);
+    }
+
+    public Checker get(int ind)
+    {
+        if (this.getSize()>ind && ind>=0)
+        {
+            return checkers.get(ind);
+        }
+        return new Checker(Checker.Color.INVALID);
+    }
+
+    public Checker pop(int ind)
+    {
+        if (this.getSize()>ind && ind>=0)
+        {
+            return checkers.remove(ind);
         }
         return new Checker(Checker.Color.INVALID);
     }

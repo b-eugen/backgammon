@@ -1,11 +1,13 @@
 package backgammon;
 
+import java.util.ArrayList;
+
 import javax.print.attribute.standard.Destination;
 
 public class Board {
     private Bar bar;
     private Point[] points;
-    private Player[] players;
+    private ArrayList<Player> players;
 
     public Board()
     {
@@ -17,14 +19,74 @@ public class Board {
             this.points[ind].prepareForGame();
         }
 
-        this.players = new Player[] {new Player("Jack", Checker.Color.RED), new Player("John", Checker.Color.BLACK)};
+        this.players = new ArrayList<Player>();//new Player[] {new Player("Jack", Checker.Color.RED), new Player("John", Checker.Color.BLACK)};
     }
 
+    public boolean addPlayer(Player player)
+    {
+        if (players.size()<2)
+        {
+            this.players.add(player);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean swapPlayers()
+    {
+        if (players.size()<2)
+        {
+            return false;
+        }
+        Player temp = players.get(0);
+        players.set(0, players.get(1));
+        players.set(1, temp);
+    }
 
     public boolean moveColumns(int source, int destination)
     {
-        boolean result = points[source - 1].moveTo(points[destination-1]);
+        destination--;
+        source--;
+        boolean result = false;
+        if (points[destination].getColor() == Checker.Color.INVALID || points[destination].getColor() == points[source].getColor())
+        {
+            result = points[source].moveTo(points[destination]);
+        }
+        else if (points[destination].getSize()==1)//blob
+        {
+            result = points[destination].moveTo(bar);
+            if (result)
+            {
+                result = points[source].moveTo(points[destination]);
+            }
+            
+        }
+            
         return result;
+    }
+
+    public boolean moveFromBar(int destination, Checker.Color color)
+    {
+        destination--;
+        boolean result = false;
+
+        if (points[destination].getColor() == Checker.Color.INVALID || points[destination].getColor() == color)
+        {
+            result = bar.moveTo(points[destination]);
+        }
+        else if (points[destination].getSize()==1)//blob
+        {
+            result = points[destination].moveTo(bar);
+            if (result)
+            {
+                result = bar.moveTo(points[destination], color);
+            }
+            
+        }
+
+
+        return result;
+
     }
     /*
      * Method which concantenates 2 arrays of strings
