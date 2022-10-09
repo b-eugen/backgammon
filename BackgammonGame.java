@@ -43,6 +43,10 @@ public class BackgammonGame {
         //     System.out.println(line);
         // }
 
+        Player player1 = new Player("patau", Checker.Color.BLACK);
+        player1.roll();
+        System.out.println(player1);
+
         Board board = new Board();
         System.out.println(board);
     }
