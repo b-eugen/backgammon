@@ -41,6 +41,7 @@ public class Board {
         Player temp = players.get(0);
         players.set(0, players.get(1));
         players.set(1, temp);
+        return true;
     }
 
     public boolean moveColumns(int source, int destination)
