@@ -1,4 +1,3 @@
-package backgammon;
 
 import java.util.*;
 

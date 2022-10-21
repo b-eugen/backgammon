@@ -1,6 +1,4 @@
-package backgammon;
 
-import backgammon.CheckerColumn;
 // cd ~/Desktop/Java && javac backgammon/*.java && java backgammon/BackgammonGame && cd ~/Desktop/Java/backgammon
 public class BackgammonGame {
     public static void main(String[] args)

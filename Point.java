@@ -1,4 +1,3 @@
-package backgammon;
 
 public class Point extends CheckerColumn{
     private int number;

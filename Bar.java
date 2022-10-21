@@ -1,4 +1,3 @@
-package backgammon;
 
 public class Bar extends CheckerColumn{
 
