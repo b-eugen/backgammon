@@ -21,6 +21,16 @@ public class Board {
         this.players = new ArrayList<Player>();//new Player[] {new Player("Jack", Checker.Color.RED), new Player("John", Checker.Color.BLACK)};
     }
 
+    public Bar getBar() {
+        return bar;
+    }
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+    public Point[] getPoints() {
+        return points;
+    }
+    
     public boolean addPlayer(Player player)
     {
         if (players.size()<2)

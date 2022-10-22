@@ -66,6 +66,10 @@ public abstract class CheckerColumn {
 
     public boolean append(Checker checker)
     {
+        if (checker.getColor() == Checker.Color.INVALID)
+        {
+            return false;
+        }
         try
         {
             this.checkers.add(checker);

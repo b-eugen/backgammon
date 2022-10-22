@@ -18,6 +18,8 @@ public class TbPoint {
     void testPoint()
     {
         assertNotNull(point);
+        point.append(new Checker(Checker.Color.INVALID));
+        assertEquals(point.getSize(), 0);
     }
 
     @Test
@@ -135,5 +137,29 @@ public class TbPoint {
             }
             
         }
+    }
+
+    @Test
+    void testMoveTo()
+    {
+        Point point_red = new Point();
+        Point point_empty = new Point();
+        Point point_black = new Point();
+        point_black.append(new Checker(Checker.Color.BLACK));
+        point_red.append(new Checker(Checker.Color.RED));
+        point.append(new Checker(Checker.Color.BLACK));
+        point.moveTo(point_black);
+        assertEquals(point.getSize(), 0);
+        assertEquals(point_black.getSize(), 2);
+        point_black.moveTo(point);
+        point_black.moveTo(point);
+        assertEquals(point_black.getSize(), 0);
+        assertEquals(point.getSize(), 2);
+        point.moveTo(point_empty);
+        assertEquals(point.getSize(), 1);
+        assertEquals(point_empty.getSize(), 1);
+        point_empty.moveTo(point_red);
+        assertEquals(point_empty.getSize(), 1);
+        assertEquals(point_red.getSize(), 1);
     }
 }
