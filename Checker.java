@@ -37,8 +37,7 @@ public class Checker {
 
     public String toString()
     {
-        // return String.format("%s%s%s", this.color, "⬤", BLACK_COLOR);
-        return String.format("%s%s%s", this.color, "O", BLACK_COLOR);
+        return String.format("%s%s%s", this.color, "⬤", BLACK_COLOR);
     }
 
     public boolean isValid()

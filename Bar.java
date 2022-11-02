@@ -75,8 +75,7 @@ public class Bar extends CheckerColumn{
 
     public String[] toArrayOfStrings()
     {
-        return new String[] {"|-----|",
-        // return new String[] {"|‾‾‾‾‾|",
+        return new String[] {"|‾‾‾‾‾|",
                             "|     |", 
                             "|     |",
                             String.format("|  %s  |", new Checker(Checker.Color.RED)), 
