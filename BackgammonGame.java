@@ -1,63 +1,159 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 // cd ~/Desktop/Java && javac backgammon/*.java && java backgammon/BackgammonGame && cd ~/Desktop/Java/backgammon
 public class BackgammonGame {
+    private boolean gameOver = false;
+    private Board board;
+    private Die die1;
+    private Die die2;
+    private ArrayList<Player> players;
+    private LinkedList<String> eventLog;
+    private static final int MAXLOGEVENTS = 5;
+    
+    public BackgammonGame(){
+        this.players = new ArrayList<Player>();
+        this.board = new Board();
+        this.die1 = new Die();
+        this.die2 = new Die();
+        this.eventLog = new LinkedList<String>();
+    }
+
+    public boolean getGameOver() {
+        return(this.gameOver);
+    }
+
+    public void endGame(){
+        this.gameOver = true;
+    }
+
+    public boolean addPlayer(Player player)
+    {
+        if (players.size() < 2)
+        {
+            this.players.add(player);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean swapPlayers()
+    {
+        if (players.size()<2)
+        {
+            return false;
+        }
+        Player temp = players.get(0);
+        players.set(0, players.get(1));
+        players.set(1, temp);
+        return true;
+    }
+
+    public Player getCurrentPlayer(){
+        return this.players.get(0);
+    }
+
+    public void immediateExit(){
+        System.out.println("\n\nYou have quit backgammon.");
+        System.exit(1);
+    }
+
+    public boolean parseInput(String userInput, boolean takeName){
+        if(userInput.toLowerCase().equals("quit")){
+            this.immediateExit();
+        }
+        if(takeName){
+            if(userInput.length() > 15){
+                System.out.println("Please ensure you name includes no more than 15 characters");
+                return false;
+            }
+            else if(userInput.length() < 1){
+                System.out.println("Please ensure you name includes no less than 1 character");
+                return false;
+            }
+            else if(this.players.get(this.players.size() - 1).getName().toLowerCase().equals(userInput.toLowerCase())){
+                System.out.println("You cannot use the same name for both players. Try again.");
+                return false;
+            }
+            else{
+                this.players.get(0).setName(userInput);
+            }
+        }
+        else{
+            userInput = userInput.toLowerCase();
+            if(!userInput.equals("roll")){
+                System.out.println("Please ensure you enter a valid command, try again.");
+                return false;
+            }
+            else{
+                this.players.get(0).sumRoll(this.die1, this.die2);
+                this.logEvent(this.getCurrentPlayer().getName() + ": " + die1 + " - " + die2 + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
+            }
+        }
+        return true;
+    }
+    
+    public void setUpSequence(Scanner in){
+        System.out.println("\nWelcome To Backgammon.");
+        System.out.println("\nUsage Instructions: 'roll' to roll, 'quit' to quit.");
+
+        this.addPlayer(new Player());
+        System.out.println("\n\nPlayer 1, enter your name: ");
+        while(!this.parseInput(in.nextLine(), true));
+        this.logEvent("Player 1 entered name: " + this.getCurrentPlayer().getName());
+        
+        this.addPlayer(new Player());
+        this.swapPlayers();
+        System.out.println("\n\nPlayer 2, enter your name: ");
+        while(!this.parseInput(in.nextLine(), true));
+        this.logEvent("Player 2 entered name: " + this.getCurrentPlayer().getName());
+
+        this.swapPlayers();
+        System.out.println("\n" + this.board + "\n");
+    }
+
+    public void logEvent(String eventString){
+        if(this.eventLog.size() == MAXLOGEVENTS){
+            this.eventLog.remove();
+        }
+        this.eventLog.add(eventString);
+    }
+
+    public String logPanelToString(){
+        String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____";
+        String returnStr = "";
+        returnStr += String.format(" %1$-130s\n", spacer);
+        returnStr += String.format("%1$60s", "");
+        returnStr += String.format("%1$-70s\n", die1 + " - " + die2);
+        returnStr += String.format(" %1$-130s\n", spacer);
+
+        for(int i = this.eventLog.size() - 1; i >=0; i--){
+            returnStr += String.format(" %1$-130s\n", this.eventLog.get(i));
+        }
+        returnStr += String.format(" %1$-130s\n", spacer);
+        
+        return returnStr;
+    }
+
+    public void updateDisplay(){
+        System.out.println("\n" + this.board);
+        System.out.println(logPanelToString());
+    }
+
+
     public static void main(String[] args)
     {
-        // Checker checker = new Checker();
-        // Checker checker2 = new Checker(Checker.Color.RED);
-        // System.out.println(checker +" "+ checker2);
+        Scanner in = new Scanner(System.in);
+        BackgammonGame game = new BackgammonGame();
+        game.setUpSequence(in);
 
-        // Bar bar = new Bar();
-
-        // System.out.println(bar);
-        // for (String line : bar.toArrayOfStrings())
-        // {
-        //     System.out.println(line);
-        // }
-        // bar.append(checker2);
-        // System.out.println(bar);
-        // for (String line : bar.toArrayOfStrings())
-        // {
-        //     System.out.println(line);
-        // }
-        // // CheckerColumn col = new CheckerColumn();
-        // // System.out.println(col);
-        // // col.append(checker2);
-        // // System.out.println(col);
-        // // System.out.println(col.pop());
-        // // System.out.println(col);
-
-        // Point point = new Point();
-        // Point point2 = new Point(24);
-        // System.out.println(point);
-        // System.out.println(point2);
-        // for (String line : point.toArrayOfStrings())
-        // {
-        //     System.out.println(line);
-        // }
-
-        // for (String line : point2.toArrayOfStrings())
-        // {
-        //     System.out.println(line);
-        // }
-
-        Player player1 = new Player("patau", Checker.Color.BLACK);
-        player1.roll();
-        System.out.println(player1);
-
-        Board board = new Board();
-        System.out.println(board);
-        board.moveColumns(13, 14);
-        System.out.println(board);
-        board.moveColumns(12, 14);
-        System.out.println(board);
-        board.moveFromBar(1, Checker.Color.BLACK);
-        System.out.println(board);
-        board.moveFromBar(2, Checker.Color.BLACK);
-        System.out.println(board);
-        board.moveColumns(13, 14);
-        System.out.println(board);
-        board.moveFromBar(2, Checker.Color.RED);
-        System.out.println(board);
+        while(!game.getGameOver()){
+            System.out.println("\n" + game.getCurrentPlayer().getName() + ", your turn. Enter a command:");
+            while(!game.parseInput(in.nextLine(), false));
+            game.swapPlayers();
+            game.updateDisplay();
+        }
     }
 }

@@ -6,7 +6,7 @@ import javax.print.attribute.standard.Destination;
 public class Board {
     private Bar bar;
     private Point[] points;
-    private ArrayList<Player> players;
+
 
     public Board()
     {
@@ -18,41 +18,16 @@ public class Board {
             this.points[ind].prepareForGame();
         }
 
-        this.players = new ArrayList<Player>();//new Player[] {new Player("Jack", Checker.Color.RED), new Player("John", Checker.Color.BLACK)};
     }
 
     public Bar getBar() {
         return bar;
     }
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
+   
     public Point[] getPoints() {
         return points;
     }
     
-    public boolean addPlayer(Player player)
-    {
-        if (players.size()<2)
-        {
-            this.players.add(player);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean swapPlayers()
-    {
-        if (players.size()<2)
-        {
-            return false;
-        }
-        Player temp = players.get(0);
-        players.set(0, players.get(1));
-        players.set(1, temp);
-        return true;
-    }
-
     public boolean moveColumns(int source, int destination)
     {
         destination--;
@@ -114,9 +89,9 @@ public class Board {
 
     public String toString()
     {
-        String[] barSting = this.bar.toArrayOfStrings();
+        String[] barString = this.bar.toArrayOfStrings();
 
-        String[][] array2D = new String[Point.MAX_POINTS/2+1][barSting.length];
+        String[][] array2D = new String[Point.MAX_POINTS/2+1][barString.length];
 
         String[] stub = {"          "};
         for (int col=0; col<Point.MAX_POINTS/2+1; col++)
@@ -127,7 +102,7 @@ public class Board {
             }
             else if (col == Point.MAX_POINTS/4)
             {
-                array2D[col] = barSting;
+                array2D[col] = barString;
             }
             else{
                 array2D[col] = concatStringArrays(concatStringArrays(points[Point.MAX_POINTS/2+col-1].toArrayOfStrings(), stub), points[Point.MAX_POINTS/2-col].toArrayOfStrings());
@@ -136,7 +111,7 @@ public class Board {
         }
 
         String result = "";
-        for (int row=0; row<barSting.length; row++)
+        for (int row=0; row<barString.length; row++)
         {
             for (int col=0; col<Point.MAX_POINTS/2+1; col++)
             {

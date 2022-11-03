@@ -5,7 +5,6 @@ public class Player {
     private String name;
     private Checker.Color color;
     private ArrayList<Integer> moves;
-    private static final int MAX_DICE = 6;
 
     public Player()
     {
@@ -71,26 +70,24 @@ public class Player {
         return false;
     }
 
-    public ArrayList<Integer> roll()
+    public ArrayList<Integer> roll(Die die1, Die die2)
     {
-        Random rand = new Random();
-        int roll1 = rand.nextInt(MAX_DICE-1)+1;
-        int roll2 = rand.nextInt(MAX_DICE-1)+1;
-        System.out.println(this.getName()+ new Checker(this.getColor())+" rolls "+ roll1+" and "+roll2);
-        if (roll2 == roll1)
-        {
+        int roll1 = die1.getRollValue();
+        int roll2 = die2.getRollValue();
+        // System.out.println(this.getName() + ": " + die1 + " " + die2 + " rolls " + roll1 + " and " + roll2);
+        
+        if (roll2 == roll1){
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll1, roll1, roll1));
         }
-        else
-        {
+        else{
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll2, 0, 0));
         }
         return this.moves;
     }
 
-    public int sumRoll()
+    public int sumRoll(Die die1, Die die2)
     {
-        this.roll();
+        this.roll(die1, die2);
         return this.moves.get(0)+this.moves.get(1);
     }
 
