@@ -74,7 +74,7 @@ public class Player {
     {
         int roll1 = die1.getRollValue();
         int roll2 = die2.getRollValue();
-        System.out.println(this.getName() + ": " + die1 + " " + die2 + " rolls " + roll1 + " and " + roll2);
+        // System.out.println(this.getName() + ": " + die1 + " " + die2 + " rolls " + roll1 + " and " + roll2);
         
         if (roll2 == roll1){
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll1, roll1, roll1));

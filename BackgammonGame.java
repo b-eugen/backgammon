@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 // cd ~/Desktop/Java && javac backgammon/*.java && java backgammon/BackgammonGame && cd ~/Desktop/Java/backgammon
 public class BackgammonGame {
@@ -8,12 +10,15 @@ public class BackgammonGame {
     private Die die1;
     private Die die2;
     private ArrayList<Player> players;
+    private LinkedList<String> eventLog;
+    private static final int MAXLOGEVENTS = 5;
     
     public BackgammonGame(){
         this.players = new ArrayList<Player>();
         this.board = new Board();
         this.die1 = new Die();
         this.die2 = new Die();
+        this.eventLog = new LinkedList<String>();
     }
 
     public boolean getGameOver() {
@@ -68,6 +73,10 @@ public class BackgammonGame {
                 System.out.println("Please ensure you name includes no less than 1 character");
                 return false;
             }
+            else if(this.players.get(this.players.size() - 1).getName().toLowerCase().equals(userInput.toLowerCase())){
+                System.out.println("You cannot use the same name for both players. Try again.");
+                return false;
+            }
             else{
                 this.players.get(0).setName(userInput);
             }
@@ -80,6 +89,7 @@ public class BackgammonGame {
             }
             else{
                 this.players.get(0).sumRoll(this.die1, this.die2);
+                this.logEvent(this.getCurrentPlayer().getName() + ": " + die1 + " - " + die2 + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
             }
         }
         return true;
@@ -92,14 +102,44 @@ public class BackgammonGame {
         this.addPlayer(new Player());
         System.out.println("\n\nPlayer 1, enter your name: ");
         while(!this.parseInput(in.nextLine(), true));
+        this.logEvent("Player 1 entered name: " + this.getCurrentPlayer().getName());
         
         this.addPlayer(new Player());
         this.swapPlayers();
         System.out.println("\n\nPlayer 2, enter your name: ");
         while(!this.parseInput(in.nextLine(), true));
+        this.logEvent("Player 2 entered name: " + this.getCurrentPlayer().getName());
 
         this.swapPlayers();
         System.out.println("\n" + this.board + "\n");
+    }
+
+    public void logEvent(String eventString){
+        if(this.eventLog.size() == MAXLOGEVENTS){
+            this.eventLog.remove();
+        }
+        this.eventLog.add(eventString);
+    }
+
+    public String logPanelToString(){
+        String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____";
+        String returnStr = "";
+        returnStr += String.format(" %1$-130s\n", spacer);
+        returnStr += String.format("%1$60s", "");
+        returnStr += String.format("%1$-70s\n", die1 + " - " + die2);
+        returnStr += String.format(" %1$-130s\n", spacer);
+
+        for(int i = this.eventLog.size() - 1; i >=0; i--){
+            returnStr += String.format(" %1$-130s\n", this.eventLog.get(i));
+        }
+        returnStr += String.format(" %1$-130s\n", spacer);
+        
+        return returnStr;
+    }
+
+    public void updateDisplay(){
+        System.out.println("\n" + this.board);
+        System.out.println(logPanelToString());
     }
 
 
@@ -113,6 +153,7 @@ public class BackgammonGame {
             System.out.println("\n" + game.getCurrentPlayer().getName() + ", your turn. Enter a command:");
             while(!game.parseInput(in.nextLine(), false));
             game.swapPlayers();
+            game.updateDisplay();
         }
     }
 }
