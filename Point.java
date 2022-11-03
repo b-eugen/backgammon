@@ -57,6 +57,23 @@ public class Point extends CheckerColumn{
     
 
     // _____________PRINTER_______________
+    private String[] toArrayOfStringsTemplate(Checker.Color color)
+    {
+        int pip_point = this.getNumber();
+        if (color == Checker.Color.RED)
+        {
+            pip_point = MAX_POINTS + 1 - pip_point;
+        }
+        String columnColor = this.getDesignColor();
+        String[] array = {String.format("%s\\%sPoint %2d%s/%s", columnColor, Checker.Color.BLACK, this.getNumber(), columnColor, Checker.Color.BLACK),
+                          String.format(" %s\\%s %2d%s  %s/%s ", columnColor, Checker.Color.BLACK,  super.getSize(), super.getTop(), columnColor, Checker.Color.BLACK),
+                          String.format("  %s\\%s    %s/%s  ",  columnColor, Checker.Color.BLACK, columnColor, Checker.Color.BLACK),
+                          String.format("   %s\\%s  %s/%s   ",  columnColor, Checker.Color.BLACK,  columnColor, Checker.Color.BLACK),
+                          String.format("    %s\\/%s    ",  columnColor, Checker.Color.BLACK)};
+        return array;
+
+    }
+
     private String[] toArrayOfStringsTemplate()
     {
         String columnColor = this.getDesignColor();
