@@ -2,6 +2,8 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 // import java.util.Pair;
 
+import javax.print.attribute.standard.Destination;
+
 
 // import javax.print.attribute.standard.Destination;
 
@@ -45,7 +47,7 @@ public class Board {
             Boolean uniqueFlag = true;
             for (int jnd=0; jnd<uniqueMoves.size(); jnd++)
             {
-                if (uniqueMoves.get(jnd) == moves.get(ind))
+                if (uniqueMoves.get(jnd) == moves.get(ind) || moves.get(ind)==0)
                 {
                     uniqueFlag = false;
                     break;
@@ -74,18 +76,24 @@ public class Board {
             else
             {
                 boolean bear_off = true;
-                for (int pip=BEAR_OFF_THOLD+1; pip<Point.MAX_POINTS; pip++)
+                for (int pip=1; pip<Point.MAX_POINTS+1; pip++)
                 {
                     if (points[mapFromPip(pip, playerColor) -1].getColor() == playerColor)
                     {
                         int destination = pip-move;
                         int destinationIndex = mapFromPip(destination, playerColor) -1;
+
+                        // System.out.println("Debug"+ pip+" "+ move +" " + destination);
+
                         if (points[destinationIndex].getColor() == Checker.Color.INVALID || points[destinationIndex].getColor()==playerColor || points[destinationIndex].getSize()<=1)
                         {
                             //move
                             result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
                         }
-                        bear_off=false;
+                        if (pip>BEAR_OFF_THOLD) 
+                        {
+                            bear_off=false;
+                        }
                         // break;
                     }
                 }
