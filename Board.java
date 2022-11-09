@@ -1,13 +1,18 @@
-
+import java.util.AbstractMap;
 import java.util.ArrayList;
+// import java.util.Pair;
 
-import javax.print.attribute.standard.Destination;
+
+// import javax.print.attribute.standard.Destination;
+
+// import Checker.Color;
+// import javafx.util.Pair;
 
 public class Board {
     private Bar bar;
     private Point[] points;
 
-
+    private static final int BEAR_OFF_THOLD=6;
     public Board()
     {
         this.bar = new Bar();
@@ -28,6 +33,103 @@ public class Board {
         return points;
     }
     
+
+    public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
+    {
+        
+
+        //find unique moves in the provided list
+        ArrayList<Integer> uniqueMoves = new ArrayList<Integer>();
+        for (int ind=0; ind<moves.size(); ind++)
+        {
+            Boolean uniqueFlag = true;
+            for (int jnd=0; jnd<uniqueMoves.size(); jnd++)
+            {
+                if (uniqueMoves.get(jnd) == moves.get(ind))
+                {
+                    uniqueFlag = false;
+                    break;
+                }
+            }
+            if (uniqueFlag)
+            {
+                uniqueMoves.add(moves.get(ind));
+            }
+        }
+
+        ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+
+        for (int move: uniqueMoves)
+        {
+            if (bar.colorCount(playerColor)>0)
+            {
+                int pointIndex = mapFromPip(Point.MAX_POINTS+1-move, playerColor)-1;
+                if (points[pointIndex].getColor()==Checker.Color.INVALID || points[pointIndex].getColor()==playerColor || points[pointIndex].getSize()<=1)
+                {
+                    //move
+                    result.add(new AbstractMap.SimpleEntry<Integer,Integer>(25, Point.MAX_POINTS+1-move));
+                }
+
+            }
+            else
+            {
+                boolean bear_off = true;
+                for (int pip=BEAR_OFF_THOLD+1; pip<Point.MAX_POINTS; pip++)
+                {
+                    if (points[mapFromPip(pip, playerColor) -1].getColor() == playerColor)
+                    {
+                        int destination = pip-move;
+                        int destinationIndex = mapFromPip(destination, playerColor) -1;
+                        if (points[destinationIndex].getColor() == Checker.Color.INVALID || points[destinationIndex].getColor()==playerColor || points[destinationIndex].getSize()<=1)
+                        {
+                            //move
+                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
+                        }
+                        bear_off=false;
+                        // break;
+                    }
+                }
+
+                if (bear_off)
+                {
+                    int pointIndex = mapFromPip(move, playerColor)-1;
+                    if ( points[pointIndex].getColor()==playerColor)
+                    {
+                        result.add(new AbstractMap.SimpleEntry<Integer,Integer>(move, 0));
+                        //move
+                    }
+                }
+                // else
+                // {
+
+
+                // }
+            }
+
+        }
+
+        
+        return result;
+    }
+
+    public static int mapToPip(int index, Checker.Color playerColor)
+    {
+        if (playerColor == Checker.Color.RED)
+        {
+            index = Point.MAX_POINTS + 1 - index;
+        }
+        return index;
+    }
+
+    public static int mapFromPip(int pip, Checker.Color playerColor)
+    {
+        if (playerColor == Checker.Color.RED)
+        {
+            pip = Point.MAX_POINTS + 1 - pip;
+        }
+        return pip;
+    }
+
     public boolean moveColumns(int source, int destination)
     {
         destination--;
@@ -73,53 +175,7 @@ public class Board {
         return result;
 
     }
-    /*
-     * Method which concantenates 2 arrays of strings
-     * @param base - first string array
-     * @param appendable - second string array
-     * @return - result of array concatentations
-     */
-    public static String[] concatStringArrays(String[] base, String[] appendable)
-    {
-        String[] result = new String[base.length+appendable.length];
-        System.arraycopy(base, 0, result, 0, base.length);
-        System.arraycopy(appendable, 0, result, base.length, appendable.length);
-        return result;
-    }
+    
 
-    public String toString()
-    {
-        String[] barString = this.bar.toArrayOfStrings();
-
-        String[][] array2D = new String[Point.MAX_POINTS/2+1][barString.length];
-
-        String[] stub = {"          "};
-        for (int col=0; col<Point.MAX_POINTS/2+1; col++)
-        {
-            if (col < Point.MAX_POINTS/4)
-            {
-                array2D[col] = concatStringArrays(concatStringArrays(points[Point.MAX_POINTS/2+col].toArrayOfStrings(), stub), points[Point.MAX_POINTS/2-col-1].toArrayOfStrings());
-            }
-            else if (col == Point.MAX_POINTS/4)
-            {
-                array2D[col] = barString;
-            }
-            else{
-                array2D[col] = concatStringArrays(concatStringArrays(points[Point.MAX_POINTS/2+col-1].toArrayOfStrings(), stub), points[Point.MAX_POINTS/2-col].toArrayOfStrings());
-            }
-            
-        }
-
-        String result = "";
-        for (int row=0; row<barString.length; row++)
-        {
-            for (int col=0; col<Point.MAX_POINTS/2+1; col++)
-            {
-                result = result+array2D[col][row];
-            }
-            result = result+"\n";
-        }
-        return result;
-        
-    }
+    
 }

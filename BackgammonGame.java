@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.awt.Color;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 
 // cd ~/Desktop/Java && javac backgammon/*.java && java backgammon/BackgammonGame && cd ~/Desktop/Java/backgammon
@@ -75,6 +77,11 @@ public class BackgammonGame {
         else{
             userInput = userInput.toLowerCase();
             this.players.get(0).sumRoll(this.die1, this.die2);
+            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves = board.getPossibleMoves(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
+            for (AbstractMap.SimpleEntry<Integer,Integer> pair : possibleMoves)
+            {
+                System.out.println(pair.getKey()+" "+pair.getValue());
+            }
             this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": " + DieView.toString(die1) + " - " + DieView.toString(die2) + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
         }
         return true;
@@ -86,11 +93,11 @@ public class BackgammonGame {
         this.addPlayer(new Player(names[1], Checker.Color.RED));
         this.eventLog.logEvent("Player 1 entered name: " + names[0] + ", is BLACK checkers");
         this.eventLog.logEvent("Player 2 entered name: " + names[1] + ", is RED checkers");
-        System.out.println("\n" + this.board + "\n");
+        System.out.println("\n" + BoardView.display(this.board, Checker.Color.BLACK) + "\n");
     }
 
     public void updateDisplay(BackgammonGame game){
-        System.out.println("\n" + this.board);
+        System.out.println("\n" + BoardView.display(this.board, this.getCurrentPlayer().getColor()));
         BackgammonGameView.gameToString(game);
     }
 
