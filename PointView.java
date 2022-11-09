@@ -3,7 +3,7 @@ public class PointView {
     private static String[] toArrayOfStringsTemplate(Point point, Checker.Color color)
     {
         int pip_point = point.getNumber();
-        if (color == Checker.Color.RED)
+        if (color == Checker.Color.BLACK)
         {
             pip_point = Point.MAX_POINTS + 1 - pip_point;
         }

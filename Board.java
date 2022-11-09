@@ -35,6 +35,43 @@ public class Board {
         return points;
     }
     
+    public int getPipScore(Checker.Color playerColor)
+    {
+        int count = 0;
+        for (int ind = 0; ind < Point.MAX_POINTS; ind++)
+        {
+            if (points[ind].getColor() == playerColor)
+            {
+                count += points[ind].getSize()*mapToPip(ind+1, playerColor);
+            }
+        }
+        return count;
+    }
+
+    public boolean makeMove(AbstractMap.SimpleEntry<Integer,Integer> move, Checker.Color playerColor)
+    {
+        boolean result = false;
+        if (move.getKey()==Point.MAX_POINTS+1)
+        {  
+            result = this.moveFromBar(mapFromPip(move.getValue(), playerColor), playerColor);
+
+        }
+        else if (move.getValue()==0)
+        {
+            Checker checker = points[mapFromPip(move.getKey(), playerColor)-1].getTop();
+            if (checker.getColor() == playerColor)
+            {
+                points[mapFromPip(move.getKey(), playerColor)-1].pop();
+                result = true;
+            }
+        }
+        else
+        {
+            result = this.moveColumns(mapFromPip(move.getKey(), playerColor), mapFromPip(move.getValue(), playerColor));
+        }
+
+        return result;
+    }
 
     public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
     {
@@ -69,7 +106,7 @@ public class Board {
                 if (points[pointIndex].getColor()==Checker.Color.INVALID || points[pointIndex].getColor()==playerColor || points[pointIndex].getSize()<=1)
                 {
                     //move
-                    result.add(new AbstractMap.SimpleEntry<Integer,Integer>(25, Point.MAX_POINTS+1-move));
+                    result.add(new AbstractMap.SimpleEntry<Integer,Integer>(Point.MAX_POINTS+1, Point.MAX_POINTS+1-move));
                 }
 
             }
@@ -85,11 +122,18 @@ public class Board {
 
                         // System.out.println("Debug"+ pip+" "+ move +" " + destination);
 
-                        if (points[destinationIndex].getColor() == Checker.Color.INVALID || points[destinationIndex].getColor()==playerColor || points[destinationIndex].getSize()<=1)
+                        if (destination>0)
                         {
-                            //move
-                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
+                            if (points[destinationIndex].getColor() == Checker.Color.INVALID || points[destinationIndex].getColor()==playerColor || points[destinationIndex].getSize()<=1)
+                            {
+                                //move
+                                result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
+                                Checker checktest = new Checker(playerColor);
+                                
+                                System.out.println(pip +" " +destination +" "+ checktest +" "+ destinationIndex);
+                            }
                         }
+                        
                         if (pip>BEAR_OFF_THOLD) 
                         {
                             bear_off=false;
