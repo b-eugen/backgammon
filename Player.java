@@ -94,12 +94,6 @@ public class Player {
         return processRoll(roll1, roll2);
     }
 
-    public int sumRoll(Die die1, Die die2)
-    {
-        this.roll(die1, die2);
-        return this.moves.get(0)+this.moves.get(1);
-    }
-
     public Checker getDisplayCheckerColor(){
         return this.displayCheckerColor;
     }

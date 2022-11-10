@@ -3,35 +3,9 @@ import java.util.ArrayList;
 import java.util.AbstractMap;
 
 public class BackgammonGameView {
-    private final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____";
+    private final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____";    
 
-    public static boolean validateInput(String userInput, boolean takeName){
-        if(takeName){
-            if(userInput.length() > 15){
-                System.out.println("Please ensure you name includes no more than 15 characters");
-                return false;
-            }
-            else if(userInput.length() < 1){
-                System.out.println("Please ensure you name includes no less than 1 character");
-                return false;
-            }
-        }
-        else if(userInput.toLowerCase().equals("quit")){
-            BackgammonGame.immediateExit();
-        }
-        else{
-            userInput = userInput.toLowerCase();
-            if(!userInput.equals("roll")){
-                System.out.println("Please ensure you enter a valid command, try again.");
-                return false;
-            }
-        }
-        return true;
-    }
-
-    
-
-    public static String[] getNames(Scanner in){
+    public static String[] getNames(Scanner in, BackgammonGame game){
         String names[] = new String[2];
         String userInput;
 
@@ -42,7 +16,7 @@ public class BackgammonGameView {
         do{
             userInput = in.nextLine();
         }
-        while(!validateInput(userInput, true));
+        while(!game.validateInput(userInput, true));
 
         names[0] = userInput;
         System.out.println("\n\nPlayer 2, enter your name: ");
@@ -50,7 +24,7 @@ public class BackgammonGameView {
         do{
             userInput = in.nextLine();
         }
-        while(!validateInput(userInput, true));
+        while(!game.validateInput(userInput, true));
 
         names[1] = userInput;
         return names;
@@ -87,9 +61,13 @@ public class BackgammonGameView {
             returnStr += String.format(" %1$-130s\n", "Possible Moves: \n");
             for (AbstractMap.SimpleEntry<Integer,Integer> pair : possibleMoves)
             {
-                returnStr+= String.format(" %1$-130s\n", BackgammonGameView.genKeyCode(counter)+ ": move a checker from point " + pair.getKey()+ " to point "+pair.getValue() + "\n");
+                returnStr+= String.format("| %1$-65s ", BackgammonGameView.genKeyCode(counter)+ ": Pip " + pair.getKey()+ " to Pip "+pair.getValue());
+                if(counter%2 == 1){
+                    returnStr+="\n";
+                }
                 counter +=1;
             }
+            returnStr+="\n";
         }
         returnStr += String.format(" %1$-130s\n", spacer);
         returnStr += display(game, showLogPanel, false);
@@ -119,12 +97,12 @@ public class BackgammonGameView {
         return(returnStr);
     }
 
-    public static String readNewInput(Scanner in, Player activePlayer){
+    public static String readNewInput(Scanner in, Player activePlayer, BackgammonGame game){
         String userInput;
         System.out.println("\n" + activePlayer.getName() + ", your turn. Enter a command:");
         do{
             userInput = in.nextLine();
-        }while(!validateInput(userInput, false));
+        }while(!game.validateInput(userInput, false));
 
         return userInput;
     }
@@ -142,27 +120,6 @@ public class BackgammonGameView {
 	    return (firstChar - 'A')*26 + (secondChar-'A');
 	}
 
-    public static boolean validateMoveInput(String userInput, int numPossibleMoves){
-        if(userInput.toLowerCase().equals("quit")){
-            BackgammonGame.immediateExit();
-        }
-        if(userInput.length() != 2){
-            System.out.println("Please enter exactly two letters for the move you would like to make.");
-            return false;
-        }
-
-        char firstChar = userInput.toUpperCase().charAt(0);
-        char secondChar = userInput.toUpperCase().charAt(1);
-        if(firstChar < 'A' || firstChar > 'Z' || secondChar < 'A' || secondChar > 'Z'){
-            System.out.println("Please enter letters between A-Z");
-            return false;
-        }
-        else if(reverseKeyCode(userInput.toUpperCase()) >= numPossibleMoves){
-            System.out.println("Please select a key code from the ones shown.");
-            return false;
-        }
-        return true;
-    }
 
     public static int promptForMove(Scanner in, ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves, BackgammonGame game){
         String userInput;
@@ -174,8 +131,46 @@ public class BackgammonGameView {
         do{
             userInput = in.nextLine();
         }
-        while(!validateMoveInput(userInput, numPossibleMoves));
+        while(!game.validateMoveInput(userInput, numPossibleMoves));
         
         return(reverseKeyCode(userInput.toUpperCase()));
+    }
+
+    public static void showPipScores(BackgammonGame game){
+        Player p1, p2;
+        p1 = game.getPlayers().get(0);
+        p2 = game.getPlayers().get(1);
+        System.out.println(String.format(" %1$-130s\n", spacer));
+        System.out.println(String.format(" %1$-130s", p1.getName() + " Pip Score: " + game.getBoard().getPipScore(p1.getColor())));
+        System.out.println(String.format(" %1$-130s", p2.getName() + " Pip Score: " + game.getBoard().getPipScore(p2.getColor())));
+        System.out.println(String.format(" %1$-130s\n", spacer));
+    }
+
+    public static void showHint(){
+        System.out.println(String.format(" %1$-130s\n", spacer));
+        System.out.println(String.format(" %1$-130s", "Usable commands:"));
+        System.out.println(String.format(" %1$-130s", "pip: display pip scores for both players"));
+        System.out.println(String.format(" %1$-130s", "hint: shows all commands"));
+        System.out.println(String.format(" %1$-130s", "roll: roll the dice"));
+        System.out.println(String.format(" %1$-130s\n", spacer));
+    }
+
+    public static void declareWinner(Player p){
+        System.out.println(String.format(" %1$-130s", spacer));
+        System.out.print(String.format("%1$45s", ""));
+        System.out.println(String.format(" %1$-85s", " _    _ _                       _ "));
+        System.out.print(String.format("%1$45s", ""));
+        System.out.println(String.format(" %1$-85s", "| |  | (_)                     | |"));
+        System.out.print(String.format("%1$45s", ""));
+        System.out.println(String.format(" %1$-85s", "| |  | |_ _ __  _ __   ___ _ __| |"));
+        System.out.print(String.format("%1$45s", ""));
+        System.out.println(String.format(" %1$-85s", "| |/\\| | | '_ \\| '_ \\ / _ \\ '__| |"));
+        System.out.print(String.format("%1$45s", ""));
+        System.out.println(String.format(" %1$-85s", "\\  /\\  / | | | | | | |  __/ |  |_|"));
+        System.out.print(String.format("%1$45s", ""));
+        System.out.println(String.format(" %1$-85s", " \\/  \\/|_|_| |_|_| |_|\\___|_|  (_)"));
+        System.out.print(String.format("\n%1$57s", ""));
+        System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins!"));
+        System.out.println(String.format(" %1$-130s\n\n", spacer));
     }
 }
