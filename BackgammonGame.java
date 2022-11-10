@@ -100,11 +100,16 @@ public class BackgammonGame {
             this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": " + DieView.display(die1) + " - " + DieView.display(die2) + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
             
             ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves = board.getAllPossibleMovesWrapper(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
-            madeMove = BackgammonGameView.promptForMove(in, possibleMoves, this);
-            for(int i=0; i<possibleMoves.get(madeMove).size(); i++){
-                this.board.makeMove(possibleMoves.get(madeMove).get(i), this.getCurrentPlayer().getColor());
+            if(possibleMoves.size() > 0){
+                madeMove = BackgammonGameView.promptForMove(in, possibleMoves, this);
+                for(int i=0; i<possibleMoves.get(madeMove).size(); i++){
+                    this.board.makeMove(possibleMoves.get(madeMove).get(i), this.getCurrentPlayer().getColor());
+                }
+                this.eventLog.logEvent(this.getCurrentPlayer().getName() + " chose move: " + BackgammonGameView.genKeyCode(madeMove));
             }
-            this.eventLog.logEvent(this.getCurrentPlayer().getName() + " chose move: " + BackgammonGameView.genKeyCode(madeMove));
+            else{
+                this.eventLog.logEvent(this.getCurrentPlayer().getName() + " cannot make any moves. Switching turns. ");
+            }
             return true; //switch turns
         }
         else if(userInput.equals("pip")){

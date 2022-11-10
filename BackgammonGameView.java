@@ -189,4 +189,9 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins!"));
         System.out.println(String.format(" %1$-190s\n\n", spacer));
     }
+
+    public static void noMoves(){
+        System.out.print(String.format("\n%1$57s", ""));
+        System.out.println(String.format(" %1$-70s", "You have no moves possible. Switching turns."));
+    }
 }
