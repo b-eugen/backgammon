@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.AbstractMap;
 
 public class BackgammonGameView {
-    private final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____";    
+    private final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ";    
 
     public static String[] getNames(Scanner in, BackgammonGame game){
         String names[] = new String[2];
@@ -33,20 +33,22 @@ public class BackgammonGameView {
     
     private static String buildDiceRoll(BackgammonGame game){
         String returnStr = "";
-        returnStr += String.format(" %1$-130s\n", spacer);
+        returnStr += String.format(" %1$-190s\n", spacer);
         returnStr += String.format("%1$52s", "");
         returnStr += String.format("%1$-70s\n", "Player Turn: " + game.getCurrentPlayer().getName() + " " + game.getCurrentPlayer().getDisplayCheckerColor());
-        returnStr += String.format("%1$60s", "");
-        returnStr += String.format("%1$-70s\n", DieView.display(game.getDie1()) + " - " + DieView.display(game.getDie2()));
-        returnStr += String.format("%1$52s", "");
-        returnStr += String.format("%1$-70s\n", "You rolled " + game.getDie1().getLastRoll() + " and " + game.getDie2().getLastRoll());
-        returnStr += String.format(" %1$-130s\n", spacer);
+        if(game.getDie1().getLastRoll() != 0 && game.getDie2().getLastRoll()!=0){
+            returnStr += String.format("%1$60s", "");
+            returnStr += String.format("%1$-70s\n", DieView.display(game.getDie1()) + " - " + DieView.display(game.getDie2()));
+            returnStr += String.format("%1$52s", "");
+            returnStr += String.format("%1$-70s\n", "You rolled " + game.getDie1().getLastRoll() + " and " + game.getDie2().getLastRoll());
+        }
+        returnStr += String.format(" %1$-190s\n", spacer);
         
         return returnStr;
     }
 
     private static void buildBoard(BackgammonGame game){
-        System.out.println(String.format(" %1$-130s\n", spacer));
+        System.out.println(String.format(" %1$-190s\n", spacer));
         System.out.println("\n" + BoardView.display(game.getBoard(), game.getCurrentPlayer().getColor()));
     }
     
@@ -59,13 +61,21 @@ public class BackgammonGameView {
         returnStr += buildDiceRoll(game);
         
         if(possibleMoves.size() > 0){
-            returnStr += String.format(" %1$-130s\n", "Possible Moves: \n");
+            returnStr += String.format(" %1$-190s\n", "Possible Moves: \n");
             for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> moveCombination : possibleMoves){
                 optionStr += "| " + BackgammonGameView.genKeyCode(counter)+ ": ";
                 for (AbstractMap.SimpleEntry<Integer,Integer> pair : moveCombination){
-                    optionStr+= "Pip " + pair.getKey()+ " to Pip "+pair.getValue() + ", ";
+                    if(pair.getKey() == 25){
+                        optionStr+= "Bar to Pip "+pair.getValue() + ", ";
+                    }
+                    else if(pair.getValue() == 0){
+                        optionStr+= "Bear off Pip " + pair.getKey();
+                    }
+                    else{
+                        optionStr+= String.format("Pip %2d", pair.getKey()) + String.format(" to Pip %2d ", pair.getValue()) + ", ";
+                    }
                 }
-                returnStr += String.format(" %1$-65s", optionStr);
+                returnStr += String.format(" %1$-85s", optionStr);
 
                 optionStr = "";
                 if(counter%2 == 1){
@@ -75,7 +85,7 @@ public class BackgammonGameView {
             }
             returnStr+="\n";
         }
-        returnStr += String.format(" %1$-130s\n", spacer);
+        returnStr += String.format(" %1$-190s\n", spacer);
         returnStr += display(game, showLogPanel, false);
 
         System.out.println(returnStr);
@@ -95,7 +105,7 @@ public class BackgammonGameView {
 
             returnStr += EventLogView.display(game.getEventLog());
         }
-        returnStr += String.format(" %1$-130s\n", spacer);
+        returnStr += String.format(" %1$-190s\n", spacer);
 
         if(showBoard){
             System.out.println(returnStr);
@@ -146,23 +156,23 @@ public class BackgammonGameView {
         Player p1, p2;
         p1 = game.getPlayers().get(0);
         p2 = game.getPlayers().get(1);
-        System.out.println(String.format(" %1$-130s\n", spacer));
-        System.out.println(String.format(" %1$-130s", p1.getName() + " Pip Score: " + game.getBoard().getPipScore(p1.getColor())));
-        System.out.println(String.format(" %1$-130s", p2.getName() + " Pip Score: " + game.getBoard().getPipScore(p2.getColor())));
-        System.out.println(String.format(" %1$-130s\n", spacer));
+        System.out.println(String.format(" %1$-190s\n", spacer));
+        System.out.println(String.format(" %1$-190s", p1.getName() + " Pip Score: " + game.getBoard().getPipScore(p1.getColor())));
+        System.out.println(String.format(" %1$-190s", p2.getName() + " Pip Score: " + game.getBoard().getPipScore(p2.getColor())));
+        System.out.println(String.format(" %1$-190s\n", spacer));
     }
 
     public static void showHint(){
-        System.out.println(String.format(" %1$-130s\n", spacer));
-        System.out.println(String.format(" %1$-130s", "Usable commands:"));
-        System.out.println(String.format(" %1$-130s", "pip: display pip scores for both players"));
-        System.out.println(String.format(" %1$-130s", "hint: shows all commands"));
-        System.out.println(String.format(" %1$-130s", "roll: roll the dice"));
-        System.out.println(String.format(" %1$-130s\n", spacer));
+        System.out.println(String.format(" %1$-190s\n", spacer));
+        System.out.println(String.format(" %1$-190s", "Usable commands:"));
+        System.out.println(String.format(" %1$-190s", "pip: display pip scores for both players"));
+        System.out.println(String.format(" %1$-190s", "hint: shows all commands"));
+        System.out.println(String.format(" %1$-190s", "roll: roll the dice"));
+        System.out.println(String.format(" %1$-190s\n", spacer));
     }
 
     public static void declareWinner(Player p){
-        System.out.println(String.format(" %1$-130s", spacer));
+        System.out.println(String.format(" %1$-190s", spacer));
         System.out.print(String.format("%1$45s", ""));
         System.out.println(String.format(" %1$-85s", " _    _ _                       _ "));
         System.out.print(String.format("%1$45s", ""));
@@ -177,6 +187,6 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-85s", " \\/  \\/|_|_| |_|_| |_|\\___|_|  (_)"));
         System.out.print(String.format("\n%1$57s", ""));
         System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins!"));
-        System.out.println(String.format(" %1$-130s\n\n", spacer));
+        System.out.println(String.format(" %1$-190s\n\n", spacer));
     }
 }

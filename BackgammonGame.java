@@ -84,6 +84,8 @@ public class BackgammonGame {
         Player temp = players.get(0);
         players.set(0, players.get(1));
         players.set(1, temp);
+        this.die1.setLastRoll(0);
+        this.die2.setLastRoll(0);
         return true;
     }
 
