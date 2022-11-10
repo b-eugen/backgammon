@@ -13,4 +13,10 @@ public class Die {
         this.lastRoll = rand.nextInt(MAX_DICE-1)+1;
         return this.lastRoll;
     }
+
+    public Die setLastRoll(int lastRoll)
+    {
+        this.lastRoll = lastRoll;
+        return this;
+    }
 }

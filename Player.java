@@ -65,12 +65,8 @@ public class Player {
         return false;
     }
 
-    public ArrayList<Integer> roll(Die die1, Die die2)
+    public ArrayList<Integer> processRoll(int roll1, int roll2)
     {
-        int roll1 = die1.getRollValue();
-        int roll2 = die2.getRollValue();
-        // System.out.println(this.getName() + ": " + die1 + " " + die2 + " rolls " + roll1 + " and " + roll2);
-        
         if (roll2 == roll1){
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll1, roll1, roll1));
         }
@@ -78,6 +74,20 @@ public class Player {
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll2, 0, 0));
         }
         return this.moves;
+    }
+    public ArrayList<Integer> forceRoll(Die die1, Die die2)
+    {
+        int roll1 = die1.getLastRoll();
+        int roll2 = die2.getLastRoll();
+        return processRoll(roll1, roll2);
+    }
+
+    public ArrayList<Integer> roll(Die die1, Die die2)
+    {
+        int roll1 = die1.getRollValue();
+        int roll2 = die2.getRollValue();
+        // System.out.println(this.getName() + ": " + die1 + " " + die2 + " rolls " + roll1 + " and " + roll2);
+        return processRoll(roll1, roll2);
     }
 
     public int sumRoll(Die die1, Die die2)

@@ -1,14 +1,5 @@
 import java.util.AbstractMap;
 import java.util.ArrayList;
-// import java.util.Pair;
-
-import javax.print.attribute.standard.Destination;
-
-
-// import javax.print.attribute.standard.Destination;
-
-// import Checker.Color;
-// import javafx.util.Pair;
 
 public class Board {
     private Bar bar;
@@ -229,5 +220,53 @@ public class Board {
     }
     
 
+    public int getEndGameMultiplierColor(Checker.Color color)
+    {
+        int multiplier = 2;//gammon
+
+        int trippleCount = bar.colorCount(color);
+        int checkerCount = trippleCount;
+
+        for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
+        {
+            if (points[mapFromPip(pip, color)].getColor()==color)
+            {
+                checkerCount+=points[mapFromPip(pip, color)].getSize();
+                if (pip > Point.MAX_POINTS-BEAR_OFF_THOLD)
+                {
+                    trippleCount += points[mapFromPip(pip, color)].getSize();
+                }
+            }
+        }
+
+        if (checkerCount < Point.START_CHECKERS)
+        {
+            multiplier = 1;//single
+        }
+        else if(trippleCount > 0)
+        {
+            multiplier = 3;//backgammon
+        }
+        
+        return multiplier;
+    }
+
+    // to be tested
+    public int getEndgameMultiplier()
+    {
+        int blackPip = getPipScore(Checker.Color.BLACK);
+        int redPip = getPipScore(Checker.Color.RED);
+        int multiplier = 0;
+        if (redPip == 0)
+        {
+            multiplier = getEndGameMultiplierColor(Checker.Color.BLACK);
+        }
+        else if (blackPip == 0)
+        {
+            multiplier = getEndGameMultiplierColor(Checker.Color.RED);
+        }
+
+        return multiplier;
+    }
     
 }

@@ -5,6 +5,7 @@ public class Point extends CheckerColumn{
     private static final String GREEN="\033[0;32m";
 
     public static final int MAX_POINTS = 24;
+    public static final int START_CHECKERS = 15;
 
     public Point(int number)
     {
