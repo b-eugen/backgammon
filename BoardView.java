@@ -18,7 +18,7 @@ public class BoardView {
     {
         String[] barString = BarView.toArrayOfStrings(board.getBar());
 
-        String[][] array2D = new String[Point.MAX_POINTS/2+1][barString.length];
+        String[][] array2D = new String[Point.MAX_POINTS/2+2][barString.length];
 
         String[] stub = {"          "};
         for (int col=0; col<Point.MAX_POINTS/2+1; col++)
@@ -36,11 +36,35 @@ public class BoardView {
             }
             
         }
+        int start_cube;
+        switch (board.getCube().getOwner())
+        {
+            case BLACK: start_cube = barString.length - DoublingCubeView.height; break;
+            case INVALID: start_cube = (barString.length - DoublingCubeView.height)/2; break;
+            default: start_cube = 0;
+        }
+
+        String[] cubeString = DoublingCubeView.toArrayOfqStrings(board.getCube());
+    
+        for (int row = 0; row<barString.length; row++)
+        {
+            if (row >= start_cube && row < start_cube + DoublingCubeView.height)
+            {
+                array2D[Point.MAX_POINTS/2+1][row] = cubeString[row-start_cube];
+            }
+            else
+            {
+                array2D[Point.MAX_POINTS/2+1][row] = stub[0];
+            }
+            
+        }
+        
+
 
         String result = "";
         for (int row=0; row<barString.length; row++)
         {
-            for (int col=0; col<Point.MAX_POINTS/2+1; col++)
+            for (int col=0; col<Point.MAX_POINTS/2+2; col++)
             {
                 result = result+array2D[col][row];
             }

@@ -11,16 +11,19 @@ import java.io.ObjectOutputStream;
 public class Board implements Serializable{
     private Bar bar;
     private Point[] points;
+    private DoublingCube cube;
 
     private static final int BEAR_OFF_THOLD=6;
     public Board()
     {
         this.bar = new Bar();
+        this.cube = new DoublingCube();
         this.points = new Point[Point.MAX_POINTS];
         for (int ind=0; ind<Point.MAX_POINTS; ind++)
         {
             this.points[ind]=new Point(ind+1);
             this.points[ind].prepareForGame();
+            
         }
 
     }
@@ -48,14 +51,16 @@ public class Board implements Serializable{
         return "bar: "+bar+"; points:"+points;
     }
 
-    public Board(Bar bar, Point[] points)
+    public Board(Bar bar, Point[] points, DoublingCube cube)
     {
         this.bar = bar;
         this.points = points;
+        this.cube = cube;
     }
 
     public Board(Board board)
     {
+        this.cube = board.cube;
         this.bar = new Bar(board.getBar());
         this.points = new Point[Point.MAX_POINTS];
 
@@ -65,16 +70,10 @@ public class Board implements Serializable{
         }
     }
 
-    // @Override
-    // public Object clone() {
-        
-    //     // try {
-    //     //     return (Board) super.clone();
-    //     // } catch (CloneNotSupportedException e) {
-    //     //     return new Board(this.bar, this.points);
-    //     // }
-    // }
-
+    public DoublingCube getCube() {
+        return cube;
+    }
+    
     public Bar getBar() {
         return bar;
     }

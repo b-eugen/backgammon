@@ -9,7 +9,7 @@ public class DoublingCube {
         owner = Checker.Color.INVALID;
     }
 
-    public int getCurrent_stake() 
+    public int getCurrentStake() 
     {
         return current_stake;
     }
@@ -51,5 +51,7 @@ public class DoublingCube {
     {
         return String.format("Doubling: ", current_stake);
     }
+
+    
 
 }
