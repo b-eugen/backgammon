@@ -63,6 +63,7 @@ public class Point extends CheckerColumn{
         int pip_point = this.getNumber();
         if (color == Checker.Color.RED)
         {
+            System.out.println("RED__________________________________");
             pip_point = MAX_POINTS + 1 - pip_point;
         }
         String columnColor = this.getDesignColor();
