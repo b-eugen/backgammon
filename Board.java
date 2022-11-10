@@ -300,11 +300,12 @@ public class Board implements Serializable{
                     }
                 }
             }
+            else
+            {
+                output=result;
+            }
         }
-        else
-        {
-            output=result;
-        }
+       
         return output;
     }
 

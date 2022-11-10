@@ -50,8 +50,9 @@ public class BackgammonGameView {
         System.out.println("\n" + BoardView.display(game.getBoard(), game.getCurrentPlayer().getColor()));
     }
     
-    public static String display(BackgammonGame game, boolean showLogPanel, ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves){
+    public static String display(BackgammonGame game, boolean showLogPanel, ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves){
         String returnStr = "";
+        String optionStr = "";
         int counter = 0; 
 
         buildBoard(game);
@@ -59,9 +60,14 @@ public class BackgammonGameView {
         
         if(possibleMoves.size() > 0){
             returnStr += String.format(" %1$-130s\n", "Possible Moves: \n");
-            for (AbstractMap.SimpleEntry<Integer,Integer> pair : possibleMoves)
-            {
-                returnStr+= String.format("| %1$-65s ", BackgammonGameView.genKeyCode(counter)+ ": Pip " + pair.getKey()+ " to Pip "+pair.getValue());
+            for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> moveCombination : possibleMoves){
+                optionStr += "| " + BackgammonGameView.genKeyCode(counter)+ ": ";
+                for (AbstractMap.SimpleEntry<Integer,Integer> pair : moveCombination){
+                    optionStr+= "Pip " + pair.getKey()+ " to Pip "+pair.getValue() + ", ";
+                }
+                returnStr += String.format(" %1$-65s", optionStr);
+
+                optionStr = "";
                 if(counter%2 == 1){
                     returnStr+="\n";
                 }
@@ -121,7 +127,7 @@ public class BackgammonGameView {
 	}
 
 
-    public static int promptForMove(Scanner in, ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves, BackgammonGame game){
+    public static int promptForMove(Scanner in, ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves, BackgammonGame game){
         String userInput;
         int numPossibleMoves = possibleMoves.size();
 
