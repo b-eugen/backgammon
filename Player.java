@@ -6,9 +6,11 @@ public class Player {
     private Checker.Color color;
     private Checker displayCheckerColor;
     private ArrayList<Integer> moves;
+    private int score;
 
     public Player()
     {
+        this.score = 0;
         this.name = "Player";
         this.color = Checker.Color.BLACK;
         this.moves = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0));
@@ -17,6 +19,7 @@ public class Player {
 
     public Player(Checker.Color color)
     {
+        this.score = 0;
         this.color = color;
         this.moves = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0));
         this.displayCheckerColor = new Checker(this.color);
@@ -27,6 +30,11 @@ public class Player {
         this.name = name;
         this.color = color;
         this.displayCheckerColor = new Checker(this.color);
+    }
+
+    public int getScore()
+    {
+        return this.score;
     }
 
     public String getName()
@@ -42,6 +50,13 @@ public class Player {
     public ArrayList<Integer> getMoves()
     {
         return this.moves;
+    }
+
+
+    public int incrementScore(int increment)
+    {
+        this.score+=increment;
+        return this.score;
     }
 
     public boolean anyMovesLeft()
