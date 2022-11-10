@@ -261,7 +261,7 @@ public class Board implements Serializable{
             }
         }
 
-        System.out.println("intermediate "+intermediateArray);
+        // System.out.println("intermediate "+intermediateArray);
 
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> outputArray = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
         
