@@ -191,19 +191,25 @@ public class Board implements Serializable{
         return result;
     }
     
-    public boolean isSame(ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> a, ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> b)
+    public boolean isSame(final ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> a, final ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> b)
     {
         boolean result = true;
-        ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> temp = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+
         if (a.size() == b.size())
         {
+            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> temp = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+            for (int ind = 0; ind < b.size(); ind++)
+            {
+                temp.add( new AbstractMap.SimpleEntry<Integer,Integer>((int) b.get(ind).getKey(), (int) b.get(ind).getValue()));
+            }
+            // System.out.println("Passionfruit1: "+ b +" "+ a);
             for (int ind = 0; ind < a.size(); ind++)
             {
                 boolean matchedElement = false;
                 int jnd = 0;
-                for (jnd = 0; jnd < b.size(); jnd++)
+                for (jnd = 0; jnd < temp.size(); jnd++)
                 {
-                    if(a.get(ind).getKey()==b.get(jnd).getKey() && a.get(ind).getValue()==b.get(jnd).getValue())
+                    if(a.get(ind).getKey()==temp.get(jnd).getKey() && a.get(ind).getValue()==temp.get(jnd).getValue())
                     {
                         matchedElement=true;
                         break;
@@ -212,7 +218,7 @@ public class Board implements Serializable{
 
                 if (matchedElement)
                 {
-                    temp.add(b.remove(jnd));
+                    temp.remove(jnd);
                 }
                 else
                 {
@@ -220,9 +226,16 @@ public class Board implements Serializable{
                     break;
                 }
             }
+
+            // System.out.println("Passionfruit: "+ b +" "+ a );
+            // b = temp;
+        }
+        else
+        {
+            result = false;
         }
         // b=a;
-        b.addAll(temp);
+        // b.addAll(temp);
         return result;
     }
 
@@ -248,7 +261,7 @@ public class Board implements Serializable{
             }
         }
 
-        // System.out.println("intermediate "+intermediateArray);
+        System.out.println("intermediate "+intermediateArray);
 
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> outputArray = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
         
@@ -258,8 +271,10 @@ public class Board implements Serializable{
             boolean isPresent = false;
             for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> arrayInOutput:outputArray)
             {
+                // System.out.println("Before" + arrayInOutput+" "+arrayInIntermediate);
                 if (isSame(arrayInOutput, arrayInIntermediate))
                 {
+                    // System.out.println("After" + arrayInOutput+" "+arrayInIntermediate);
                     // System.out.println("Same: "+arrayInOutput +" "+  arrayInIntermediate);
                     isPresent= true;
                     break;
@@ -287,9 +302,9 @@ public class Board implements Serializable{
             if (result.get(0).size() == 1)
             {
                 int max_move = moves.get(1);
-                if (moves.get(2) > max_move)
+                if (moves.get(0) > max_move)
                 {
-                    max_move = moves.get(2);
+                    max_move = moves.get(0);
                 }
 
                 for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> move : result)
