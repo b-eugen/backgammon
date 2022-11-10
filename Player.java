@@ -4,6 +4,7 @@ import java.util.*;
 public class Player {
     private String name;
     private Checker.Color color;
+    private Checker displayCheckerColor;
     private ArrayList<Integer> moves;
 
     public Player()
@@ -11,18 +12,21 @@ public class Player {
         this.name = "Player";
         this.color = Checker.Color.BLACK;
         this.moves = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0));
+        this.displayCheckerColor = new Checker(this.color);
     }
 
     public Player(Checker.Color color)
     {
         this.color = color;
         this.moves = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0));
+        this.displayCheckerColor = new Checker(this.color);
     }
 
     public Player(String name, Checker.Color color)
     {
         this.name = name;
         this.color = color;
+        this.displayCheckerColor = new Checker(this.color);
     }
 
     public String getName()
@@ -94,6 +98,10 @@ public class Player {
     {
         this.roll(die1, die2);
         return this.moves.get(0)+this.moves.get(1);
+    }
+
+    public Checker getDisplayCheckerColor(){
+        return this.displayCheckerColor;
     }
 
     public String toString()

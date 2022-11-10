@@ -1,5 +1,5 @@
 public class DieView {
-    public static String toString(Die die){
+    public static String display(Die die){
         switch(die.getLastRoll()) {
             case 1:
                 return("⚀");

@@ -9,7 +9,6 @@ public class BackgammonGame {
     private Board board;
     private Die die1;
     private Die die2;
-    private DieView dieView;
     private EventLog eventLog;
     private ArrayList<Player> players;
     
@@ -19,7 +18,11 @@ public class BackgammonGame {
         this.die1 = new Die();
         this.die2 = new Die();
         this.eventLog = new EventLog();
-        this.dieView = new DieView();
+    }
+
+    public static void immediateExit(){
+        System.out.println("\n\nYou have quit backgammon.");
+        System.exit(1);
     }
 
     public Player getCurrentPlayer(){
@@ -32,6 +35,10 @@ public class BackgammonGame {
 
     public Die getDie2(){
         return this.die2;
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
     public EventLog getEventLog(){
@@ -69,22 +76,13 @@ public class BackgammonGame {
     }
 
 
-    public boolean takeAction(String userInput){
-        if(userInput.toLowerCase().equals("quit")){
-            BackgammonGameView.immediateExit();
-            System.exit(1);
-        }
-        else{
-            userInput = userInput.toLowerCase();
-            this.players.get(0).sumRoll(this.die1, this.die2);
-            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves = board.getPossibleMoves(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
-            for (AbstractMap.SimpleEntry<Integer,Integer> pair : possibleMoves)
-            {
-                System.out.println(pair.getKey()+" "+pair.getValue());
-            }
-            this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": " + DieView.toString(die1) + " - " + DieView.toString(die2) + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
-        }
-        return true;
+    public void takeAction(String userInput, Scanner in){
+        userInput = userInput.toLowerCase();
+        this.players.get(0).roll(this.die1, this.die2);
+        this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": " + DieView.display(die1) + " - " + DieView.display(die2) + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
+        
+        ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves = board.getPossibleMoves(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
+        this.board.makeMove(possibleMoves.get(BackgammonGameView.promptForMove(in, possibleMoves, this)), this.getCurrentPlayer().getColor());
     }
     
     public void setUpSequence(Scanner in){
@@ -93,14 +91,8 @@ public class BackgammonGame {
         this.addPlayer(new Player(names[1], Checker.Color.RED));
         this.eventLog.logEvent("Player 1 entered name: " + names[0] + ", is BLACK checkers");
         this.eventLog.logEvent("Player 2 entered name: " + names[1] + ", is RED checkers");
-        System.out.println("\n" + BoardView.display(this.board, Checker.Color.BLACK) + "\n");
+        BackgammonGameView.display(this, false, true);
     }
-
-    public void updateDisplay(BackgammonGame game){
-        System.out.println("\n" + BoardView.display(this.board, this.getCurrentPlayer().getColor()));
-        BackgammonGameView.gameToString(game);
-    }
-
 
     public static void main(String[] args)
     {
@@ -109,9 +101,9 @@ public class BackgammonGame {
         game.setUpSequence(in);
 
         while(!game.getGameOver()){
-            game.takeAction(BackgammonGameView.readNewInput(in, game.getCurrentPlayer()));
+            game.takeAction(BackgammonGameView.readNewInput(in, game.getCurrentPlayer()), in);
             game.swapPlayers();
-            game.updateDisplay(game);
+            BackgammonGameView.display(game, true, true);
         }
     }
 }

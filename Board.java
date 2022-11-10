@@ -121,7 +121,7 @@ public class Board {
                                 result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
                                 Checker checktest = new Checker(playerColor);
                                 
-                                System.out.println(pip +" " +destination +" "+ checktest +" "+ destinationIndex);
+                                // System.out.println(pip +" " +destination +" "+ checktest +" "+ destinationIndex);
                             }
                         }
                         
