@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.io.Serializable;
 
 public abstract class CheckerColumn {
     private ArrayList<Checker> checkers;
@@ -9,6 +10,26 @@ public abstract class CheckerColumn {
         this.checkers = new ArrayList<Checker>();
     }
 
+    public CheckerColumn(ArrayList<Checker> checkers)
+    {
+        this.checkers = checkers;
+    }
+
+    public CheckerColumn(CheckerColumn newColumn)
+    {
+        this.checkers = newColumn.getCheckersCopy();
+        // this(newColumn.getCheckers());
+    }
+
+    public ArrayList<Checker> getCheckersCopy() {
+        ArrayList<Checker> checkers = new ArrayList<Checker>();
+        for (int ind = 0; ind < this.getSize(); ind++)
+        {
+            Checker newChecker = new Checker(this.checkers.get(ind).getColor());
+            checkers.add(newChecker);
+        }
+        return checkers;
+    }
     public ArrayList<Checker> getCheckers() {
         return this.checkers;
     }

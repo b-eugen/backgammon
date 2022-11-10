@@ -75,7 +75,7 @@ public class Player {
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll1, roll1, roll1));
         }
         else{
-            this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll2, 0, 0));
+            this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll2));
         }
         return this.moves;
     }

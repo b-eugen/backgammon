@@ -6,6 +6,11 @@ public class Bar extends CheckerColumn{
         super();
     }
 
+    public Bar(Bar newBar)
+    {
+        super(newBar);
+    }
+
     public String toString()
     {
         return String.format("Bar %s", super.toString());

@@ -1,7 +1,14 @@
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.io.Serializable;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-public class Board {
+public class Board implements Serializable{
     private Bar bar;
     private Point[] points;
 
@@ -17,6 +24,56 @@ public class Board {
         }
 
     }
+
+    // public Board deepClone() {
+	// 	try {
+    //     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    //     ObjectOutputStream oos = new ObjectOutputStream(baos);
+    //     oos.writeObject(this);
+
+    //     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    //     ObjectInputStream ois = new ObjectInputStream(bais);
+    //     return (Board) ois.readObject();
+	// 	} catch (IOException e) {
+    //         System.out.println("Excepton"+ e);
+	// 		return null;
+	// 	} catch (ClassNotFoundException e) {
+    //         System.out.println("Excepton"+ e);
+	// 		return null;
+	// 	}
+	// }
+
+    public String toString()
+    {
+        return "bar: "+bar+"; points:"+points;
+    }
+
+    public Board(Bar bar, Point[] points)
+    {
+        this.bar = bar;
+        this.points = points;
+    }
+
+    public Board(Board board)
+    {
+        this.bar = new Bar(board.getBar());
+        this.points = new Point[Point.MAX_POINTS];
+
+        for (int ind=0; ind<Point.MAX_POINTS; ind++)
+        {
+            this.points[ind]=new Point(board.points[ind]);
+        }
+    }
+
+    // @Override
+    // public Object clone() {
+        
+    //     // try {
+    //     //     return (Board) super.clone();
+    //     // } catch (CloneNotSupportedException e) {
+    //     //     return new Board(this.bar, this.points);
+    //     // }
+    // }
 
     public Bar getBar() {
         return bar;
@@ -64,33 +121,16 @@ public class Board {
         return result;
     }
 
-    public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
+    
+
+    public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMovesFromOneRoll(Checker.Color playerColor, int move)
     {
-        
-
-        //find unique moves in the provided list
-        ArrayList<Integer> uniqueMoves = new ArrayList<Integer>();
-        for (int ind=0; ind<moves.size(); ind++)
-        {
-            Boolean uniqueFlag = true;
-            for (int jnd=0; jnd<uniqueMoves.size(); jnd++)
-            {
-                if (uniqueMoves.get(jnd) == moves.get(ind) || moves.get(ind)==0)
-                {
-                    uniqueFlag = false;
-                    break;
-                }
-            }
-            if (uniqueFlag)
-            {
-                uniqueMoves.add(moves.get(ind));
-            }
-        }
-
         ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
 
-        for (int move: uniqueMoves)
+        if (move>0 && move <7)
         {
+
+        
             if (bar.colorCount(playerColor)>0)
             {
                 int pointIndex = mapFromPip(Point.MAX_POINTS+1-move, playerColor)-1;
@@ -135,20 +175,213 @@ public class Board {
 
                 if (bear_off)
                 {
-                    int pointIndex = mapFromPip(move, playerColor)-1;
-                    if ( points[pointIndex].getColor()==playerColor)
+                    for (int pointIndex = mapFromPip(move, playerColor)-1;pointIndex>=0; pointIndex--)
                     {
-                        result.add(new AbstractMap.SimpleEntry<Integer,Integer>(move, 0));
-                        //move
+                        if ( points[pointIndex].getColor()==playerColor)
+                        {
+                            
+                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(move+1, playerColor), 0));
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return result;
+    }
+    
+    public boolean isSame(ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> a, ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> b)
+    {
+        boolean result = true;
+        ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> temp = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+        if (a.size() == b.size())
+        {
+            for (int ind = 0; ind < a.size(); ind++)
+            {
+                boolean matchedElement = false;
+                int jnd = 0;
+                for (jnd = 0; jnd < b.size(); jnd++)
+                {
+                    if(a.get(ind).getKey()==b.get(jnd).getKey() && a.get(ind).getValue()==b.get(jnd).getValue())
+                    {
+                        matchedElement=true;
+                        break;
                     }
                 }
-                // else
-                // {
 
-
-                // }
+                if (matchedElement)
+                {
+                    temp.add(b.remove(jnd));
+                }
+                else
+                {
+                    result = false;
+                    break;
+                }
             }
+        }
+        // b=a;
+        b.addAll(temp);
+        return result;
+    }
 
+    public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> getUniqueLongArrays(ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> inputArray)
+    {
+        int maxLength = 0;
+        for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> array : inputArray)
+        {
+            int currentSize = array.size();
+            if (currentSize>maxLength)
+            {
+                maxLength = currentSize;
+            }
+        }
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> intermediateArray = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+        
+        for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> array : inputArray)
+        {
+            int currentSize = array.size();
+            if (currentSize==maxLength)
+            {
+                intermediateArray.add(array);
+            }
+        }
+
+        // System.out.println("intermediate "+intermediateArray);
+
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> outputArray = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+        
+       
+        for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> arrayInIntermediate:intermediateArray)
+        {
+            boolean isPresent = false;
+            for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> arrayInOutput:outputArray)
+            {
+                if (isSame(arrayInOutput, arrayInIntermediate))
+                {
+                    // System.out.println("Same: "+arrayInOutput +" "+  arrayInIntermediate);
+                    isPresent= true;
+                    break;
+                }
+            }
+            if (!isPresent)
+            {
+                // System.out.println("Adding: "+  arrayInIntermediate);
+                outputArray.add(arrayInIntermediate);
+                // System.out.println("outputArray: " +outputArray);
+            }
+        }
+
+
+
+        return outputArray;
+    }
+
+    public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>  getAllPossibleMovesWrapper(Checker.Color playerColor, ArrayList<Integer> moves)
+    {
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> output = new  ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = getAllPossibleMoves( playerColor, moves);
+        if (result.size()>0)
+        {
+            if (result.get(0).size() == 1)
+            {
+                int max_move = moves.get(1);
+                if (moves.get(2) > max_move)
+                {
+                    max_move = moves.get(2);
+                }
+
+                for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> move : result)
+                {
+                    if (move.get(0).getValue() == 0 || (move.get(0).getKey() - move.get(0).getValue()) == max_move)
+                    {
+                        output.add(move);
+                    }
+                }
+            }
+        }
+        return output;
+    }
+
+    public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>  getAllPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
+    {
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+        for (int ind=0; ind<moves.size(); ind++)
+        {
+            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result_single = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+            // System.out.println("Size moves: "+ getPossibleMovesFromOneRoll(playerColor, moves.get(ind)).size());
+            result_single.addAll(getPossibleMovesFromOneRoll(playerColor, moves.get(ind)));
+
+            // System.out.println("result_single "+result_single);
+            ArrayList<Integer> moves_copy = new ArrayList<Integer>();
+            for (int jnd=0; jnd<moves.size(); jnd++)
+            {
+                if (ind != jnd)
+                {
+                    moves_copy.add(moves.get(jnd));
+                }
+            }
+            
+            for (int knd=0; knd < result_single.size(); knd++)
+            {
+                Board cloneBoard = new Board(this);//(Board) this.clone();
+                
+                cloneBoard.makeMove(result_single.get(knd), playerColor);
+                ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> previous_result = cloneBoard.getAllPossibleMoves(playerColor, moves_copy);
+                if (previous_result.size() > 0)
+                {
+                    for (int lnd = 0; lnd<previous_result.size(); lnd++)
+                    {
+    
+                        
+                        previous_result.get(lnd).add(0, result_single.get(knd));
+                        
+                    }
+                    result.addAll(previous_result);
+                }
+                else
+                {
+                    ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> fillerArray = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+                    fillerArray.add(result_single.get(knd));
+                    result.add(fillerArray);
+                }
+                
+            }
+        }
+        
+
+        return getUniqueLongArrays(result);
+    }
+
+    public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
+    {
+        
+
+        //find unique moves in the provided list
+        ArrayList<Integer> uniqueMoves = new ArrayList<Integer>();
+        for (int ind=0; ind<moves.size(); ind++)
+        {
+            Boolean uniqueFlag = true;
+            for (int jnd=0; jnd<uniqueMoves.size(); jnd++)
+            {
+                if (uniqueMoves.get(jnd) == moves.get(ind) || moves.get(ind)==0)
+                {
+                    uniqueFlag = false;
+                    break;
+                }
+            }
+            if (uniqueFlag)
+            {
+                uniqueMoves.add(moves.get(ind));
+            }
+        }
+
+        ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+
+        for (int move: uniqueMoves)
+        {
+            result.addAll(getPossibleMovesFromOneRoll(playerColor, move));
         }
 
         
@@ -268,5 +501,8 @@ public class Board {
 
         return multiplier;
     }
+    
+
+
     
 }

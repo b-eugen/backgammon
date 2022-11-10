@@ -97,7 +97,7 @@ public class BackgammonGame {
             this.players.get(0).roll(this.die1, this.die2);
             this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": " + DieView.display(die1) + " - " + DieView.display(die2) + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
             
-            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> possibleMoves = board.getPossibleMoves(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
+            ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves = board.getAllPossibleMovesWrapper(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
             
             madeMove = BackgammonGameView.promptForMove(in, possibleMoves, this);
             this.board.makeMove(possibleMoves.get(madeMove), this.getCurrentPlayer().getColor());

@@ -19,6 +19,12 @@ public class Point extends CheckerColumn{
         this.number = 1;
     }
 
+    public Point(Point newPoint)
+    {
+        super(newPoint);
+        this.number = newPoint.getNumber();
+    }
+
     public String getDesignColor()
     {
         if (this.number%2 == 0)
