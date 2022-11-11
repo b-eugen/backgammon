@@ -37,7 +37,7 @@ public class Match {
         this.players.add(new Player(names[1], Checker.Color.RED));
         
         do{
-            BackgammonGame game = new BackgammonGame();
+            BackgammonGame game = new BackgammonGame(length);
             this.players = game.gameRoutine(in, this.players, game);
         }
         while(!checkMatchOver());

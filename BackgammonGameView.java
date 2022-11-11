@@ -8,6 +8,10 @@ public class BackgammonGameView {
     private static String buildDiceRoll(BackgammonGame game){
         String returnStr = "";
         returnStr += String.format(" %1$-190s\n", spacer);
+        returnStr += String.format("%1$47s", "");
+        returnStr += String.format("%1$-65s\n", "Match Score: " + game.getPlayers().get(0).getName() + " " + game.getPlayers().get(0).getScore() + " - " + game.getPlayers().get(1).getScore() + " " + game.getPlayers().get(1).getName());
+        returnStr += String.format("%1$54s", "");
+        returnStr += String.format("%1$-72s\n", "Match Length: " + game.getMatchLength());
         returnStr += String.format("%1$52s", "");
         returnStr += String.format("%1$-70s\n", "Player Turn: " + game.getCurrentPlayer().getName() + " " + game.getCurrentPlayer().getDisplayCheckerColor());
         if(game.getDie1().getLastRoll() != 0 && game.getDie2().getLastRoll()!=0){
@@ -142,6 +146,7 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-190s", "pip: display pip scores for both players"));
         System.out.println(String.format(" %1$-190s", "hint: shows all commands"));
         System.out.println(String.format(" %1$-190s", "roll: roll the dice"));
+        System.out.println(String.format(" %1$-190s", "double: offer your opponent to double the stakes or lose!"));
         System.out.println(String.format(" %1$-190s\n", spacer));
     }
 

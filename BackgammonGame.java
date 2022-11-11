@@ -10,17 +10,23 @@ public class BackgammonGame {
     private Die die2;
     private EventLog eventLog;
     private ArrayList<Player> players;
+    private int matchLength;
     
-    public BackgammonGame(){
+    public BackgammonGame(int matchLength){
         this.players = new ArrayList<Player>();
         this.board = new Board();
         this.die1 = new Die();
         this.die2 = new Die();
         this.eventLog = new EventLog();
+        this.matchLength = matchLength;
     }
 
     public Player getCurrentPlayer(){
         return this.players.get(0);
+    }
+
+    public int getMatchLength(){
+        return this.matchLength;
     }
 
     public ArrayList<Player> getPlayers(){
@@ -59,6 +65,11 @@ public class BackgammonGame {
         return(gameOver);
     }
 
+    public void resetDice(){
+        this.die1.setLastRoll(0);
+        this.die2.setLastRoll(0);
+    }
+
     public boolean swapPlayers()
     {
         if (players.size() < 2)
@@ -68,8 +79,7 @@ public class BackgammonGame {
         Player temp = players.get(0);
         players.set(0, players.get(1));
         players.set(1, temp);
-        this.die1.setLastRoll(0);
-        this.die2.setLastRoll(0);
+        this.resetDice();
         return true;
     }
 
@@ -120,7 +130,7 @@ public class BackgammonGame {
             this.eventLog.logEvent(this.players.get(1).getName() + " goes first!");
             this.swapPlayers();
         }
-
+        resetDice();
     }
     
     public void setUpSequence(Scanner in, ArrayList<Player> matchPlayers){
