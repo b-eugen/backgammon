@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 // cd ~/Desktop/Java && javac backgammon/*.java && java backgammon/BackgammonGame && cd ~/Desktop/Java/backgammon
 public class BackgammonGame {
-    private boolean gameOver = false;
     private Board board;
     private Die die1;
     private Die die2;
@@ -18,11 +17,6 @@ public class BackgammonGame {
         this.die1 = new Die();
         this.die2 = new Die();
         this.eventLog = new EventLog();
-    }
-
-    public static void immediateExit(){
-        System.out.println("\n\nYou have quit backgammon.");
-        System.exit(1);
     }
 
     public Player getCurrentPlayer(){
@@ -50,29 +44,19 @@ public class BackgammonGame {
     }
 
     public boolean checkGameOver() {
+        boolean gameOver = false;
+
         if(this.board.getPipScore(players.get(0).getColor()) == 0){
             BackgammonGameView.declareWinner(players.get(0));
-            this.gameOver = true;
+            Match.updatePlayersMatchScore(players.get(0), this);
+            gameOver = true;
         }
         else if(this.board.getPipScore(players.get(1).getColor()) == 0){
             BackgammonGameView.declareWinner(players.get(1));
-            this.gameOver = true;
+            Match.updatePlayersMatchScore(players.get(1), this);
+            gameOver = true;
         }
-        return(this.gameOver);
-    }
-
-    public void endGame(){
-        this.gameOver = true;
-    }
-
-    public boolean addPlayer(Player player)
-    {
-        if (players.size() < 2)
-        {
-            this.players.add(player);
-            return true;
-        }
-        return false;
+        return(gameOver);
     }
 
     public boolean swapPlayers()
@@ -91,6 +75,7 @@ public class BackgammonGame {
 
 
     public boolean takeAction(String userInput, Scanner in){
+        boolean endTurn = false;
         userInput = userInput.toLowerCase();
 
         if(userInput.equals("roll")){
@@ -110,18 +95,17 @@ public class BackgammonGame {
             else{
                 this.eventLog.logEvent(this.getCurrentPlayer().getName() + " cannot make any moves. Switching turns. ");
             }
-            return true; //switch turns
+            endTurn = true; //switch turns
         }
-        else if(userInput.equals("pip")){
+        else if(userInput.toLowerCase().equals("pip")){
             BackgammonGameView.showPipScores(this);
-            return false; //do not switch turns
+            //do not switch turns
         }
-        else if(userInput.equals("hint")){
+        else if(userInput.toLowerCase().equals("hint")){
             BackgammonGameView.showHint();
-            return false; //do not switch turns
+            //do not switch turns
         }
-        
-        return false; //do not switch turns
+        return endTurn; 
     }
 
     public void rollOff(){
@@ -139,19 +123,17 @@ public class BackgammonGame {
 
     }
     
-    public void setUpSequence(Scanner in){
-        String names[] = BackgammonGameView.getNames(in, this);
-        this.addPlayer(new Player(names[0], Checker.Color.BLACK));
-        this.addPlayer(new Player(names[1], Checker.Color.RED));
-        this.eventLog.logEvent("Player 1 entered name: " + names[0] + ", is BLACK checkers");
-        this.eventLog.logEvent("Player 2 entered name: " + names[1] + ", is RED checkers");
+    public void setUpSequence(Scanner in, ArrayList<Player> matchPlayers){
+        this.players = matchPlayers;
+        this.eventLog.logEvent("Player 1 entered name: " + players.get(0).getName() + ", is BLACK checkers");
+        this.eventLog.logEvent("Player 2 entered name: " + players.get(1).getName() + ", is RED checkers");
         this.rollOff();
         BackgammonGameView.display(this, true, true);
     }
 
     public boolean validateMoveInput(String userInput, int numPossibleMoves){
         if(userInput.toLowerCase().equals("quit")){
-            BackgammonGame.immediateExit();
+            Menu.immediateExit();
         }
         if(userInput.length() != 2){
             System.out.println("Please enter exactly two letters for the move you would like to make.");
@@ -171,19 +153,9 @@ public class BackgammonGame {
         return true;
     }
 
-    public boolean validateInput(String userInput, boolean takeName){
-        if(takeName){
-            if(userInput.length() > 15){
-                System.out.println("Please ensure you name includes no more than 15 characters");
-                return false;
-            }
-            else if(userInput.length() < 1){
-                System.out.println("Please ensure you name includes no less than 1 character");
-                return false;
-            }
-        }
-        else if(userInput.toLowerCase().equals("quit")){
-            BackgammonGame.immediateExit();
+    public boolean validateInput(String userInput){
+        if(userInput.toLowerCase().equals("quit")){
+            Menu.immediateExit();
         }
         else{
             userInput = userInput.toLowerCase();
@@ -195,16 +167,16 @@ public class BackgammonGame {
         return true;
     }
 
-    public static void main(String[] args)
+    public ArrayList<Player> gameRoutine(Scanner in, ArrayList<Player> matchPlayers, BackgammonGame game)
     {
-        Scanner in = new Scanner(System.in);
-        BackgammonGame game = new BackgammonGame();
-        game.setUpSequence(in);
+        game.setUpSequence(in, matchPlayers);
 
         while(!game.checkGameOver()){
             while(!game.takeAction(BackgammonGameView.readNewInput(in, game.getCurrentPlayer(), game), in));
             game.swapPlayers();
             BackgammonGameView.display(game, true, true);
         }
+
+        return this.players;
     }
 }

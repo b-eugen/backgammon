@@ -3,33 +3,7 @@ import java.util.ArrayList;
 import java.util.AbstractMap;
 
 public class BackgammonGameView {
-    private final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ";    
-
-    public static String[] getNames(Scanner in, BackgammonGame game){
-        String names[] = new String[2];
-        String userInput;
-
-        System.out.println("\nWelcome To Backgammon.");
-        System.out.println("\nUsage Instructions: 'roll' to roll, 'quit' to quit.");
-        System.out.println("\n\nPlayer 1, enter your name: ");
-
-        do{
-            userInput = in.nextLine();
-        }
-        while(!game.validateInput(userInput, true));
-
-        names[0] = userInput;
-        System.out.println("\n\nPlayer 2, enter your name: ");
-        
-        do{
-            userInput = in.nextLine();
-        }
-        while(!game.validateInput(userInput, true));
-
-        names[1] = userInput;
-        return names;
-    }
-
+    public final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ";    
     
     private static String buildDiceRoll(BackgammonGame game){
         String returnStr = "";
@@ -118,7 +92,7 @@ public class BackgammonGameView {
         System.out.println("\n" + activePlayer.getName() + ", your turn. Enter a command:");
         do{
             userInput = in.nextLine();
-        }while(!game.validateInput(userInput, false));
+        }while(!game.validateInput(userInput));
 
         return userInput;
     }
@@ -173,20 +147,7 @@ public class BackgammonGameView {
 
     public static void declareWinner(Player p){
         System.out.println(String.format(" %1$-190s", spacer));
-        System.out.print(String.format("%1$45s", ""));
-        System.out.println(String.format(" %1$-85s", " _    _ _                       _ "));
-        System.out.print(String.format("%1$45s", ""));
-        System.out.println(String.format(" %1$-85s", "| |  | (_)                     | |"));
-        System.out.print(String.format("%1$45s", ""));
-        System.out.println(String.format(" %1$-85s", "| |  | |_ _ __  _ __   ___ _ __| |"));
-        System.out.print(String.format("%1$45s", ""));
-        System.out.println(String.format(" %1$-85s", "| |/\\| | | '_ \\| '_ \\ / _ \\ '__| |"));
-        System.out.print(String.format("%1$45s", ""));
-        System.out.println(String.format(" %1$-85s", "\\  /\\  / | | | | | | |  __/ |  |_|"));
-        System.out.print(String.format("%1$45s", ""));
-        System.out.println(String.format(" %1$-85s", " \\/  \\/|_|_| |_|_| |_|\\___|_|  (_)"));
-        System.out.print(String.format("\n%1$57s", ""));
-        System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins!"));
+        System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins this game!"));
         System.out.println(String.format(" %1$-190s\n\n", spacer));
     }
 
