@@ -490,19 +490,19 @@ public class Board implements Serializable{
 
         int trippleCount = bar.colorCount(color);
         int checkerCount = trippleCount;
-
+        System.out.println(BoardView.display(this, color));
         for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
         {
             if (points[mapFromPip(pip, color)-1].getColor()==color)
             {
-                checkerCount+=points[mapFromPip(pip, color)].getSize();
+                checkerCount+=points[mapFromPip(pip, color)-1].getSize();
                 if (pip > Point.MAX_POINTS-BEAR_OFF_THOLD)
                 {
-                    trippleCount += points[mapFromPip(pip, color)].getSize();
+                    trippleCount += points[mapFromPip(pip, color)-1].getSize();
                 }
             }
         }
-
+        System.out.println("checkerCount "+checkerCount +"trippleCount "+trippleCount+color+"color"+Checker.Color.BLACK );
         if (checkerCount < Point.START_CHECKERS)
         {
             multiplier = 1;//single

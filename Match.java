@@ -25,7 +25,7 @@ public class Match {
     }
 
     public static void updatePlayersMatchScore(Player player, BackgammonGame game){
-        player.incrementScore(game.getBoard().getEndGameMultiplierColor(player.getColor()));
+        player.incrementScore(game.getBoard().getEndgameMultiplier() * game.getBoard().getCube().getCurrentStake());
     }
 
     public void matchRoutine(Scanner in){
