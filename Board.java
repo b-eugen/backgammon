@@ -73,7 +73,7 @@ public class Board implements Serializable{
     public DoublingCube getCube() {
         return cube;
     }
-    
+
     public Bar getBar() {
         return bar;
     }
@@ -84,7 +84,7 @@ public class Board implements Serializable{
     
     public int getPipScore(Checker.Color playerColor)
     {
-        int count = 0;
+        int count = 25*bar.colorCount(playerColor);
         for (int ind = 0; ind < Point.MAX_POINTS; ind++)
         {
             if (points[ind].getColor() == playerColor)
@@ -92,6 +92,7 @@ public class Board implements Serializable{
                 count += points[ind].getSize()*mapToPip(ind+1, playerColor);
             }
         }
+        
         return count;
     }
 
@@ -471,6 +472,17 @@ public class Board implements Serializable{
 
     }
     
+    public void autoWin(Checker.Color playerColor)
+    {
+        for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
+        {
+            if (points[mapFromPip(pip, playerColor)-1].getColor()==playerColor)
+            {
+                points[mapFromPip(pip, playerColor)-1].removeAllCheckersColor(playerColor);
+            }
+        }
+        bar.removeAllCheckersColor(playerColor);
+    }
 
     public int getEndGameMultiplierColor(Checker.Color color)
     {
@@ -481,7 +493,7 @@ public class Board implements Serializable{
 
         for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
         {
-            if (points[mapFromPip(pip, color)].getColor()==color)
+            if (points[mapFromPip(pip, color)-1].getColor()==color)
             {
                 checkerCount+=points[mapFromPip(pip, color)].getSize();
                 if (pip > Point.MAX_POINTS-BEAR_OFF_THOLD)

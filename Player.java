@@ -115,23 +115,23 @@ public class Player {
 
     public String toString()
     {
-        String outputString="";
-        for (int move : this.moves)
-        {
-            if (move>0)
-            {
-                outputString = outputString+ " " +move;
-            }
-        }
-        if (outputString.length() > 0) 
-        {
-            outputString = "  Possible moves:"+outputString;
-        }
-        else
-        {
-            outputString = "  No possible moves";
-        }
+        // String outputString="";
+        // for (int move : this.moves)
+        // {
+        //     if (move>0)
+        //     {
+        //         outputString = outputString+ " " +move;
+        //     }
+        // }
+        // if (outputString.length() > 0) 
+        // {
+        //     outputString = "  Possible moves:"+outputString;
+        // }
+        // else
+        // {
+        //     outputString = "  No possible moves";
+        // }
 
-        return "Player: "+this.getName() + new Checker(this.getColor())+ outputString;
+        return "Player: "+this.getName() + new Checker(this.getColor())+" ";//+ outputString;
     }
 }

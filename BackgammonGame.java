@@ -83,28 +83,49 @@ public class BackgammonGame {
         return true;
     }
 
-    public boolean doubleStakes()
+    public boolean doubleStakes(Scanner in)
     {
-        boolean result = false;
+        boolean concealed = true;// true means game finishes, false continue
         if (board.getCube().canDoubleStakes(this.getCurrentPlayer().getColor()))
         {
-            result = board.getCube().doubleStakes(this.getCurrentPlayer().getColor());
+            if (BackgammonGameView.promptFroDouble(in, this.getPlayers().get(1)))
+            {
+                board.getCube().doubleStakes(this.getCurrentPlayer().getColor());
+                this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": doubles the stakes to "+ this.board.getCube().getCurrentStake() );
+                concealed = false;
+            }
+            else //conceal or autowin
+            {
+                this.board.autoWin(this.getCurrentPlayer().getColor());
+                this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": autowins");
+            }
         }
-        if (!result)
+        else
         {
             System.out.println(Checker.Color.RED+"Error: cannot double the stakes"+Checker.Color.BLACK);
+            concealed = false;
         }
-        return result;
+        return concealed;
     }
 
     public boolean takeAction(String userInput, Scanner in){
         boolean endTurn = false;
         userInput = userInput.toLowerCase();
 
-        if(userInput.equals("roll")){
+        if(userInput.equals("roll") || userInput.matches("dice [1-6] [1-6]")){
             int madeMove;
 
-            this.players.get(0).roll(this.die1, this.die2);
+            if (userInput.equals("roll"))
+            {
+                this.players.get(0).roll(this.die1, this.die2);
+            }
+            else if(userInput.matches("dice [1-6] [1-6]"))
+            {
+                this.die1.setLastRoll((int) userInput.charAt(5) - '0');
+                this.die2.setLastRoll((int) userInput.charAt(7) - '0');
+                this.players.get(0).forceRoll(die1, die2);
+            }
+
             this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": " + DieView.display(die1) + " - " + DieView.display(die2) + " rolled " + this.die1.getLastRoll() + " and " + this.die2.getLastRoll());
             
             ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves = board.getAllPossibleMovesWrapper(this.getCurrentPlayer().getColor(), this.getCurrentPlayer().getMoves());
@@ -130,11 +151,11 @@ public class BackgammonGame {
         }
         else if(userInput.equals("double"))
         {
-            this.doubleStakes();
-            return false;
+            return this.doubleStakes(in);
+            // return false;
         }
         
-        return false; //do not switch turns
+        return endTurn; //do not switch turns
     }
 
     public void rollOff(){
@@ -188,7 +209,7 @@ public class BackgammonGame {
         }
         else{
             userInput = userInput.toLowerCase();
-            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double")){
+            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double") &&!userInput.matches("dice [1-6] [1-6]")){
                 System.out.println("Please ensure you enter a valid command, try again.");
                 return false;
             }

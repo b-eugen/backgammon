@@ -160,4 +160,24 @@ public class BackgammonGameView {
         System.out.print(String.format("\n%1$57s", ""));
         System.out.println(String.format(" %1$-70s", "You have no moves possible. Switching turns."));
     }
+
+    public static boolean promptFroDouble(Scanner in, Player player)
+    {
+        String userInput;
+        boolean result = false;
+        do
+        {
+            System.out.println(player +"Would you like to accept the double (Y/n)?");
+            userInput = in.nextLine();
+            userInput = userInput.toLowerCase();
+            System.out.println("."+userInput+".");
+        }
+        while(!userInput.equals("y") && !userInput.equals("n"));
+
+        if (userInput.equals("y"))
+        {
+            result= true;
+        }
+        return result;
+    }
 }

@@ -34,6 +34,22 @@ public abstract class CheckerColumn {
         return this.checkers;
     }
 
+    public void removeAllCheckersColor(Checker.Color color)
+    {
+        int ind = 0;
+        while (ind<this.checkers.size())
+        {
+            if(this.checkers.get(ind).getColor() ==color)
+            {
+                this.checkers.remove(ind);
+            }
+            else
+            {
+                ind++;
+            }
+        }
+    }
+
     public int getSize()
     {
         return this.checkers.size();
