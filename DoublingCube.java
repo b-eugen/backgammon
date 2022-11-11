@@ -22,7 +22,7 @@ public class DoublingCube {
     public boolean canDoubleStakes(Checker.Color playerColor)
     {
         boolean result = false;
-        if (playerColor != owner && current_stake!=MAX_COEF)
+        if ((playerColor == owner || owner==Checker.Color.INVALID) && current_stake!=MAX_COEF)
         {
             result= true;
         }
