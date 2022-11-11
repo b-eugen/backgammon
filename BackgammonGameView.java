@@ -145,6 +145,8 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-190s", "Usable commands:"));
         System.out.println(String.format(" %1$-190s", "pip: display pip scores for both players"));
         System.out.println(String.format(" %1$-190s", "hint: shows all commands"));
+        System.out.println(String.format(" %1$-190s", "dice <int> <int>: forces the roll of the dice to be as specified by integers"));
+        System.out.println(String.format(" %1$-190s", "test <filename>: executes the commands from the file, specified by filename, instead of standard input"));
         System.out.println(String.format(" %1$-190s", "roll: roll the dice"));
         System.out.println(String.format(" %1$-190s", "double: offer your opponent to double the stakes or lose!"));
         System.out.println(String.format(" %1$-190s\n", spacer));
