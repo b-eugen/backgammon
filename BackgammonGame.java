@@ -83,6 +83,19 @@ public class BackgammonGame {
         return true;
     }
 
+    public boolean doubleStakes()
+    {
+        boolean result = false;
+        if (board.getCube().canDoubleStakes(this.getCurrentPlayer().getColor()))
+        {
+            result = board.getCube().doubleStakes(this.getCurrentPlayer().getColor());
+        }
+        if (!result)
+        {
+            System.out.println(Checker.Color.RED+"Error: cannot double the stakes"+Checker.Color.BLACK);
+        }
+        return result;
+    }
 
     public boolean takeAction(String userInput, Scanner in){
         boolean endTurn = false;
@@ -115,7 +128,13 @@ public class BackgammonGame {
             BackgammonGameView.showHint();
             //do not switch turns
         }
-        return endTurn; 
+        else if(userInput.equals("double"))
+        {
+            this.doubleStakes();
+            return false;
+        }
+        
+        return false; //do not switch turns
     }
 
     public void rollOff(){
@@ -169,7 +188,7 @@ public class BackgammonGame {
         }
         else{
             userInput = userInput.toLowerCase();
-            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint")){
+            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double")){
                 System.out.println("Please ensure you enter a valid command, try again.");
                 return false;
             }
