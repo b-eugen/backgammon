@@ -47,7 +47,7 @@ public class BackgammonGameView {
                         optionStr+= "Bar to Pip "+pair.getValue() + ", ";
                     }
                     else if(pair.getValue() == 0){
-                        optionStr+= "Bear off Pip " + pair.getKey();
+                        optionStr+= "Bear off Pip " + pair.getKey() + ", ";
                     }
                     else{
                         optionStr+= String.format("Pip %2d", pair.getKey()) + String.format(" to Pip %2d ", pair.getValue()) + ", ";

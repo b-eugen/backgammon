@@ -128,13 +128,16 @@ public class BackgammonGame {
             BackgammonGameView.showHint();
             //do not switch turns
         }
-        else if(userInput.equals("double"))
+        else if(userInput.toLowerCase().equals("double"))
         {
             this.doubleStakes();
-            return false;
+        }
+        else if(userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt"))
+        {
+            FileReader.applyCommandsFromFile(userInput.replace("test ", ""), this.players, this);
         }
         
-        return false; //do not switch turns
+        return endTurn; //do not switch turns
     }
 
     public void rollOff(){
@@ -188,7 +191,7 @@ public class BackgammonGame {
         }
         else{
             userInput = userInput.toLowerCase();
-            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double")){
+            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double") && !userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
                 System.out.println("Please ensure you enter a valid command, try again.");
                 return false;
             }
@@ -196,11 +199,13 @@ public class BackgammonGame {
         return true;
     }
 
-    public ArrayList<Player> gameRoutine(Scanner in, ArrayList<Player> matchPlayers, BackgammonGame game)
+    public ArrayList<Player> gameRoutine(Scanner in, ArrayList<Player> matchPlayers, BackgammonGame game, boolean fromFile)
     {
-        game.setUpSequence(in, matchPlayers);
+        if(!fromFile){
+            game.setUpSequence(in, matchPlayers);
+        }
 
-        while(!game.checkGameOver()){
+        while((!game.checkGameOver() && !fromFile) || (fromFile && in.hasNextLine())){
             while(!game.takeAction(BackgammonGameView.readNewInput(in, game.getCurrentPlayer(), game), in));
             game.swapPlayers();
             BackgammonGameView.display(game, true, true);

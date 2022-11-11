@@ -38,7 +38,7 @@ public class Match {
         
         do{
             BackgammonGame game = new BackgammonGame(length);
-            this.players = game.gameRoutine(in, this.players, game);
+            this.players = game.gameRoutine(in, this.players, game, false);
         }
         while(!checkMatchOver());
     }
