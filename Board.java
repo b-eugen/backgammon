@@ -180,7 +180,7 @@ public class Board implements Serializable{
                         if ( points[pointIndex].getColor()==playerColor)
                         {
                             
-                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(move+1, playerColor), 0));
+                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(pointIndex+1, playerColor), 0));
                             break;
                         }
                     }
@@ -502,7 +502,7 @@ public class Board implements Serializable{
                 }
             }
         }
-        System.out.println("checkerCount "+checkerCount +"trippleCount "+trippleCount+color+"color"+Checker.Color.BLACK );
+        // System.out.println("checkerCount "+checkerCount +"trippleCount "+trippleCount+color+"color"+Checker.Color.BLACK );
         if (checkerCount < Point.START_CHECKERS)
         {
             multiplier = 1;//single
