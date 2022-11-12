@@ -54,6 +54,7 @@ public class BackgammonGame {
 
         if(this.board.getPipScore(players.get(0).getColor()) == 0){
             BackgammonGameView.declareWinner(players.get(0));
+            
             Match.updatePlayersMatchScore(players.get(0), this);
             gameOver = true;
         }
@@ -62,6 +63,18 @@ public class BackgammonGame {
             Match.updatePlayersMatchScore(players.get(1), this);
             gameOver = true;
         }
+        if (gameOver)
+        {
+            String endgameString = "";
+            switch (this.board.getEndgameMultiplier())
+            {
+                case 1: endgameString = "Single";break;
+                case 2: endgameString = "Gammon";break;
+                case 3: endgameString = "Backgammon";break;
+            }
+            BackgammonGameView.declareGameEngingType(endgameString);
+        }
+        
         return(gameOver);
     }
 

@@ -158,6 +158,13 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-190s\n\n", spacer));
     }
 
+    public static void declareGameEngingType(String type){
+        System.out.println(String.format(" %1$-190s", spacer));
+        System.out.println(String.format(" %1$-70s\n", " The game ends as "+type));
+        System.out.println(String.format(" %1$-190s\n\n", spacer));
+    }
+
+
     public static void noMoves(){
         System.out.print(String.format("\n%1$57s", ""));
         System.out.println(String.format(" %1$-70s", "You have no moves possible. Switching turns."));
@@ -169,14 +176,14 @@ public class BackgammonGameView {
         boolean result = false;
         do
         {
-            System.out.println(player +"Would you like to accept the double (Y/n)?");
+            System.out.println(player +"Would you like to accept the double (accept/refuse)?");
             userInput = in.nextLine();
             userInput = userInput.toLowerCase();
-            System.out.println("."+userInput+".");
+            // System.out.println("."+userInput+".");
         }
-        while(!userInput.equals("y") && !userInput.equals("n"));
+        while(!userInput.equals("accept") && !userInput.equals("refuse"));
 
-        if (userInput.equals("y"))
+        if (userInput.equals("accept"))
         {
             result= true;
         }

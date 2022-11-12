@@ -13,7 +13,7 @@ public class Board implements Serializable{
     private Point[] points;
     private DoublingCube cube;
 
-    private static final int BEAR_OFF_THOLD=6;
+    private static final int BER_OFF_THOLD=6;
     public Board()
     {
         this.bar = new Bar();
@@ -143,7 +143,7 @@ public class Board implements Serializable{
             }
             else
             {
-                boolean bear_off = true;
+                boolean ber_off = true;
                 for (int pip=1; pip<Point.MAX_POINTS+1; pip++)
                 {
                     if (points[mapFromPip(pip, playerColor) -1].getColor() == playerColor)
@@ -159,28 +159,30 @@ public class Board implements Serializable{
                             {
                                 //move
                                 result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
-                                Checker checktest = new Checker(playerColor);
+                                // Checker checktest = new Checker(playerColor);
                                 
                                 // System.out.println(pip +" " +destination +" "+ checktest +" "+ destinationIndex);
                             }
                         }
                         
-                        if (pip>BEAR_OFF_THOLD) 
+                        if (pip>BER_OFF_THOLD) 
                         {
-                            bear_off=false;
+                            ber_off=false;
                         }
                         // break;
                     }
                 }
 
-                if (bear_off)
+                if (ber_off)
                 {
-                    for (int pointIndex = mapFromPip(move, playerColor)-1;pointIndex>=0; pointIndex--)
+                    
+                    for (int pipIndex = move;pipIndex>0; pipIndex--)
                     {
-                        if ( points[pointIndex].getColor()==playerColor)
+                        int pointIndex2 = mapFromPip(pipIndex, playerColor)-1;
+                        if ( points[pointIndex2].getColor()==playerColor)
                         {
-                            
-                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(pointIndex+1, playerColor), 0));
+                            // System.out.println("ind "+pointIndex2);
+                            result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(pointIndex2+1, playerColor), 0));
                             break;
                         }
                     }
@@ -188,6 +190,8 @@ public class Board implements Serializable{
                 }
             }
         }
+        // System.out.println(BoardView.display(this, playerColor));
+        // System.out.println("Single move: " +move+ " moves: "+result);
         return result;
     }
     
@@ -289,6 +293,7 @@ public class Board implements Serializable{
         }
 
 
+        // System.out.println("Not Unique move: " +inputArray+"\n" +"Unique moves: "+outputArray);
 
         return outputArray;
     }
@@ -302,14 +307,26 @@ public class Board implements Serializable{
             if (result.get(0).size() == 1)
             {
                 int max_move = moves.get(1);
+                // int min_move = moves.get(0);
                 if (moves.get(0) > max_move)
                 {
                     max_move = moves.get(0);
+                    // min_move = moves.get(1);
+                }
+
+                boolean maxMoveNotPresent = true;
+                for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> move : result)
+                {
+                    if ((move.get(0).getKey() - move.get(0).getValue()) == max_move)
+                    {
+                        maxMoveNotPresent = false;
+                        break;
+                    }
                 }
 
                 for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> move : result)
                 {
-                    if (move.get(0).getValue() == 0 || (move.get(0).getKey() - move.get(0).getValue()) == max_move)
+                    if (move.get(0).getValue() == 0 || (move.get(0).getKey() - move.get(0).getValue()) == max_move || maxMoveNotPresent)
                     {
                         output.add(move);
                     }
@@ -320,6 +337,9 @@ public class Board implements Serializable{
                 output=result;
             }
         }
+
+        // System.out.println("Wrapper moves: " +output+" "+result);
+
        
         return output;
     }
@@ -346,8 +366,8 @@ public class Board implements Serializable{
             for (int knd=0; knd < result_single.size(); knd++)
             {
                 Board cloneBoard = new Board(this);//(Board) this.clone();
-                
                 cloneBoard.makeMove(result_single.get(knd), playerColor);
+                // System.out.println("Move result: "+cloneBoard.makeMove(result_single.get(knd), playerColor));
                 ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> previous_result = cloneBoard.getAllPossibleMoves(playerColor, moves_copy);
                 if (previous_result.size() > 0)
                 {
@@ -370,6 +390,7 @@ public class Board implements Serializable{
             }
         }
         
+        // System.out.println("Group move: " +moves+" " +" moves: "+result);
 
         return getUniqueLongArrays(result);
     }
@@ -455,7 +476,7 @@ public class Board implements Serializable{
 
         if (points[destination].getColor() == Checker.Color.INVALID || points[destination].getColor() == color)
         {
-            result = bar.moveTo(points[destination]);
+            result = bar.moveTo(points[destination], color);
         }
         else if (points[destination].getSize()==1)//blob
         {
@@ -464,12 +485,8 @@ public class Board implements Serializable{
             {
                 result = bar.moveTo(points[destination], color);
             }
-            
         }
-
-
         return result;
-
     }
     
     public void autoWin(Checker.Color playerColor)
@@ -490,13 +507,13 @@ public class Board implements Serializable{
 
         int trippleCount = bar.colorCount(color);
         int checkerCount = trippleCount;
-        System.out.println(BoardView.display(this, color));
+        // System.out.println(BoardView.display(this, color));
         for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
         {
             if (points[mapFromPip(pip, color)-1].getColor()==color)
             {
                 checkerCount+=points[mapFromPip(pip, color)-1].getSize();
-                if (pip > Point.MAX_POINTS-BEAR_OFF_THOLD)
+                if (pip > Point.MAX_POINTS-BER_OFF_THOLD)
                 {
                     trippleCount += points[mapFromPip(pip, color)-1].getSize();
                 }
