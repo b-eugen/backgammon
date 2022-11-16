@@ -1,5 +1,3 @@
-import java.util.Scanner;
-import java.awt.Color;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 
@@ -96,12 +94,12 @@ public class BackgammonGame {
         return true;
     }
 
-    public boolean doubleStakes(Scanner in)
+    public boolean doubleStakes(MultiScanner in)
     {
         boolean concealed = true;// true means game finishes, false continue
         if (board.getCube().canDoubleStakes(this.getCurrentPlayer().getColor()))
         {
-            if (BackgammonGameView.promptFroDouble(in, this.getPlayers().get(1)))
+            if (BackgammonGameView.promptForDouble(in, this.getPlayers().get(1)))
             {
                 board.getCube().doubleStakes(this.getCurrentPlayer().getColor());
                 this.eventLog.logEvent(this.getCurrentPlayer().getName() + ": doubles the stakes to "+ this.board.getCube().getCurrentStake() );
@@ -121,7 +119,7 @@ public class BackgammonGame {
         return concealed;
     }
 
-    public boolean takeAction(String userInput, Scanner in){
+    public boolean takeAction(String userInput, MultiScanner in){
         boolean endTurn = false;
         userInput = userInput.toLowerCase();
 
@@ -170,7 +168,8 @@ public class BackgammonGame {
         }
         else if(userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt"))
         {
-            FileReader.applyCommandsFromFile(userInput.replace("test ", ""), this.players, this);
+            in.setReadFile(userInput.replace("test ", ""));
+            // FileReader.applyCommandsFromFile(userInput.replace("test ", ""), this.players, this);
         }
         
         return endTurn; //do not switch turns
@@ -191,7 +190,7 @@ public class BackgammonGame {
         resetDice();
     }
     
-    public void setUpSequence(Scanner in, ArrayList<Player> matchPlayers){
+    public void setUpSequence(MultiScanner in, ArrayList<Player> matchPlayers){
         this.players = matchPlayers;
         this.eventLog.logEvent("Player 1 entered name: " + players.get(0).getName() + ", is BLACK checkers");
         this.eventLog.logEvent("Player 2 entered name: " + players.get(1).getName() + ", is RED checkers");
@@ -235,13 +234,11 @@ public class BackgammonGame {
         return true;
     }
 
-    public ArrayList<Player> gameRoutine(Scanner in, ArrayList<Player> matchPlayers, BackgammonGame game, boolean fromFile)
+    public ArrayList<Player> gameRoutine(MultiScanner in, ArrayList<Player> matchPlayers, BackgammonGame game)
     {
-        if(!fromFile){
-            game.setUpSequence(in, matchPlayers);
-        }
+        game.setUpSequence(in, matchPlayers);
 
-        while((!game.checkGameOver() && !fromFile) || (fromFile && in.hasNextLine())){
+        while((!game.checkGameOver())){
             while(!game.takeAction(BackgammonGameView.readNewInput(in, game.getCurrentPlayer(), game), in));
             game.swapPlayers();
             BackgammonGameView.display(game, true, true);

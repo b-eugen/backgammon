@@ -1,6 +1,5 @@
 
 import java.util.*;
-import java.io.Serializable;
 
 public abstract class CheckerColumn {
     private ArrayList<Checker> checkers;

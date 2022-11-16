@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Match {
     private ArrayList<Player> players;
@@ -14,11 +13,11 @@ public class Match {
         boolean matchOver = false;
 
         if(players.get(0).getScore() >= length){
-            MatchView.declareMatchWinner(players.get(0));
+            MatchView.declareMatchWinner(players.get(0), players.get(0).getScore());
             matchOver = true;
         }
         else if(players.get(1).getScore() >= length){
-            MatchView.declareMatchWinner(players.get(1));
+            MatchView.declareMatchWinner(players.get(1), players.get(1).getScore());
             matchOver = true;
         }
         return(matchOver);
@@ -28,7 +27,7 @@ public class Match {
         player.incrementScore(game.getBoard().getEndgameMultiplier() * game.getBoard().getCube().getCurrentStake());
     }
 
-    public void matchRoutine(Scanner in){
+    public void matchRoutine(MultiScanner in){
         MatchView.newMatchNotice();
         this.length = MatchView.askMatchLength(in);
 
@@ -38,7 +37,7 @@ public class Match {
         
         do{
             BackgammonGame game = new BackgammonGame(length);
-            this.players = game.gameRoutine(in, this.players, game, false);
+            this.players = game.gameRoutine(in, this.players, game);
         }
         while(!checkMatchOver());
     }

@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.AbstractMap;
 
@@ -91,7 +90,7 @@ public class BackgammonGameView {
         return(returnStr);
     }
 
-    public static String readNewInput(Scanner in, Player activePlayer, BackgammonGame game){
+    public static String readNewInput(MultiScanner in, Player activePlayer, BackgammonGame game){
         String userInput;
         System.out.println("\n" + activePlayer.getName() + ", your turn. Enter a command:");
         do{
@@ -115,7 +114,7 @@ public class BackgammonGameView {
 	}
 
 
-    public static int promptForMove(Scanner in, ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves, BackgammonGame game){
+    public static int promptForMove(MultiScanner in, ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves, BackgammonGame game){
         String userInput;
         int numPossibleMoves = possibleMoves.size();
 
@@ -170,7 +169,7 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-70s", "You have no moves possible. Switching turns."));
     }
 
-    public static boolean promptFroDouble(Scanner in, Player player)
+    public static boolean promptForDouble(MultiScanner in, Player player)
     {
         String userInput;
         boolean result = false;

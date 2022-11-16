@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Menu {
     
     public boolean validateMenuInput(String userInput){
@@ -16,7 +14,7 @@ public class Menu {
 
     public static void main(String[] args)
     {
-        Scanner in = new Scanner(System.in);
+        MultiScanner in = new MultiScanner();
         Menu menu = new Menu();
         MenuView.welcomeMessage();
 
@@ -26,6 +24,6 @@ public class Menu {
         }
         while(MenuView.askNewMatch(in, menu));
         
-        in.close();
+        in.closeScanner();
     }
 }

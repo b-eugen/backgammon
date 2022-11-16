@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class MatchView { 
 
     public static boolean validateNames(String userInput){
@@ -15,7 +13,7 @@ public class MatchView {
     }
     
 
-    public static int askMatchLength(Scanner in){
+    public static int askMatchLength(MultiScanner in){
         String userInput;
         do{
             System.out.println("What is the preferred length for this match? Please enter a positive integer.");
@@ -35,7 +33,7 @@ public class MatchView {
         System.out.println(String.format(" %1$-190s", BackgammonGameView.spacer));
     }
 
-    public static String[] getNames(Scanner in){
+    public static String[] getNames(MultiScanner in){
         String names[] = new String[2];
         String userInput;
 
@@ -65,7 +63,7 @@ public class MatchView {
         return names;
     }
 
-    public static void declareMatchWinner(Player p){
+    public static void declareMatchWinner(Player p, int winningScore){
         System.out.println(String.format(" %1$-190s", BackgammonGameView.spacer));
         System.out.print(String.format("%1$45s", ""));
         System.out.println(String.format(" %1$-85s", " _    _ _                       _ "));
@@ -80,7 +78,7 @@ public class MatchView {
         System.out.print(String.format("%1$45s", ""));
         System.out.println(String.format(" %1$-85s", " \\/  \\/|_|_| |_|_| |_|\\___|_|  (_)"));
         System.out.print(String.format("\n%1$57s", ""));
-        System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins the entire match!"));
+        System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins the entire match with score: " + winningScore + "!"));
         System.out.println(String.format(" %1$-190s\n\n", BackgammonGameView.spacer));
     }
 }
