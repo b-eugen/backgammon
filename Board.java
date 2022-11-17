@@ -143,7 +143,8 @@ public class Board implements Serializable{
             }
             else
             {
-                boolean ber_off = true;
+                boolean berOff = true;
+                boolean berOffStrict = false;
                 for (int pip=1; pip<Point.MAX_POINTS+1; pip++)
                 {
                     if (points[mapFromPip(pip, playerColor) -1].getColor() == playerColor)
@@ -159,6 +160,7 @@ public class Board implements Serializable{
                             {
                                 //move
                                 result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
+                                berOffStrict = true;
                                 // Checker checktest = new Checker(playerColor);
                                 
                                 // System.out.println(pip +" " +destination +" "+ checktest +" "+ destinationIndex);
@@ -167,19 +169,19 @@ public class Board implements Serializable{
                         
                         if (pip>BER_OFF_THOLD) 
                         {
-                            ber_off=false;
+                            berOff=false;
                         }
                         // break;
                     }
                 }
 
-                if (ber_off)
+                if (berOff)
                 {
                     
                     for (int pipIndex = move;pipIndex>0; pipIndex--)
                     {
                         int pointIndex2 = mapFromPip(pipIndex, playerColor)-1;
-                        if ( points[pointIndex2].getColor()==playerColor)
+                        if ( points[pointIndex2].getColor()==playerColor && (!berOffStrict || berOffStrict && pipIndex == move))
                         {
                             // System.out.println("ind "+pointIndex2);
                             result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(pointIndex2+1, playerColor), 0));
