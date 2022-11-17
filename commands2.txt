@@ -1,6 +1,6 @@
+4
 Aness
 Yev
-4
 dice 6 6
 ae
 dice 5 6
