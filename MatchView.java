@@ -18,9 +18,6 @@ public class MatchView {
         do{
             System.out.println("What is the preferred length for this match? Please enter a positive integer.");
             userInput = in.nextLine();
-            if(userInput.equals("quit")){
-                Menu.immediateExit();
-            }
         }
         while(!userInput.matches("[+]?[0-9]+"));
 
@@ -41,9 +38,6 @@ public class MatchView {
 
         do{
             userInput = in.nextLine();
-            if(userInput.equals("quit")){
-                Menu.immediateExit();
-            }
         }
         while(!validateNames(userInput));
 
@@ -52,9 +46,6 @@ public class MatchView {
         
         do{
             userInput = in.nextLine();
-            if(userInput.equals("quit")){
-                Menu.immediateExit();
-            }
         }
         while(!validateNames(userInput));
 

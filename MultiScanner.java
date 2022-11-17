@@ -16,11 +16,11 @@ public class MultiScanner {
         try {
             File file = new File(filename);
             this.fileIn = new Scanner(file);
+            this.currentScanner = this.fileIn;
         } 
         catch (FileNotFoundException e) {
-            System.out.println("Cannot read from file: " + filename);
+            System.out.println("Cannot read from file: " + filename + " - try again.");
         }
-        this.currentScanner = this.fileIn;
     }
 
     public void setReadUser(){
@@ -38,6 +38,9 @@ public class MultiScanner {
         
         if(userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
             this.setReadFile(userInput.replace("test ", ""));
+        }
+        if(userInput.toLowerCase().equals("quit")){
+            Menu.immediateExit();
         }
         return userInput;
     }

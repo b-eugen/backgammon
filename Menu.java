@@ -1,14 +1,21 @@
+import java.io.File;
+
 public class Menu {
     
     public boolean validateMenuInput(String userInput){
-        if(userInput.toLowerCase().equals("new") || userInput.toLowerCase().equals("no") || userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
+        if(userInput.toLowerCase().equals("new") || userInput.toLowerCase().equals("no")){
             return true;
+        }
+        else if(userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
+            if(new File(userInput.replace("test ", "")).isFile()){
+                return true;
+            }
         }
         return false;
     }
 
     public static void immediateExit(){
-        System.out.println("\n\nYou have quit backgammon.\n\n");
+        MenuView.exitMessage();
         System.exit(1);
     }
 
@@ -22,7 +29,8 @@ public class Menu {
             Match match = new Match();
             match.matchRoutine(in);
         }
-        
+
+        MenuView.exitMessage();        
         in.closeScanner();
     }
 }

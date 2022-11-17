@@ -187,16 +187,13 @@ public class BackgammonGame {
     
     public void setUpSequence(MultiScanner in, ArrayList<Player> matchPlayers){
         this.players = matchPlayers;
-        this.eventLog.logEvent("Player 1 entered name: " + players.get(0).getName() + ", is BLACK checkers");
-        this.eventLog.logEvent("Player 2 entered name: " + players.get(1).getName() + ", is RED checkers");
+        this.eventLog.logEvent("Player 1: " + players.get(0).getName() + ", is BLACK checkers");
+        this.eventLog.logEvent("Player 2: " + players.get(1).getName() + ", is RED checkers");
         this.rollOff();
         BackgammonGameView.display(this, true, true);
     }
 
     public boolean validateMoveInput(String userInput, int numPossibleMoves){
-        if(userInput.toLowerCase().equals("quit")){
-            Menu.immediateExit();
-        }
         if(userInput.length() != 2){
             System.out.println("Please enter exactly two letters for the move you would like to make.");
             return false;
@@ -216,15 +213,10 @@ public class BackgammonGame {
     }
 
     public boolean validateInput(String userInput){
-        if(userInput.toLowerCase().equals("quit")){
-            Menu.immediateExit();
-        }
-        else{
-            userInput = userInput.toLowerCase();
-            if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double") &&!userInput.matches("dice [1-6] [1-6]")  && !userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
-                System.out.println("Please ensure you enter a valid command, try again.");
-                return false;
-            }
+        userInput = userInput.toLowerCase();
+        if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double") &&!userInput.matches("dice [1-6] [1-6]")  && !userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
+            System.out.println("Please ensure you enter a valid command, try again.");
+            return false;
         }
         return true;
     }
