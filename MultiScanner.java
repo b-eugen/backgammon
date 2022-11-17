@@ -29,10 +29,17 @@ public class MultiScanner {
     }
 
     public String nextLine(){
+        String userInput;
+
         if(!this.currentScanner.hasNextLine()){
             setReadUser();
         }
-        return this.currentScanner.nextLine();
+        userInput = this.currentScanner.nextLine();
+        
+        if(userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
+            this.setReadFile(userInput.replace("test ", ""));
+        }
+        return userInput;
     }
 
     public void closeScanner(){

@@ -166,11 +166,6 @@ public class BackgammonGame {
             // return false;
             // this.doubleStakes();
         }
-        else if(userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt"))
-        {
-            in.setReadFile(userInput.replace("test ", ""));
-            // FileReader.applyCommandsFromFile(userInput.replace("test ", ""), this.players, this);
-        }
         
         return endTurn; //do not switch turns
     }

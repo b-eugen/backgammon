@@ -6,12 +6,13 @@ public class MenuView {
     public static boolean askNewMatch(MultiScanner in, Menu menu){
         String userInput;
         
-        do{
-            System.out.println("\n\nNew match? Enter 'yes' or 'no'.\n");
-            userInput = in.nextLine();
-        }
-        while(!menu.validateMenuInput(userInput));
+        // do{
+        System.out.println("\n\nNew match? Enter 'new' for new match, (test file.txt for test), or anything else to quit.\n");
+        userInput = in.nextLine();
+        // }
+        // while(!menu.validateMenuInput(userInput));
         
-        return userInput.toLowerCase().equals("yes");
+        // return (userInput.toLowerCase().equals("new") || userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt"));
+        return (menu.validateMenuInput(userInput));
     }
 }

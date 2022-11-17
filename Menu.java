@@ -1,7 +1,7 @@
 public class Menu {
     
     public boolean validateMenuInput(String userInput){
-        if(userInput.toLowerCase().equals("yes") || userInput.toLowerCase().equals("no")){
+        if(userInput.toLowerCase().equals("new") || userInput.toLowerCase().equals("no") || userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
             return true;
         }
         return false;
@@ -18,11 +18,10 @@ public class Menu {
         Menu menu = new Menu();
         MenuView.welcomeMessage();
 
-        do{
+        while(MenuView.askNewMatch(in, menu)){
             Match match = new Match();
             match.matchRoutine(in);
         }
-        while(MenuView.askNewMatch(in, menu));
         
         in.closeScanner();
     }
