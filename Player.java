@@ -26,26 +26,47 @@ public class Player {
         this.displayCheckerColor = new Checker(this.color);
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getScore()
     {
         return this.score;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getName()
     {
         return this.name;
     }
 
+    
+    /** 
+     * @return Color
+     */
     public Checker.Color getColor()
     {
         return this.color;
     }
 
+    
+    /** 
+     * @return ArrayList<Integer>
+     */
     public ArrayList<Integer> getMoves()
     {
         return this.moves;
     }
 
+    
+    /** 
+     * @param increment
+     * @return int
+     */
     public int incrementScore(int increment)
     {
         if (increment >0)
@@ -53,6 +74,12 @@ public class Player {
         return this.score;
     }
 
+    
+    /** 
+     * @param roll1
+     * @param roll2
+     * @return ArrayList<Integer>
+     */
     private ArrayList<Integer> processRoll(int roll1, int roll2)
     {
         if (roll2 == roll1){
@@ -63,6 +90,12 @@ public class Player {
         }
         return this.moves;
     }
+    
+    /** 
+     * @param die1
+     * @param die2
+     * @return ArrayList<Integer>
+     */
     public ArrayList<Integer> forceRoll(Die die1, Die die2)
     {
         int roll1 = die1.getLastRoll();
@@ -70,6 +103,12 @@ public class Player {
         return processRoll(roll1, roll2);
     }
 
+    
+    /** 
+     * @param die1
+     * @param die2
+     * @return ArrayList<Integer>
+     */
     public ArrayList<Integer> roll(Die die1, Die die2)
     {
         int roll1 = die1.getRollValue();
@@ -78,10 +117,18 @@ public class Player {
         return processRoll(roll1, roll2);
     }
 
+    
+    /** 
+     * @return Checker
+     */
     public Checker getDisplayCheckerColor(){
         return this.displayCheckerColor;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String toString()
     {
         // String outputString="";

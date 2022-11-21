@@ -1,6 +1,11 @@
 import java.util.LinkedList;
 
 public class EventLogView {
+    
+    /** 
+     * @param eventLog
+     * @return String
+     */
     public static String display(EventLog eventLog){
         LinkedList<String> logs = eventLog.getLogs();
         String returnStr = "";

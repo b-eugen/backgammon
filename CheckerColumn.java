@@ -15,6 +15,10 @@ public abstract class CheckerColumn {
         // this(newColumn.getCheckers());
     }
 
+    
+    /** 
+     * @return ArrayList<Checker>
+     */
     public ArrayList<Checker> getCheckersCopy() {
         ArrayList<Checker> checkers = new ArrayList<Checker>();
         for (int ind = 0; ind < this.getSize(); ind++)
@@ -24,10 +28,18 @@ public abstract class CheckerColumn {
         }
         return checkers;
     }
+    
+    /** 
+     * @return ArrayList<Checker>
+     */
     public ArrayList<Checker> getCheckers() {
         return this.checkers;
     }
 
+    
+    /** 
+     * @param color
+     */
     public void removeAllCheckersColor(Checker.Color color)
     {
         int ind = 0;
@@ -44,11 +56,19 @@ public abstract class CheckerColumn {
         }
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getSize()
     {
         return this.checkers.size();
     }
 
+    
+    /** 
+     * @return Color
+     */
     public Checker.Color getColor()
     {
         if (this.getSize()>0)
@@ -59,6 +79,10 @@ public abstract class CheckerColumn {
         return Checker.Color.INVALID;
     }
 
+    
+    /** 
+     * @return Checker
+     */
     public Checker pop()
     {
         if (this.getSize()>0)
@@ -68,6 +92,11 @@ public abstract class CheckerColumn {
         return new Checker(Checker.Color.INVALID);
     }
 
+    
+    /** 
+     * @param ind
+     * @return Checker
+     */
     public Checker get(int ind)
     {
         if (this.getSize()>ind && ind>=0)
@@ -77,6 +106,11 @@ public abstract class CheckerColumn {
         return new Checker(Checker.Color.INVALID);
     }
 
+    
+    /** 
+     * @param ind
+     * @return Checker
+     */
     public Checker pop(int ind)
     {
         if (this.getSize()>ind && ind>=0)
@@ -86,6 +120,10 @@ public abstract class CheckerColumn {
         return new Checker(Checker.Color.INVALID);
     }
 
+    
+    /** 
+     * @return Checker
+     */
     public Checker getTop()
     {
         if (this.getSize()>0)
@@ -95,6 +133,11 @@ public abstract class CheckerColumn {
         return new Checker(Checker.Color.INVALID);
     }
 
+    
+    /** 
+     * @param checker
+     * @return boolean
+     */
     public boolean append(Checker checker)
     {
         if (checker.getColor() == Checker.Color.INVALID)
@@ -113,6 +156,11 @@ public abstract class CheckerColumn {
     }
 
 
+    
+    /** 
+     * @param destination
+     * @return boolean
+     */
     public boolean moveTo(CheckerColumn destination)
     {
         if (this.getColor()==destination.getColor() || destination.getColor()==Checker.Color.INVALID)

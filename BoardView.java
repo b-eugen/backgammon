@@ -4,6 +4,12 @@ public class BoardView {
     {
 
     }
+    
+    /** 
+     * @param base
+     * @param appendable
+     * @return String[]
+     */
     /*
      * Method which concantenates 2 arrays of strings
      * @param base - first string array
@@ -18,6 +24,12 @@ public class BoardView {
         return result;
     }
 
+    
+    /** 
+     * @param board
+     * @param playerColor
+     * @return String
+     */
     public static String display(Board board, Checker.Color playerColor)
     {
         String[] barString = BarView.toArrayOfStrings(board.getBar());

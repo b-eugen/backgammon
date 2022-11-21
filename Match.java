@@ -9,6 +9,10 @@ public class Match {
     }
 
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean checkMatchOver(){
         boolean matchOver = false;
 
@@ -23,10 +27,19 @@ public class Match {
         return(matchOver);
     }
 
+    
+    /** 
+     * @param player
+     * @param game
+     */
     public static void updatePlayersMatchScore(Player player, BackgammonGame game){
         player.incrementScore(game.getBoard().getEndgameMultiplier() * game.getBoard().getCube().getCurrentStake());
     }
 
+    
+    /** 
+     * @param in
+     */
     public void matchRoutine(MultiScanner in){
         MatchView.newMatchNotice();
         this.length = MatchView.askMatchLength(in);

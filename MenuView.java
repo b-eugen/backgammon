@@ -3,6 +3,12 @@ public class MenuView {
         System.out.println("\nWelcome to Backgammon. Enter quit at any time to exit.");
     }
 
+    
+    /** 
+     * @param in
+     * @param menu
+     * @return boolean
+     */
     public static boolean askNewMatch(MultiScanner in, Menu menu){
         String userInput;
         

@@ -2,6 +2,11 @@ import java.io.File;
 
 public class Menu {
     
+    
+    /** 
+     * @param userInput
+     * @return boolean
+     */
     public boolean validateMenuInput(String userInput){
         if(userInput.toLowerCase().equals("new") || userInput.toLowerCase().equals("no")){
             return true;
@@ -19,6 +24,10 @@ public class Menu {
         System.exit(1);
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args)
     {
         MultiScanner in = new MultiScanner();

@@ -41,18 +41,35 @@ public class Board implements Serializable{
         }
     }
 
+    
+    /** 
+     * @return DoublingCube
+     */
     public DoublingCube getCube() {
         return cube;
     }
 
+    
+    /** 
+     * @return Bar
+     */
     public Bar getBar() {
         return bar;
     }
    
+    
+    /** 
+     * @return Point[]
+     */
     public Point[] getPoints() {
         return points;
     }
     
+    
+    /** 
+     * @param playerColor
+     * @return int
+     */
     public int getPipScore(Checker.Color playerColor)
     {
         int count = 25*bar.colorCount(playerColor);
@@ -67,6 +84,12 @@ public class Board implements Serializable{
         return count;
     }
 
+    
+    /** 
+     * @param move
+     * @param playerColor
+     * @return boolean
+     */
     public boolean makeMove(AbstractMap.SimpleEntry<Integer,Integer> move, Checker.Color playerColor)
     {
         boolean result = false;
@@ -93,6 +116,12 @@ public class Board implements Serializable{
 
     
 
+    
+    /** 
+     * @param playerColor
+     * @param move
+     * @return ArrayList<SimpleEntry<Integer, Integer>>
+     */
     public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMovesFromOneRoll(Checker.Color playerColor, int move)
     {
         ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
@@ -164,6 +193,13 @@ public class Board implements Serializable{
         return result;
     }
     
+    
+    /** 
+     * @param a
+     * @param ArrayList<AbstractMap.SimpleEntry<Integer
+     * @param b
+     * @return boolean
+     */
     public boolean isSame(final ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> a, final ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> b)
     {
         boolean result = true;
@@ -212,6 +248,12 @@ public class Board implements Serializable{
         return result;
     }
 
+    
+    /** 
+     * @param ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer
+     * @param inputArray
+     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>>
+     */
     public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> getUniqueLongArrays(ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> inputArray)
     {
         int maxLength = 0;
@@ -267,6 +309,12 @@ public class Board implements Serializable{
         return outputArray;
     }
 
+    
+    /** 
+     * @param playerColor
+     * @param moves
+     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>>
+     */
     public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>  getAllPossibleMovesWrapper(Checker.Color playerColor, ArrayList<Integer> moves)
     {
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> output = new  ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
@@ -313,6 +361,12 @@ public class Board implements Serializable{
         return output;
     }
 
+    
+    /** 
+     * @param playerColor
+     * @param moves
+     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>>
+     */
     public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>  getAllPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
     {
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
@@ -365,6 +419,12 @@ public class Board implements Serializable{
     }
 
 
+    
+    /** 
+     * @param index
+     * @param playerColor
+     * @return int
+     */
     public static int mapToPip(int index, Checker.Color playerColor)
     {
         if (playerColor == Checker.Color.RED)
@@ -374,6 +434,12 @@ public class Board implements Serializable{
         return index;
     }
 
+    
+    /** 
+     * @param pip
+     * @param playerColor
+     * @return int
+     */
     public static int mapFromPip(int pip, Checker.Color playerColor)
     {
         if (playerColor == Checker.Color.RED)
@@ -383,6 +449,12 @@ public class Board implements Serializable{
         return pip;
     }
 
+    
+    /** 
+     * @param source
+     * @param destination
+     * @return boolean
+     */
     public boolean moveColumns(int source, int destination)
     {
         destination--;
@@ -405,6 +477,12 @@ public class Board implements Serializable{
         return result;
     }
 
+    
+    /** 
+     * @param destination
+     * @param color
+     * @return boolean
+     */
     public boolean moveFromBar(int destination, Checker.Color color)
     {
         destination--;
@@ -425,6 +503,10 @@ public class Board implements Serializable{
         return result;
     }
     
+    
+    /** 
+     * @param playerColor
+     */
     public void autoWin(Checker.Color playerColor)
     {
         for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
@@ -437,6 +519,11 @@ public class Board implements Serializable{
         bar.removeAllCheckersColor(playerColor);
     }
 
+    
+    /** 
+     * @param color
+     * @return int
+     */
     public int getEndGameMultiplierColor(Checker.Color color)
     {
         int multiplier = 2;//gammon
@@ -468,6 +555,10 @@ public class Board implements Serializable{
         return multiplier;
     }
 
+    
+    /** 
+     * @return int
+     */
     // to be tested
     public int getEndgameMultiplier()
     {

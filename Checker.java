@@ -30,16 +30,28 @@ public class Checker {
         this.color = color;
     }
     
+    
+    /** 
+     * @return Color
+     */
     public Color getColor()
     {
         return this.color;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String toString()
     {
         return String.format("%s%s%s", this.color, "⬤", BLACK_COLOR);
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean isValid()
     {
         if (this.color != Color.INVALID)

@@ -11,6 +11,11 @@ public class Bar extends CheckerColumn{
         super(newBar);
     }
 
+    
+    /** 
+     * @param color
+     * @return int
+     */
     public int colorCount(Checker.Color color)
     {
         int count = 0;
@@ -24,11 +29,20 @@ public class Bar extends CheckerColumn{
         return count;
     }
 
+    
+    /** 
+     * @return Color
+     */
     public Checker.Color getColor()
     {
         return Checker.Color.INVALID;
     }
 
+    
+    /** 
+     * @param color
+     * @return int
+     */
     public int getColorIndex(Checker.Color color)
     {
         int popInd = -1;
@@ -43,6 +57,11 @@ public class Bar extends CheckerColumn{
         return popInd;
     }
 
+    
+    /** 
+     * @param color
+     * @return boolean
+     */
     public boolean removeColor(Checker.Color color)
     {
         
@@ -56,6 +75,12 @@ public class Bar extends CheckerColumn{
         return result;
     }
 
+    
+    /** 
+     * @param destination
+     * @param color
+     * @return boolean
+     */
     public boolean moveTo(CheckerColumn destination, Checker.Color color)
     {
         int popInd = getColorIndex(color);

@@ -12,6 +12,10 @@ public class MultiScanner {
         this.currentScanner = this.userIn;
     }
 
+    
+    /** 
+     * @param filename
+     */
     public void setReadFile(String filename){
         try {
             File file = new File(filename);
@@ -28,6 +32,10 @@ public class MultiScanner {
         this.currentScanner = this.userIn;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String nextLine(){
         String userInput;
 

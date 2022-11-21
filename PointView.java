@@ -1,5 +1,11 @@
 public class PointView {
 
+    
+    /** 
+     * @param point
+     * @param color
+     * @return String[]
+     */
     private static String[] toArrayOfStringsTemplate(Point point, Checker.Color color)
     {
         int pip_point = point.getNumber();
@@ -17,6 +23,13 @@ public class PointView {
 
     }
 
+    
+    /** 
+     * @param line
+     * @param c1
+     * @param c2
+     * @return String
+     */
     private static String swapCharString(String line, char c1, char c2)
     {
         for(int ind=0; ind<line.length(); ind++)
@@ -33,6 +46,12 @@ public class PointView {
         return line;
     }
 
+    
+    /** 
+     * @param point
+     * @param color
+     * @return String[]
+     */
     private static String[] toArrayOfStringsReversed(Point point, Checker.Color color)
     {
         String[] array = PointView.toArrayOfStringsTemplate(point, color);
@@ -45,6 +64,12 @@ public class PointView {
         return outputArray;
     }
 
+    
+    /** 
+     * @param point
+     * @param color
+     * @return String[]
+     */
     public static String[] toArrayOfStrings(Point point, Checker.Color color)
     {
         if (point.getNumber()>point.MAX_POINTS/2)

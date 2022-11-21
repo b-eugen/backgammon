@@ -1,4 +1,9 @@
 public class DieView {
+    
+    /** 
+     * @param die
+     * @return String
+     */
     public static String display(Die die){
         switch(die.getLastRoll()) {
             case 1:

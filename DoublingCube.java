@@ -9,16 +9,29 @@ public class DoublingCube {
         owner = Checker.Color.INVALID;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getCurrentStake() 
     {
         return current_stake;
     }
 
+    
+    /** 
+     * @return Color
+     */
     public Checker.Color getOwner() 
     {
         return owner;
     }
 
+    
+    /** 
+     * @param playerColor
+     * @return boolean
+     */
     public boolean canDoubleStakes(Checker.Color playerColor)
     {
         boolean result = false;
@@ -29,6 +42,11 @@ public class DoublingCube {
         return result;
     }
 
+    
+    /** 
+     * @param playerColor
+     * @return boolean
+     */
     public boolean doubleStakes(Checker.Color playerColor)
     {
         boolean result = canDoubleStakes(playerColor);

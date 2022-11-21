@@ -4,6 +4,11 @@ import java.util.AbstractMap;
 public class BackgammonGameView {
     public final static String spacer = "____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ____ ";    
     
+    
+    /** 
+     * @param game
+     * @return String
+     */
     private static String buildDiceRoll(BackgammonGame game){
         String returnStr = "";
         returnStr += String.format(" %1$-190s\n", spacer);
@@ -24,11 +29,20 @@ public class BackgammonGameView {
         return returnStr;
     }
 
+    
+    /** 
+     * @param game
+     */
     private static void buildBoard(BackgammonGame game){
         System.out.println(String.format(" %1$-190s\n", spacer));
         System.out.println("\n" + BoardView.display(game.getBoard(), game.getCurrentPlayer().getColor()));
     }
     
+    
+    /** 
+     * @param possibleMoves
+     * @return String
+     */
     public static String display(BackgammonGame game, boolean showLogPanel, ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves){
         String returnStr = "";
         String optionStr = "";
@@ -69,6 +83,13 @@ public class BackgammonGameView {
         return(returnStr);
     }
 
+    
+    /** 
+     * @param game
+     * @param showLogPanel
+     * @param showBoard
+     * @return String
+     */
     public static String display(BackgammonGame game, boolean showLogPanel, boolean showBoard){
         String returnStr = "";
 
@@ -90,6 +111,13 @@ public class BackgammonGameView {
         return(returnStr);
     }
 
+    
+    /** 
+     * @param in
+     * @param activePlayer
+     * @param game
+     * @return String
+     */
     public static String readNewInput(MultiScanner in, Player activePlayer, BackgammonGame game){
         String userInput;
         System.out.println("\n" + activePlayer.getName() + ", your turn. Enter a command:");
@@ -100,6 +128,11 @@ public class BackgammonGameView {
         return userInput;
     }
 
+    
+    /** 
+     * @param index
+     * @return String
+     */
     public static String genKeyCode(int index){
 	    //AA, ... AZ, BA, ...., BZ, CA, ....
 	    int secondChar = 'A' + index%26;
@@ -107,13 +140,24 @@ public class BackgammonGameView {
 	    return "" + (char)firstChar + (char)secondChar;
 	}
 	
-	public static int reverseKeyCode(String keyCode){
+	
+    /** 
+     * @param keyCode
+     * @return int
+     */
+    public static int reverseKeyCode(String keyCode){
 	    int firstChar = (int) keyCode.charAt(0); 
 	    int secondChar = (int) keyCode.charAt(1); 
 	    return (firstChar - 'A')*26 + (secondChar-'A');
 	}
 
 
+    
+    /** 
+     * @param possibleMoves
+     * @param game
+     * @return int
+     */
     public static int promptForMove(MultiScanner in, ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> possibleMoves, BackgammonGame game){
         String userInput;
         int numPossibleMoves = possibleMoves.size();
@@ -129,6 +173,10 @@ public class BackgammonGameView {
         return(reverseKeyCode(userInput.toUpperCase()));
     }
 
+    
+    /** 
+     * @param game
+     */
     public static void showPipScores(BackgammonGame game){
         Player p1, p2;
         p1 = game.getPlayers().get(0);
@@ -151,12 +199,20 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-190s\n", spacer));
     }
 
+    
+    /** 
+     * @param p
+     */
     public static void declareWinner(Player p){
         System.out.println(String.format(" %1$-190s", spacer));
         System.out.println(String.format(" %1$-70s\n", p.getName() + " Wins this game!"));
         System.out.println(String.format(" %1$-190s\n\n", spacer));
     }
 
+    
+    /** 
+     * @param type
+     */
     public static void declareGameEngingType(String type){
         System.out.println(String.format(" %1$-190s", spacer));
         System.out.println(String.format(" %1$-70s\n", " The game ends as "+type));
@@ -169,6 +225,12 @@ public class BackgammonGameView {
         System.out.println(String.format(" %1$-70s", "You have no moves possible. Switching turns."));
     }
 
+    
+    /** 
+     * @param in
+     * @param player
+     * @return boolean
+     */
     public static boolean promptForDouble(MultiScanner in, Player player)
     {
         String userInput;

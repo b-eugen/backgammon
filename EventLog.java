@@ -8,10 +8,18 @@ public class EventLog {
         this.logs = new LinkedList<String>();
     }
 
+    
+    /** 
+     * @return LinkedList<String>
+     */
     public LinkedList<String> getLogs(){
         return this.logs;
     }
 
+    
+    /** 
+     * @param eventString
+     */
     public void logEvent(String eventString){
         if(this.logs.size() == MAXLOGEVENTS){
             this.logs.remove();

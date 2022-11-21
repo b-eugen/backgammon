@@ -1,5 +1,10 @@
 public class MatchView { 
 
+    
+    /** 
+     * @param userInput
+     * @return boolean
+     */
     public static boolean validateNames(String userInput){
         if(userInput.length() > 15){
             System.out.println("Please ensure you name includes no more than 15 characters");
@@ -13,6 +18,11 @@ public class MatchView {
     }
     
 
+    
+    /** 
+     * @param in
+     * @return int
+     */
     public static int askMatchLength(MultiScanner in){
         String userInput;
         do{
@@ -30,6 +40,11 @@ public class MatchView {
         System.out.println(String.format(" %1$-190s", BackgammonGameView.spacer));
     }
 
+    
+    /** 
+     * @param in
+     * @return String[]
+     */
     public static String[] getNames(MultiScanner in){
         String names[] = new String[2];
         String userInput;
@@ -54,6 +69,11 @@ public class MatchView {
         return names;
     }
 
+    
+    /** 
+     * @param p
+     * @param winningScore
+     */
     public static void declareMatchWinner(Player p, int winningScore){
         System.out.println(String.format(" %1$-190s", BackgammonGameView.spacer));
         System.out.print(String.format("%1$45s", ""));

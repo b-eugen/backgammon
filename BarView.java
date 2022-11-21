@@ -1,4 +1,9 @@
 public class BarView {
+    
+    /** 
+     * @param bar
+     * @return String[]
+     */
     public static String[] toArrayOfStrings(Bar bar)
     {
         return new String[] {"|‾‾‾‾‾|",

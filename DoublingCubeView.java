@@ -1,5 +1,10 @@
 public class DoublingCubeView {
     public static final int height = 3;
+    
+    /** 
+     * @param cube
+     * @return String[]
+     */
     public static String[] toArrayOfStrings(DoublingCube cube)
     {
         

@@ -19,34 +19,66 @@ public class BackgammonGame {
         this.matchLength = matchLength;
     }
 
+    
+    /** 
+     * @return Player
+     */
     public Player getCurrentPlayer(){
         return this.players.get(0);
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getMatchLength(){
         return this.matchLength;
     }
 
+    
+    /** 
+     * @return ArrayList<Player>
+     */
     public ArrayList<Player> getPlayers(){
         return this.players;
     }
 
+    
+    /** 
+     * @return Die
+     */
     public Die getDie1(){
         return this.die1;
     }
 
+    
+    /** 
+     * @return Die
+     */
     public Die getDie2(){
         return this.die2;
     }
 
+    
+    /** 
+     * @return Board
+     */
     public Board getBoard(){
         return this.board;
     }
 
+    
+    /** 
+     * @return EventLog
+     */
     public EventLog getEventLog(){
         return this.eventLog;
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean checkGameOver() {
         boolean gameOver = false;
 
@@ -81,6 +113,10 @@ public class BackgammonGame {
         this.die2.setLastRoll(0);
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean swapPlayers()
     {
         if (players.size() < 2)
@@ -94,6 +130,11 @@ public class BackgammonGame {
         return true;
     }
 
+    
+    /** 
+     * @param in
+     * @return boolean
+     */
     public boolean doubleStakes(MultiScanner in)
     {
         boolean concealed = true;// true means game finishes, false continue
@@ -119,6 +160,12 @@ public class BackgammonGame {
         return concealed;
     }
 
+    
+    /** 
+     * @param userInput
+     * @param in
+     * @return boolean
+     */
     public boolean takeAction(String userInput, MultiScanner in){
         boolean endTurn = false;
         userInput = userInput.toLowerCase();
@@ -185,6 +232,11 @@ public class BackgammonGame {
         resetDice();
     }
     
+    
+    /** 
+     * @param in
+     * @param matchPlayers
+     */
     public void setUpSequence(MultiScanner in, ArrayList<Player> matchPlayers){
         this.players = matchPlayers;
         this.eventLog.logEvent("Player 1: " + players.get(0).getName() + ", is BLACK checkers");
@@ -193,6 +245,12 @@ public class BackgammonGame {
         BackgammonGameView.display(this, true, true);
     }
 
+    
+    /** 
+     * @param userInput
+     * @param numPossibleMoves
+     * @return boolean
+     */
     public boolean validateMoveInput(String userInput, int numPossibleMoves){
         if(userInput.length() != 2){
             System.out.println("Please enter exactly two letters for the move you would like to make.");
@@ -212,6 +270,11 @@ public class BackgammonGame {
         return true;
     }
 
+    
+    /** 
+     * @param userInput
+     * @return boolean
+     */
     public boolean validateInput(String userInput){
         userInput = userInput.toLowerCase();
         if(!userInput.equals("roll") && !userInput.equals("pip") && !userInput.equals("hint") && !userInput.equals("double") &&!userInput.matches("dice [1-6] [1-6]")  && !userInput.toLowerCase().matches("[t][e][s][t]\\s[a-z\\d]+.txt")){
@@ -221,6 +284,13 @@ public class BackgammonGame {
         return true;
     }
 
+    
+    /** 
+     * @param in
+     * @param matchPlayers
+     * @param game
+     * @return ArrayList<Player>
+     */
     public ArrayList<Player> gameRoutine(MultiScanner in, ArrayList<Player> matchPlayers, BackgammonGame game)
     {
         game.setUpSequence(in, matchPlayers);

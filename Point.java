@@ -25,6 +25,10 @@ public class Point extends CheckerColumn{
         this.number = newPoint.getNumber();
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getDesignColor()
     {
         if (this.number%2 == 0)
@@ -34,6 +38,10 @@ public class Point extends CheckerColumn{
         return BLUE;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getNumber()
     {
         return this.number;
