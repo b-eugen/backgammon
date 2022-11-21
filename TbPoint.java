@@ -57,24 +57,7 @@
      }
 
 
-     @Test
-     void testDesignColor()
-     {
-         for(int i=1;  i<=24; i++)
-         {
-             point = new Point(i);
-            
-             assertNotNull(point);
-             if (i%2==0)
-             {
-                 assertEquals(point.getDesignColor(), "\033[0;32m");
-             }
-             else
-             {
-                 assertEquals(point.getDesignColor(), "\033[0;34m");
-             }
-         }
-     }
+
 
      @Test
      void testGetNumberGetColor()

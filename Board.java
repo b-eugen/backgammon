@@ -1,3 +1,9 @@
+/**
+ * This program is the board class, which is a board in backgammon game
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
+
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -8,7 +14,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class Board implements Serializable{
+/**
+ * A {@code Board} object represents a board
+ */
+public class Board{
     private Bar bar;
     private Point[] points;
     private DoublingCube cube;
@@ -67,8 +76,8 @@ public class Board implements Serializable{
     
     
     /** 
-     * @param playerColor
-     * @return int
+     * @param playerColor -  color of the player to find the pip score for
+     * @return int - pip score
      */
     public int getPipScore(Checker.Color playerColor)
     {
@@ -86,18 +95,18 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param move
-     * @param playerColor
-     * @return boolean
+     * @param move - Pair of ints, <source><destination>, representing a move on the board ot be made
+     * @param playerColor - color of the active player
+     * @return boolean - true if successful
      */
     public boolean makeMove(AbstractMap.SimpleEntry<Integer,Integer> move, Checker.Color playerColor)
     {
         boolean result = false;
-        if (move.getKey()==Point.MAX_POINTS+1)
+        if (move.getKey()==Point.MAX_POINTS+1)//move from the bar
         {  
             result = this.moveFromBar(mapFromPip(move.getValue(), playerColor), playerColor);
         }
-        else if (move.getValue()==0)
+        else if (move.getValue()==0)//ber off
         {
             Checker checker = points[mapFromPip(move.getKey(), playerColor)-1].getTop();
             if (checker.getColor() == playerColor)
@@ -106,7 +115,7 @@ public class Board implements Serializable{
                 result = true;
             }
         }
-        else
+        else//move between points
         {
             result = this.moveColumns(mapFromPip(move.getKey(), playerColor), mapFromPip(move.getValue(), playerColor));
         }
@@ -118,17 +127,17 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param playerColor
-     * @param move
-     * @return ArrayList<SimpleEntry<Integer, Integer>>
+     * @param playerColor - color of the active player
+     * @param move - integer representation of the dice roll
+     * @return ArrayList<SimpleEntry<Integer, Integer>> - list of possible moves in form of integer Pair <source><destination>
      */
     public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMovesFromOneRoll(Checker.Color playerColor, int move)
     {
         ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
 
-        if (move>0 && move <7)
+        if (move>0 && move <7)//allow only legal moves
         {
-            if (bar.colorCount(playerColor)>0)
+            if (bar.colorCount(playerColor)>0)//find if any moves from bar are possible
             {
                 int pointIndex = mapFromPip(Point.MAX_POINTS+1-move, playerColor)-1;
                 if (points[pointIndex].getColor()==Checker.Color.INVALID || points[pointIndex].getColor()==playerColor || points[pointIndex].getSize()<=1)
@@ -137,10 +146,11 @@ public class Board implements Serializable{
                     result.add(new AbstractMap.SimpleEntry<Integer,Integer>(Point.MAX_POINTS+1, Point.MAX_POINTS+1-move));
                 }
             }
-            else
+            else //otherwise
             {
                 boolean berOff = true;
                 boolean berOffStrict = false;
+                //attempt to move checkers between points
                 for (int pip=1; pip<Point.MAX_POINTS+1; pip++)
                 {
                     if (points[mapFromPip(pip, playerColor) -1].getColor() == playerColor)
@@ -148,38 +158,33 @@ public class Board implements Serializable{
                         int destination = pip-move;
                         int destinationIndex = mapFromPip(destination, playerColor) -1;
 
-                        // System.out.println("Debug"+ pip+" "+ move +" " + destination);
 
                         if (destination>0)
                         {
+                            //possible move is found
                             if (points[destinationIndex].getColor() == Checker.Color.INVALID || points[destinationIndex].getColor()==playerColor || points[destinationIndex].getSize()<=1)
                             {
-                                //move
                                 result.add(new AbstractMap.SimpleEntry<Integer,Integer>(pip, destination));
-                                berOffStrict = true;
-                                // Checker checktest = new Checker(playerColor);
-                                
-                                // System.out.println(pip +" " +destination +" "+ checktest +" "+ destinationIndex);
+                                berOffStrict = true;//if moves between points are possible, only strict ber-off is possible
+
                             }
                         }
-                        
+                        //if any checker beyond the ber-off region, ber off is forbidden
                         if (pip>BER_OFF_THOLD) 
                         {
                             berOff=false;
                         }
-                        // break;
                     }
                 }
 
-                if (berOff)
+                if (berOff)//attempt ber-off
                 {
-                    
                     for (int pipIndex = move;pipIndex>0; pipIndex--)
                     {
                         int pointIndex2 = mapFromPip(pipIndex, playerColor)-1;
+                        //ber-off the legal checker (if strict, only one at pip=move, otherwise, first point, which satisfies move>pip)
                         if ( points[pointIndex2].getColor()==playerColor && (!berOffStrict || berOffStrict && pipIndex == move))
                         {
-                            // System.out.println("ind "+pointIndex2);
                             result.add(new AbstractMap.SimpleEntry<Integer,Integer>(mapToPip(pointIndex2+1, playerColor), 0));
                             break;
                         }
@@ -188,17 +193,15 @@ public class Board implements Serializable{
                 }
             }
         }
-        // System.out.println(BoardView.display(this, playerColor));
-        // System.out.println("Single move: " +move+ " moves: "+result);
-        return result;
+
+        return result;//return a list of possible moves
     }
     
     
     /** 
-     * @param a
-     * @param ArrayList<AbstractMap.SimpleEntry<Integer
-     * @param b
-     * @return boolean
+     * @param a - ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> first array list to be compared
+     * @param b - ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> first array list to be compared
+     * @return boolean - true if 2 array lists of pairs are the same
      */
     public boolean isSame(final ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> a, final ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> b)
     {
@@ -206,12 +209,12 @@ public class Board implements Serializable{
 
         if (a.size() == b.size())
         {
-            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> temp = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
+            ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> temp = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();//copy of b
             for (int ind = 0; ind < b.size(); ind++)
             {
                 temp.add( new AbstractMap.SimpleEntry<Integer,Integer>((int) b.get(ind).getKey(), (int) b.get(ind).getValue()));
             }
-            // System.out.println("Passionfruit1: "+ b +" "+ a);
+            //compare and eliminate element wise and elimitate matching elements (NlogN) complexity
             for (int ind = 0; ind < a.size(); ind++)
             {
                 boolean matchedElement = false;
@@ -225,37 +228,33 @@ public class Board implements Serializable{
                     }
                 }
 
-                if (matchedElement)
+                if (matchedElement)//elimination of matched element
                 {
                     temp.remove(jnd);
                 }
-                else
+                else//if no match for 1 element, means arraylists are different, can break the loop
                 {
                     result = false;
                     break;
                 }
             }
-
-            // System.out.println("Passionfruit: "+ b +" "+ a );
-            // b = temp;
         }
-        else
+        else//if sizes are different, arrays are different
         {
             result = false;
         }
-        // b=a;
-        // b.addAll(temp);
+
         return result;
     }
 
     
     /** 
-     * @param ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer
-     * @param inputArray
-     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>>
+     * @param inputArray - ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> to be converted into set of unique arrays
+     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>> - inputArray without matching elements
      */
     public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> getUniqueLongArrays(ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> inputArray)
     {
+        //eliminate all elements, which sre smaller than maximal in size
         int maxLength = 0;
         for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> array : inputArray)
         {
@@ -266,7 +265,6 @@ public class Board implements Serializable{
             }
         }
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> intermediateArray = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
-        
         for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> array : inputArray)
         {
             int currentSize = array.size();
@@ -276,61 +274,51 @@ public class Board implements Serializable{
             }
         }
 
-        // System.out.println("intermediate "+intermediateArray);
 
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> outputArray = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
         
-       
+       //keep only the arrays, which are the same
         for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> arrayInIntermediate:intermediateArray)
         {
             boolean isPresent = false;
             for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> arrayInOutput:outputArray)
             {
-                // System.out.println("Before" + arrayInOutput+" "+arrayInIntermediate);
                 if (isSame(arrayInOutput, arrayInIntermediate))
                 {
-                    // System.out.println("After" + arrayInOutput+" "+arrayInIntermediate);
-                    // System.out.println("Same: "+arrayInOutput +" "+  arrayInIntermediate);
                     isPresent= true;
                     break;
                 }
             }
             if (!isPresent)
             {
-                // System.out.println("Adding: "+  arrayInIntermediate);
                 outputArray.add(arrayInIntermediate);
-                // System.out.println("outputArray: " +outputArray);
             }
         }
-
-
-        // System.out.println("Not Unique move: " +inputArray+"\n" +"Unique moves: "+outputArray);
-
         return outputArray;
     }
 
     
     /** 
-     * @param playerColor
-     * @param moves
-     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>>
+     * @param playerColor - color of the active player
+     * @param moves - ArrayList<Integer> list of possible moves
+     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>> - Array list of arraylists of possible combinations of moves
      */
     public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>  getAllPossibleMovesWrapper(Checker.Color playerColor, ArrayList<Integer> moves)
     {
-        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> output = new  ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
-        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = getAllPossibleMoves( playerColor, moves);
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> output = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+        ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = getAllPossibleMoves( playerColor, moves); // find all possible moves
+
         if (result.size()>0)
         {
-            if (result.get(0).size() == 1)
+            if (result.get(0).size() == 1) // if size = 1, only moves which represent the biggest roll can be played
             {
-                int max_move = moves.get(1);
-                // int min_move = moves.get(0);
+                int max_move = moves.get(1);//find the biggest move
                 if (moves.get(0) > max_move)
                 {
                     max_move = moves.get(0);
-                    // min_move = moves.get(1);
                 }
 
+                //find if the biggest move is at all present
                 boolean maxMoveNotPresent = true;
                 for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> move : result)
                 {
@@ -340,7 +328,7 @@ public class Board implements Serializable{
                         break;
                     }
                 }
-
+                //only use combinations, which use the biggest move
                 for (ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> move : result)
                 {
                     if (move.get(0).getValue() == 0 || (move.get(0).getKey() - move.get(0).getValue()) == max_move || maxMoveNotPresent)
@@ -355,7 +343,6 @@ public class Board implements Serializable{
             }
         }
 
-        // System.out.println("Wrapper moves: " +output+" "+result);
 
        
         return output;
@@ -363,20 +350,20 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param playerColor
-     * @param moves
-     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>>
+     * @param playerColor -  color of the active player
+     * @param moves - ArrayList<Integer> of moves resulting from roll of the die
+     * @return ArrayList<ArrayList<SimpleEntry<Integer, Integer>>> - array list of all possisble permutations of moves
      */
     public ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>  getAllPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
     {
         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
-        for (int ind=0; ind<moves.size(); ind++)
+        for (int ind=0; ind<moves.size(); ind++)//loop through moves
         {
+            //find all legal moves with the current roll
             ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result_single = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
-            // System.out.println("Size moves: "+ getPossibleMovesFromOneRoll(playerColor, moves.get(ind)).size());
             result_single.addAll(getPossibleMovesFromOneRoll(playerColor, moves.get(ind)));
 
-            // System.out.println("result_single "+result_single);
+            //make a copy of all moves possible exculding the current move (as if it is used)
             ArrayList<Integer> moves_copy = new ArrayList<Integer>();
             for (int jnd=0; jnd<moves.size(); jnd++)
             {
@@ -385,12 +372,12 @@ public class Board implements Serializable{
                     moves_copy.add(moves.get(jnd));
                 }
             }
-            
+
+            //iterate through the possible list of moves updating the board and finding all the possible moves till the end of the branch
             for (int knd=0; knd < result_single.size(); knd++)
             {
-                Board cloneBoard = new Board(this);//(Board) this.clone();
+                Board cloneBoard = new Board(this);
                 cloneBoard.makeMove(result_single.get(knd), playerColor);
-                // System.out.println("Move result: "+cloneBoard.makeMove(result_single.get(knd), playerColor));
                 ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> previous_result = cloneBoard.getAllPossibleMoves(playerColor, moves_copy);
                 if (previous_result.size() > 0)
                 {
@@ -403,7 +390,7 @@ public class Board implements Serializable{
                     }
                     result.addAll(previous_result);
                 }
-                else
+                else//if in the enf of the branch, just append the current result
                 {
                     ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> fillerArray = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
                     fillerArray.add(result_single.get(knd));
@@ -413,17 +400,16 @@ public class Board implements Serializable{
             }
         }
         
-        // System.out.println("Group move: " +moves+" " +" moves: "+result);
 
-        return getUniqueLongArrays(result);
+        return getUniqueLongArrays(result);//return only unique arrays, to reduce complexity
     }
 
 
     
     /** 
-     * @param index
-     * @param playerColor
-     * @return int
+     * @param index - index of the array (1-24)
+     * @param playerColor - color of the current player
+     * @return int - pip representation of the index
      */
     public static int mapToPip(int index, Checker.Color playerColor)
     {
@@ -436,9 +422,9 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param pip
-     * @param playerColor
-     * @return int
+     * @param pip - pip of the point (1-24)
+     * @param playerColor - color of the current player
+     * @return int - index of the array (1-24)
      */
     public static int mapFromPip(int pip, Checker.Color playerColor)
     {
@@ -451,25 +437,25 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param source
-     * @param destination
-     * @return boolean
+     * @param source - int index of the source (1-24) to move from
+     * @param destination - int index of the destiation (1-24) to move to
+     * @return boolean - flag indicating the success of the move
      */
     public boolean moveColumns(int source, int destination)
     {
         destination--;
         source--;
         boolean result = false;
-        if (points[destination].getColor() == Checker.Color.INVALID || points[destination].getColor() == points[source].getColor())
+        if (points[destination].getColor() == Checker.Color.INVALID || points[destination].getColor() == points[source].getColor())//valid move and not a blob
         {
-            result = points[source].moveTo(points[destination]);
+            result = points[source].moveTo(points[destination]);//move checker from source to destination
         }
-        else if (points[destination].getSize()==1)//blob
+        else if (points[destination].getSize()==1)//blob case
         {
-            result = points[destination].moveTo(bar);
+            result = points[destination].moveTo(bar);//move a checker of the opposite color to bar
             if (result)
             {
-                result = points[source].moveTo(points[destination]);
+                result = points[source].moveTo(points[destination]);//move checker from source to destination
             }
             
         }
@@ -479,9 +465,9 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param destination
-     * @param color
-     * @return boolean
+     * @param destination - int index of the destination (1-24)
+     * @param color - color of the current player
+     * @return boolean - flag indicating the success of the move
      */
     public boolean moveFromBar(int destination, Checker.Color color)
     {
@@ -490,9 +476,9 @@ public class Board implements Serializable{
 
         if (points[destination].getColor() == Checker.Color.INVALID || points[destination].getColor() == color)
         {
-            result = bar.moveTo(points[destination], color);
+            result = bar.moveTo(points[destination], color);//move from bar to empty/same color point
         }
-        else if (points[destination].getSize()==1)//blob
+        else if (points[destination].getSize()==1)//blob case, removing the checker of oposite color to the bar
         {
             result = points[destination].moveTo(bar);
             if (result)
@@ -505,10 +491,11 @@ public class Board implements Serializable{
     
     
     /** 
-     * @param playerColor
+     * @param playerColor - color of the player, which autowins
      */
     public void autoWin(Checker.Color playerColor)
     {
+        //to autowin, just remove all the checkers from the board
         for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
         {
             if (points[mapFromPip(pip, playerColor)-1].getColor()==playerColor)
@@ -521,16 +508,16 @@ public class Board implements Serializable{
 
     
     /** 
-     * @param color
-     * @return int
+     * @param color - color of the current player
+     * @return int - 1 - single ending, 2 - gammon, 3 - backgammon
      */
     public int getEndGameMultiplierColor(Checker.Color color)
     {
         int multiplier = 2;//gammon
 
-        int trippleCount = bar.colorCount(color);
-        int checkerCount = trippleCount;
-        // System.out.println(BoardView.display(this, color));
+        int trippleCount = bar.colorCount(color);//checkers, satisfying the backgammon condition
+        int checkerCount = trippleCount;//total count of checkers on the board
+
         for (int pip=1; pip < Point.MAX_POINTS+1; pip++)
         {
             if (points[mapFromPip(pip, color)-1].getColor()==color)
@@ -542,7 +529,6 @@ public class Board implements Serializable{
                 }
             }
         }
-        // System.out.println("checkerCount "+checkerCount +"trippleCount "+trippleCount+color+"color"+Checker.Color.BLACK );
         if (checkerCount < Point.START_CHECKERS)
         {
             multiplier = 1;//single
@@ -557,21 +543,20 @@ public class Board implements Serializable{
 
     
     /** 
-     * @return int
+     * @return int - endgame multiplier 0- not over, 1-single, 2-gammon, 3-backgammon
      */
-    // to be tested
     public int getEndgameMultiplier()
     {
         int blackPip = getPipScore(Checker.Color.BLACK);
         int redPip = getPipScore(Checker.Color.RED);
         int multiplier = 0;
-        if (redPip == 0)
+        if (redPip == 0)//red wins
         {
-            multiplier = getEndGameMultiplierColor(Checker.Color.BLACK);
+            multiplier = getEndGameMultiplierColor(Checker.Color.BLACK);//find multiplier for black
         }
-        else if (blackPip == 0)
+        else if (blackPip == 0)//black wins
         {
-            multiplier = getEndGameMultiplierColor(Checker.Color.RED);
+            multiplier = getEndGameMultiplierColor(Checker.Color.RED);//find multiplier for red
         }
 
         return multiplier;

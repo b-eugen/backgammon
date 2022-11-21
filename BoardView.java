@@ -1,15 +1,18 @@
+/**
+ * This program is the BoardView class, which displays the Board
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
+/**
+ * A {@code BoardView} object displayes the board
+ */
 public class BoardView {
 
     BoardView()
     {
-
     }
     
-    /** 
-     * @param base
-     * @param appendable
-     * @return String[]
-     */
+
     /*
      * Method which concantenates 2 arrays of strings
      * @param base - first string array
@@ -26,16 +29,17 @@ public class BoardView {
 
     
     /** 
-     * @param board
-     * @param playerColor
-     * @return String
+     * @param board - board to be displayed
+     * @param playerColor - color of the active player
+     * @return String - string representation of the board
      */
     public static String display(Board board, Checker.Color playerColor)
     {
-        String[] barString = BarView.toArrayOfStrings(board.getBar());
+        String[] barString = BarView.toArrayOfStrings(board.getBar());//use bar view
 
-        String[][] array2D = new String[Point.MAX_POINTS/2+2][barString.length];
+        String[][] array2D = new String[Point.MAX_POINTS/2+2][barString.length];//2d representation, to be converted to output String
 
+        //convert points and bar to board
         String[] stub = {"          "};
         for (int col=0; col<Point.MAX_POINTS/2+1; col++)
         {
@@ -52,6 +56,9 @@ public class BoardView {
             }
             
         }
+
+        // add the start cube to the 2d array
+        //determine the owner
         int start_cube;
         switch (board.getCube().getOwner())
         {
@@ -60,6 +67,7 @@ public class BoardView {
             default: start_cube = 0;
         }
 
+        //place cube accordingly
         String[] cubeString = DoublingCubeView.toArrayOfStrings(board.getCube());
     
         for (int row = 0; row<barString.length; row++)
@@ -76,7 +84,7 @@ public class BoardView {
         }
         
 
-
+        //convert 2d array of strings into the resulting string
         String result = "";
         for (int row=0; row<barString.length; row++)
         {

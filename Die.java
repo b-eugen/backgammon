@@ -1,12 +1,20 @@
+/**
+ * This program is the Die class, which represents the die
+ * @version 1 2022-21-11
+ * @author Aness Al-Qawlaq
+ */
 import java.util.Random;
 
+/**
+ * A {@code Die} object represents the die
+ */
 public class Die {
     private static final int MAX_DICE = 6;
     private int lastRoll = 1;
 
     
     /** 
-     * @return int
+     * @return int - value of the last roll
      */
     public int getLastRoll(){
         return this.lastRoll;
@@ -14,7 +22,7 @@ public class Die {
 
     
     /** 
-     * @return int
+     * @return int - result of the new roll
      */
     public int getRollValue(){
         Random rand = new Random();
@@ -24,8 +32,8 @@ public class Die {
 
     
     /** 
-     * @param lastRoll
-     * @return Die
+     * @param lastRoll - force the value of the last roll (cheat)
+     * @return Die - current die with the value set tot the last roll
      */
     public Die setLastRoll(int lastRoll)
     {

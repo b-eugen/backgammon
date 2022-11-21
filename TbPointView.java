@@ -17,11 +17,31 @@ public class TbPointView {
         pointView = new PointView();
     }
 
+
+    @Test
+    void testDesignColor()
+    {
+        for(int i=1;  i<=24; i++)
+        {
+            Point point = new Point(i);
+
+            assertNotNull(point);
+            if (i%2==0)
+            {
+                assertEquals(PointView.getDesignColor(point), "\033[0;32m");
+            }
+            else
+            {
+                assertEquals(PointView.getDesignColor(point), "\033[0;34m");
+            }
+        }
+    }
+
     @Test
     void test_output()
     {
         Point p = new Point(24);
-        String columnColor = p.getDesignColor();
+        String columnColor = PointView.getDesignColor(p);
         String[] array = {String.format("%s\\%sPoint %2d%s/%s", columnColor, Checker.Color.BLACK, p.getNumber(), columnColor, Checker.Color.BLACK),
                 String.format(" %s\\%s %2d%s  %s/%s ", columnColor, Checker.Color.BLACK,  p.getSize(), p.getTop(), columnColor, Checker.Color.BLACK),
                 String.format("  %s\\%s    %s/%s  ",  columnColor, Checker.Color.BLACK, columnColor, Checker.Color.BLACK),

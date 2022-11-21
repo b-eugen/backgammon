@@ -1,8 +1,16 @@
+/**
+ * This program is the BarView class, which displayes the Bar
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
+/**
+ * A {@code BarView} object represents a bar
+ */
 public class BarView {
     
     /** 
-     * @param bar
-     * @return String[]
+     * @param bar - bar to be displayed
+     * @return String[] - string representation of the bar
      */
     public static String[] toArrayOfStrings(Bar bar)
     {

@@ -1,6 +1,13 @@
+/**
+ * This program is the Player class, which represents the player
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
 
 import java.util.*;
-
+/**
+ * A {@code Player} object represents the player
+ */
 public class Player {
     private String name;
     private Checker.Color color;
@@ -28,7 +35,7 @@ public class Player {
 
     
     /** 
-     * @return int
+     * @return int - current score of the player
      */
     public int getScore()
     {
@@ -37,7 +44,7 @@ public class Player {
 
     
     /** 
-     * @return String
+     * @return String - name of the player
      */
     public String getName()
     {
@@ -46,7 +53,7 @@ public class Player {
 
     
     /** 
-     * @return Color
+     * @return Color - color of the player
      */
     public Checker.Color getColor()
     {
@@ -55,7 +62,7 @@ public class Player {
 
     
     /** 
-     * @return ArrayList<Integer>
+     * @return ArrayList<Integer> - integer arraylist of possible moves
      */
     public ArrayList<Integer> getMoves()
     {
@@ -64,8 +71,8 @@ public class Player {
 
     
     /** 
-     * @param increment
-     * @return int
+     * @param increment - value to increment the score by
+     * @return int - new score of the player
      */
     public int incrementScore(int increment)
     {
@@ -76,25 +83,25 @@ public class Player {
 
     
     /** 
-     * @param roll1
-     * @param roll2
-     * @return ArrayList<Integer>
+     * @param roll1 - integer value of the first roll
+     * @param roll2 - integer value of the second roll
+     * @return ArrayList<Integer> - array list of possible moves
      */
     private ArrayList<Integer> processRoll(int roll1, int roll2)
     {
-        if (roll2 == roll1){
+        if (roll2 == roll1){// double the number of moves, if 2 dices land with the same result
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll1, roll1, roll1));
         }
-        else{
+        else{//save as by default
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll2));
         }
         return this.moves;
     }
     
     /** 
-     * @param die1
-     * @param die2
-     * @return ArrayList<Integer>
+     * @param die1 - first die
+     * @param die2 - second die
+     * @return ArrayList<Integer> - arraylist of possible moves, from the forced rolls (cheat)
      */
     public ArrayList<Integer> forceRoll(Die die1, Die die2)
     {
@@ -105,21 +112,20 @@ public class Player {
 
     
     /** 
-     * @param die1
-     * @param die2
-     * @return ArrayList<Integer>
+     * @param die1 - first die
+     * @param die2 - second die
+     * @return ArrayList<Integer> - arraylist of possible moves, from the real random rolls
      */
     public ArrayList<Integer> roll(Die die1, Die die2)
     {
         int roll1 = die1.getRollValue();
         int roll2 = die2.getRollValue();
-        // System.out.println(this.getName() + ": " + die1 + " " + die2 + " rolls " + roll1 + " and " + roll2);
         return processRoll(roll1, roll2);
     }
 
     
     /** 
-     * @return Checker
+     * @return Checker - checker of the current player
      */
     public Checker getDisplayCheckerColor(){
         return this.displayCheckerColor;
@@ -127,27 +133,10 @@ public class Player {
 
     
     /** 
-     * @return String
+     * @return String - string representation of the current player
      */
     public String toString()
     {
-        // String outputString="";
-        // for (int move : this.moves)
-        // {
-        //     if (move>0)
-        //     {
-        //         outputString = outputString+ " " +move;
-        //     }
-        // }
-        // if (outputString.length() > 0) 
-        // {
-        //     outputString = "  Possible moves:"+outputString;
-        // }
-        // else
-        // {
-        //     outputString = "  No possible moves";
-        // }
-
         return "Player: "+this.getName() + new Checker(this.getColor())+" ";//+ outputString;
     }
 }

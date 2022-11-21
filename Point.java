@@ -1,8 +1,15 @@
+/**
+ * This program is the Point class, which represents the point
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
 
+/**
+ * A {@code Point} object represents the point
+ */
 public class Point extends CheckerColumn{
     private int number;
-    private static final String BLUE="\033[0;34m";
-    private static final String GREEN="\033[0;32m";
+
 
     public static final int MAX_POINTS = 24;
     public static final int START_CHECKERS = 15;
@@ -27,26 +34,16 @@ public class Point extends CheckerColumn{
 
     
     /** 
-     * @return String
-     */
-    public String getDesignColor()
-    {
-        if (this.number%2 == 0)
-        {
-            return GREEN;
-        }
-        return BLUE;
-    }
-
-    
-    /** 
-     * @return int
+     * @return int - number of the current point
      */
     public int getNumber()
     {
         return this.number;
     }
 
+    /**
+     * method, prepares the point for game putting a particular number of checkers into the point
+     */
     public void prepareForGame()
     {
         switch (this.number)

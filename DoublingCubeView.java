@@ -1,9 +1,19 @@
+/**
+ * This program is the DoublingCubeView class
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
+
+
+/**
+ * A {@code DoublingCubeView} object allows to view the doubling cube
+ */
 public class DoublingCubeView {
-    public static final int height = 3;
+    public static final int height = 3;//height of the cube
     
     /** 
-     * @param cube
-     * @return String[]
+     * @param cube - DoublingCube to be displayed
+     * @return String[] – representation of the DoublingCube in Strings
      */
     public static String[] toArrayOfStrings(DoublingCube cube)
     {

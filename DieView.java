@@ -1,8 +1,16 @@
+/**
+ * This program is the Die class, which allows to view the die
+ * @version 1 2022-21-11
+ * @author Aness Al-Qawlaq
+ */
+/**
+ * A {@code DieView} object displays the die as a string
+ */
 public class DieView {
     
     /** 
-     * @param die
-     * @return String
+     * @param die - object of Die class
+     * @return String - string representation  of the die
      */
     public static String display(Die die){
         switch(die.getLastRoll()) {

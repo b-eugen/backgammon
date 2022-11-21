@@ -1,10 +1,21 @@
-
+/**
+ * This program is the Checker class, which represents the checker
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
+/**
+ * A {@code Checker} object represents the checker
+ */
 public class Checker {
 
+    //color encoding
     private static final String RED_COLOR="\033[0;31m";
     private static final String BLACK_COLOR="\033[0m";
     private static final String CYAN_COLOR="\033[0;36m";
 
+    /**
+     * A {@code Color} object represents the color
+     */
     public enum Color{RED(RED_COLOR), BLACK(BLACK_COLOR), INVALID(CYAN_COLOR);
         private String color;
         private Color(String color)
@@ -32,7 +43,7 @@ public class Checker {
     
     
     /** 
-     * @return Color
+     * @return Color - color of the checker
      */
     public Color getColor()
     {
@@ -41,7 +52,7 @@ public class Checker {
 
     
     /** 
-     * @return String
+     * @return String - string representation of the checker
      */
     public String toString()
     {
@@ -50,7 +61,7 @@ public class Checker {
 
     
     /** 
-     * @return boolean
+     * @return boolean - true, if checker is red or black
      */
     public boolean isValid()
     {

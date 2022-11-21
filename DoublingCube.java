@@ -1,3 +1,11 @@
+/**
+ * This program is the DoublingCube class, which represents the doubling cube
+ * @version 1 2022-21-11
+ * @author Yevhenii Mormul
+ */
+/**
+ * A {@code DoublingCube} object represents the doubling cube
+ */
 public class DoublingCube {
     public static final int MAX_COEF = 64;
     int current_stake;
@@ -11,7 +19,7 @@ public class DoublingCube {
 
     
     /** 
-     * @return int
+     * @return int - current stake on the doubling cube
      */
     public int getCurrentStake() 
     {
@@ -20,7 +28,7 @@ public class DoublingCube {
 
     
     /** 
-     * @return Color
+     * @return Color - color of the owner of the cube
      */
     public Checker.Color getOwner() 
     {
@@ -29,8 +37,8 @@ public class DoublingCube {
 
     
     /** 
-     * @param playerColor
-     * @return boolean
+     * @param playerColor - color of the player who wants to double the stakes
+     * @return boolean - true if can double the stakes
      */
     public boolean canDoubleStakes(Checker.Color playerColor)
     {
@@ -44,8 +52,8 @@ public class DoublingCube {
 
     
     /** 
-     * @param playerColor
-     * @return boolean
+     * @param playerColor - color of the player who wants to double the stakes
+     * @return boolean - true if stakes were doubled successfully
      */
     public boolean doubleStakes(Checker.Color playerColor)
     {
