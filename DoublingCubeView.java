@@ -1,6 +1,6 @@
 public class DoublingCubeView {
     public static final int height = 3;
-    public static String[] toArrayOfqStrings(DoublingCube cube)
+    public static String[] toArrayOfStrings(DoublingCube cube)
     {
         
         String[] output = new String[] {"   ----   ", "", "   ----   "};

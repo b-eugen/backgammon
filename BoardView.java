@@ -48,7 +48,7 @@ public class BoardView {
             default: start_cube = 0;
         }
 
-        String[] cubeString = DoublingCubeView.toArrayOfqStrings(board.getCube());
+        String[] cubeString = DoublingCubeView.toArrayOfStrings(board.getCube());
     
         for (int row = 0; row<barString.length; row++)
         {
