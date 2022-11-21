@@ -28,35 +28,6 @@ public class Board implements Serializable{
 
     }
 
-    // public Board deepClone() {
-	// 	try {
-    //     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    //     ObjectOutputStream oos = new ObjectOutputStream(baos);
-    //     oos.writeObject(this);
-
-    //     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    //     ObjectInputStream ois = new ObjectInputStream(bais);
-    //     return (Board) ois.readObject();
-	// 	} catch (IOException e) {
-    //         System.out.println("Excepton"+ e);
-	// 		return null;
-	// 	} catch (ClassNotFoundException e) {
-    //         System.out.println("Excepton"+ e);
-	// 		return null;
-	// 	}
-	// }
-
-    public String toString()
-    {
-        return "bar: "+bar+"; points:"+points;
-    }
-
-    public Board(Bar bar, Point[] points, DoublingCube cube)
-    {
-        this.bar = bar;
-        this.points = points;
-        this.cube = cube;
-    }
 
     public Board(Board board)
     {
@@ -102,7 +73,6 @@ public class Board implements Serializable{
         if (move.getKey()==Point.MAX_POINTS+1)
         {  
             result = this.moveFromBar(mapFromPip(move.getValue(), playerColor), playerColor);
-
         }
         else if (move.getValue()==0)
         {
@@ -129,8 +99,6 @@ public class Board implements Serializable{
 
         if (move>0 && move <7)
         {
-
-        
             if (bar.colorCount(playerColor)>0)
             {
                 int pointIndex = mapFromPip(Point.MAX_POINTS+1-move, playerColor)-1;
@@ -139,7 +107,6 @@ public class Board implements Serializable{
                     //move
                     result.add(new AbstractMap.SimpleEntry<Integer,Integer>(Point.MAX_POINTS+1, Point.MAX_POINTS+1-move));
                 }
-
             }
             else
             {
@@ -397,39 +364,6 @@ public class Board implements Serializable{
         return getUniqueLongArrays(result);
     }
 
-    public ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> getPossibleMoves(Checker.Color playerColor, ArrayList<Integer> moves)
-    {
-        
-
-        //find unique moves in the provided list
-        ArrayList<Integer> uniqueMoves = new ArrayList<Integer>();
-        for (int ind=0; ind<moves.size(); ind++)
-        {
-            Boolean uniqueFlag = true;
-            for (int jnd=0; jnd<uniqueMoves.size(); jnd++)
-            {
-                if (uniqueMoves.get(jnd) == moves.get(ind) || moves.get(ind)==0)
-                {
-                    uniqueFlag = false;
-                    break;
-                }
-            }
-            if (uniqueFlag)
-            {
-                uniqueMoves.add(moves.get(ind));
-            }
-        }
-
-        ArrayList<AbstractMap.SimpleEntry<Integer,Integer>> result = new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>();
-
-        for (int move: uniqueMoves)
-        {
-            result.addAll(getPossibleMovesFromOneRoll(playerColor, move));
-        }
-
-        
-        return result;
-    }
 
     public static int mapToPip(int index, Checker.Color playerColor)
     {

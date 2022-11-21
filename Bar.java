@@ -11,11 +11,6 @@ public class Bar extends CheckerColumn{
         super(newBar);
     }
 
-    public String toString()
-    {
-        return String.format("Bar %s", super.toString());
-    }
-
     public int colorCount(Checker.Color color)
     {
         int count = 0;
@@ -76,20 +71,5 @@ public class Bar extends CheckerColumn{
             }
         }
         return false;
-    }
-
-    public String[] toArrayOfStrings()
-    {
-        return new String[] {"|‾‾‾‾‾|",
-                            "|     |", 
-                            "|     |",
-                            String.format("|  %s  |", new Checker(Checker.Color.RED)), 
-                            String.format("|%3d  |", this.colorCount(Checker.Color.RED)), 
-                            "| Bar |", 
-                            String.format("|  %s  |", new Checker(Checker.Color.BLACK)), 
-                            String.format("|%3d  |", this.colorCount(Checker.Color.BLACK)), 
-                            "|     |",
-                            "|     |",
-                            "|_____|"};
     }
 }

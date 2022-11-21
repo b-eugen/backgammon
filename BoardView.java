@@ -1,12 +1,16 @@
 public class BoardView {
 
+    BoardView()
+    {
+
+    }
     /*
      * Method which concantenates 2 arrays of strings
      * @param base - first string array
      * @param appendable - second string array
      * @return - result of array concatentations
      */
-    public static String[] concatStringArrays(String[] base, String[] appendable)
+    private static String[] concatStringArrays(String[] base, String[] appendable)
     {
         String[] result = new String[base.length+appendable.length];
         System.arraycopy(base, 0, result, 0, base.length);

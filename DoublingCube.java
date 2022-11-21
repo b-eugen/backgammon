@@ -47,11 +47,6 @@ public class DoublingCube {
         return result;
     }
 
-    public String toString()
-    {
-        return String.format("Doubling: ", current_stake);
-    }
-
     
 
 }

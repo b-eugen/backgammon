@@ -13,20 +13,14 @@ public class Player {
         this.score = 0;
         this.name = "Player";
         this.color = Checker.Color.BLACK;
-        this.moves = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0));
-        this.displayCheckerColor = new Checker(this.color);
-    }
-
-    public Player(Checker.Color color)
-    {
-        this.score = 0;
-        this.color = color;
-        this.moves = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0));
+        this.moves = new ArrayList<Integer>();
         this.displayCheckerColor = new Checker(this.color);
     }
 
     public Player(String name, Checker.Color color)
     {
+        this.score = 0;
+        this.moves = new ArrayList<Integer>();
         this.name = name;
         this.color = color;
         this.displayCheckerColor = new Checker(this.color);
@@ -52,39 +46,14 @@ public class Player {
         return this.moves;
     }
 
-
     public int incrementScore(int increment)
     {
-        this.score+=increment;
+        if (increment >0)
+            this.score+=increment;
         return this.score;
     }
 
-    public boolean anyMovesLeft()
-    {
-        for (int move: moves)
-        {
-            if (move>0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean popMove(int move)
-    {
-        for (int ind=0; ind < this.moves.size(); ind++)
-        {
-            if (move == this.moves.get(ind))
-            {
-                this.moves.set(ind, 0);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public ArrayList<Integer> processRoll(int roll1, int roll2)
+    private ArrayList<Integer> processRoll(int roll1, int roll2)
     {
         if (roll2 == roll1){
             this.moves = new ArrayList<Integer>(Arrays.asList(roll1, roll1, roll1, roll1));

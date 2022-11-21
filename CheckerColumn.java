@@ -9,11 +9,6 @@ public abstract class CheckerColumn {
         this.checkers = new ArrayList<Checker>();
     }
 
-    public CheckerColumn(ArrayList<Checker> checkers)
-    {
-        this.checkers = checkers;
-    }
-
     public CheckerColumn(CheckerColumn newColumn)
     {
         this.checkers = newColumn.getCheckersCopy();
@@ -117,10 +112,6 @@ public abstract class CheckerColumn {
         }
     }
 
-    public String toString()
-    {
-        return String.format("%s%s", this.getSize(), this.getTop());
-    }
 
     public boolean moveTo(CheckerColumn destination)
     {

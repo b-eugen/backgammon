@@ -17,19 +17,6 @@ public class PointView {
 
     }
 
-    private static String[] toArrayOfStringsTemplate(Point point)
-    {
-        
-        String columnColor = point.getDesignColor();
-        
-        String[] array = {String.format("%s\\%sPoint %2d%s/%s", columnColor, Checker.Color.BLACK, point.getNumber(), columnColor, Checker.Color.BLACK),
-                          String.format(" %s\\%s %2d%s  %s/%s ", columnColor, Checker.Color.BLACK,  point.getSize(), point.getTop(), columnColor, Checker.Color.BLACK),
-                          String.format("  %s\\%s    %s/%s  ",  columnColor, Checker.Color.BLACK, columnColor, Checker.Color.BLACK),
-                          String.format("   %s\\%s  %s/%s   ",  columnColor, Checker.Color.BLACK,  columnColor, Checker.Color.BLACK),
-                          String.format("    %s\\/%s    ",  columnColor, Checker.Color.BLACK)};
-        return array;
-    }
-
     private static String swapCharString(String line, char c1, char c2)
     {
         for(int ind=0; ind<line.length(); ind++)
