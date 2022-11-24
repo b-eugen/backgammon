@@ -1,11 +1,9 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
-import java.util.*;
 
-public class tbDieView {
+public class TbDieView {
     DieView dieView;
     @BeforeEach
     void setUp()
