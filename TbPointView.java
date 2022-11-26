@@ -44,10 +44,10 @@ public class TbPointView {
                 String.format("   %s\\%s  %s/%s   ",  columnColor, Checker.Color.BLACK,  columnColor, Checker.Color.BLACK),
                 String.format("    %s\\/%s    ",  columnColor, Checker.Color.BLACK)};
 
-        String[] test = pointView.toArrayOfStrings(p, Checker.Color.BLACK);
+        String[] test = PointView.toArrayOfStrings(p, Checker.Color.BLACK);
         assertEquals(String.join("\n", test), String.join("\n", array));
         p = new Point(1);
-        test = pointView.toArrayOfStrings(p, Checker.Color.BLACK);
+        test = PointView.toArrayOfStrings(p, Checker.Color.BLACK);
         array = new String[]{"    \u001B[0;34m/\\\u001B[0m    ", "   \u001B[0;34m/\u001B[0m  \u001B[0;34m\\\u001B[0m   ", "  \u001B[0;34m/\u001B[0m    \u001B[0;34m\\\u001B[0m  ", " \u001B[0;34m/\u001B[0m  0\u001B[0;36m⬤\u001B[0m  \u001B[0;34m\\\u001B[0m ", "\u001B[0;34m/\u001B[0mPoint  1\u001B[0;34m\\\u001B[0m"};
         assertEquals(String.join("\n", test), String.join("\n", array));
 

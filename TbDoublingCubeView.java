@@ -12,7 +12,7 @@ public class TbDoublingCubeView {
 
     @Test
     void testDoublingCubeView() {
-        String[] result = doublingCubeView.toArrayOfStrings(new DoublingCube());
+        String[] result = DoublingCubeView.toArrayOfStrings(new DoublingCube());
         String[] expectation = new String[] {"   ----   ", String.format("  | %2d |  ", 64), "   ----   "};
         assertEquals(String.join("\n", result), String.join("\n", expectation));
 

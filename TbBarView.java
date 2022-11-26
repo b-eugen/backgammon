@@ -27,7 +27,7 @@ public class TbBarView {
                 "|     |",
                 "|     |",
                 "|_____|"};
-        String[] test = barView.toArrayOfStrings(bar);
+        String[] test = BarView.toArrayOfStrings(bar);
         assertEquals(String.join("\n", reference), String.join("\n", test));
     }
 
