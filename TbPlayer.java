@@ -16,7 +16,6 @@
      void testPlayer()
      {
          assertNotNull(player);
-         Checker checker = new Checker(Checker.Color.BLACK);
          assertEquals(player.toString(), "Player: Player[0m⬤[0m ");
          assertEquals(player.getColor(), Checker.Color.BLACK);
          assertEquals(player.getName(), "Player");
