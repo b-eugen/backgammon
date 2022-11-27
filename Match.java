@@ -8,7 +8,12 @@ public class Match {
         this.players = new ArrayList<Player>();
     }
 
-
+    /** 
+     * @param lengthToSet
+     */
+    public void setLength(int lengthToSet){
+        this.length = lengthToSet;
+    }
     
     /** 
      * @return boolean
@@ -36,17 +41,20 @@ public class Match {
         player.incrementScore(game.getBoard().getEndgameMultiplier() * game.getBoard().getCube().getCurrentStake());
     }
 
+    public void setNames(MultiScanner in){
+        String[] names = MatchView.getNames(in);
+        this.players.add(new Player(names[0], Checker.Color.BLACK));
+        this.players.add(new Player(names[1], Checker.Color.RED));
+    }
+
     
     /** 
      * @param in
      */
     public void matchRoutine(MultiScanner in){
         MatchView.newMatchNotice();
-        this.length = MatchView.askMatchLength(in);
-
-        String[] names = MatchView.getNames(in);
-        this.players.add(new Player(names[0], Checker.Color.BLACK));
-        this.players.add(new Player(names[1], Checker.Color.RED));
+        this.setLength(MatchView.askMatchLength(in));
+        this.setNames(in);
         
         do{
             BackgammonGame game = new BackgammonGame(length);

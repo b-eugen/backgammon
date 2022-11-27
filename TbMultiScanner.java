@@ -44,6 +44,12 @@ public class TbMultiScanner {
         return file;
     }
 
+    static MultiScanner fakeUserInput(String userInput){
+        InputStream in = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(in);
+        return new MultiScanner(System.in);
+    }
+
     @Test
     void testUserInputRead(){
         // Test multiscanner ability to read user input

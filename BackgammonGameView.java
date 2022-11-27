@@ -240,7 +240,6 @@ public class BackgammonGameView {
             System.out.println(player +"Would you like to accept the double (accept/refuse)?");
             userInput = in.nextLine();
             userInput = userInput.toLowerCase();
-            // System.out.println("."+userInput+".");
         }
         while(!userInput.equals("accept") && !userInput.equals("refuse"));
 

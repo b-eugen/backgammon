@@ -108,11 +108,6 @@ public class BackgammonGame {
         return(gameOver);
     }
 
-    public void resetDice(){
-        this.die1.setLastRoll(0);
-        this.die2.setLastRoll(0);
-    }
-
     
     /** 
      * @return boolean
@@ -126,7 +121,6 @@ public class BackgammonGame {
         Player temp = players.get(0);
         players.set(0, players.get(1));
         players.set(1, temp);
-        this.resetDice();
         return true;
     }
 
@@ -229,7 +223,6 @@ public class BackgammonGame {
             this.eventLog.logEvent(this.players.get(1).getName() + " goes first!");
             this.swapPlayers();
         }
-        resetDice();
     }
     
     
