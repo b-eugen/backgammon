@@ -94,7 +94,7 @@ public class PointView {
      */
     public static String[] toArrayOfStrings(Point point, Checker.Color color)
     {
-        if (point.getNumber()>Point.MAX_POINTS/2)
+        if (point.getNumber()>point.MAX_POINTS/2)
         {
             return PointView.toArrayOfStringsTemplate(point, color);
         }

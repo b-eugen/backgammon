@@ -11,10 +11,29 @@ dice 13 4
 dice 6 7
 dice -4 -5
 dice -5 -4
+
 dice -3 -3
 dice -3.0 -1.0
 dice 6 6
+XY
+xyz
+ui
+oe
+poe
+ajdpocm
+vssl
+vm
+a
+sd
+NT
+lH
+Hl
 ae
+invalid command test
+skkmvlks
+fkmv
+pop
+top
 pip
 dice 5 6
 hint
@@ -141,6 +160,9 @@ pip
 roll
 hint
 AA
+
 pip
+
 roll
+
 AA
