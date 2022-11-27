@@ -30,7 +30,7 @@ public class Menu {
      */
     public static void main(String[] args)
     {
-        MultiScanner in = new MultiScanner();
+        MultiScanner in = new MultiScanner(System.in);
         Menu menu = new Menu();
         MenuView.welcomeMessage();
 

@@ -213,7 +213,7 @@ public class BackgammonGameView {
     /** 
      * @param type
      */
-    public static void declareGameEngingType(String type){
+    public static void declareGameEndingType(String type){
         System.out.println(String.format(" %1$-190s", spacer));
         System.out.println(String.format(" %1$-70s\n", " The game ends as "+type));
         System.out.println(String.format(" %1$-190s\n\n", spacer));

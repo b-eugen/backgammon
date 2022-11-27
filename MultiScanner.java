@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class MultiScanner {
@@ -7,8 +8,8 @@ public class MultiScanner {
     Scanner fileIn;
     Scanner currentScanner;
 
-    public MultiScanner(){
-        this.userIn = new Scanner(System.in);
+    public MultiScanner(InputStream in){
+        this.userIn = new Scanner(in);
         this.currentScanner = this.userIn;
     }
 
@@ -28,7 +29,9 @@ public class MultiScanner {
     }
 
     public void setReadUser(){
-        this.fileIn.close();
+        if(this.fileIn != null){
+            this.fileIn.close();
+        }
         this.currentScanner = this.userIn;
     }
 
@@ -54,6 +57,11 @@ public class MultiScanner {
     }
 
     public void closeScanner(){
-        this.userIn.close();
+        if(this.userIn != null){
+            this.userIn.close();
+        }
+        if(this.fileIn != null){
+            this.fileIn.close();
+        }
     }
 }

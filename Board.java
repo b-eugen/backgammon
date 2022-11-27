@@ -4,15 +4,8 @@
  * @author Yevhenii Mormul
  */
 
-import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.io.Serializable;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * A {@code Board} object represents a board

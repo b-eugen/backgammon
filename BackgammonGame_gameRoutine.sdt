@@ -123,7 +123,7 @@
 )
 )
 (
-{"_classDescription":{"_className":"BackgammonGameView","_attributes":["public"]},"_methodName":"declareGameEngingType","_attributes":["public","static"],"_argNames":["type"],"_argTypes":["java.lang.String"],"_returnType":"void","offset":2408}
+{"_classDescription":{"_className":"BackgammonGameView","_attributes":["public"]},"_methodName":"declareGameEndingType","_attributes":["public","static"],"_argNames":["type"],"_argTypes":["java.lang.String"],"_returnType":"void","offset":2408}
 )
 )
 (

@@ -102,7 +102,7 @@ public class BackgammonGame {
                 case 2: endgameString = "Gammon";break;
                 case 3: endgameString = "Backgammon";break;
             }
-            BackgammonGameView.declareGameEngingType(endgameString);
+            BackgammonGameView.declareGameEndingType(endgameString);
         }
         
         return(gameOver);
