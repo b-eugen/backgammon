@@ -32,12 +32,15 @@ public class Die {
 
     
     /** 
-     * @param lastRoll - force the value of the last roll (cheat)
+     * @param lastRoll - force the value of the last roll (cheat, only valid values are permitted, remains the same if invalid value is entered)
      * @return Die - current die with the value set tot the last roll
      */
     public Die setLastRoll(int lastRoll)
     {
-        this.lastRoll = lastRoll;
+        if (lastRoll>0 && lastRoll<=6)
+        {
+            this.lastRoll = lastRoll;
+        }
         return this;
     }
 }

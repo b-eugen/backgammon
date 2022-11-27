@@ -14,13 +14,24 @@ public class TbDie {
     @Test
     void testRoll()
     {
-        int result = die.getRollValue();
+        int result1 = die.getRollValue();
 
-        assertTrue(result<=6 && result>=1);
-        for (int i = 1; i <= 6; i++)
+        assertTrue(result1<=6 && result1>=1);
+        for (int i = -10; i <= 10; i++)
         {
-            result = die.setLastRoll(i).getLastRoll();
-            assertEquals(result, i);
+            int result = die.setLastRoll(i).getLastRoll();
+            if (i<1)
+            {
+                assertEquals(result, result1);
+            }
+            else if (i>=1 && i<7)
+            {
+                assertEquals(result, i);
+            }
+            else
+            {
+                assertEquals(result, 6);
+            }
         }
     }
 
