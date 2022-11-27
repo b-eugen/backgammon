@@ -36,7 +36,7 @@ public class MatchView {
 
     public static void newMatchNotice(){
         System.out.println(String.format(" %1$-190s", BackgammonGameView.spacer));
-        System.out.println("A new match has started!!");
+        System.out.println(String.format(" %1$-190s", "A new match has started!!"));
         System.out.println(String.format(" %1$-190s", BackgammonGameView.spacer));
     }
 
