@@ -53,6 +53,9 @@ public class MultiScanner {
         if(userInput.toLowerCase().equals("quit")){
             Menu.immediateExit();
         }
+        if(currentScanner == fileIn){
+            System.out.println("Command read from file: " + userInput);
+        }
         return userInput;
     }
 
