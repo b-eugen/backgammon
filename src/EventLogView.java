@@ -1,10 +1,21 @@
+/**
+ * Represents the view (MVC) of EventLog
+ * @version 1 2022-21-11
+ * @author Aness Al-Qawlaq
+ */
+
 import java.util.LinkedList;
+
+/**
+ * {@code EventLogView} is the view class (MVC) of the EventLog class
+ */
 
 public class EventLogView {
     
     /** 
-     * @param eventLog
-     * @return String
+     * method to display an event log
+     * @param eventLog - the event log to be displayed
+     * @return String - the built string
      */
     public static String display(EventLog eventLog){
         LinkedList<String> logs = eventLog.getLogs();

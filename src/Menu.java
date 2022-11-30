@@ -1,11 +1,21 @@
+/**
+ * Represents the main menu of the backgammon program 
+ * @version 1 2022-21-11
+ * @author Aness Al-Qawlaq
+ */
+
 import java.io.File;
+
+ /**
+ * {@code Menu} is the main menu of the backgammon program
+ */
 
 public class Menu {
     
-    
-    /** 
-     * @param userInput
-     * @return boolean
+    /**
+     * method to validate the menu input 
+     * @param userInput - requested string input
+     * @return boolean - true if input is valid
      */
     public boolean validateMenuInput(String userInput){
         if(userInput.toLowerCase().equals("new") || userInput.toLowerCase().equals("no")){
@@ -19,6 +29,9 @@ public class Menu {
         return false;
     }
 
+    /**
+     * method to immediately halt program execution
+     */
     public static void immediateExit(){
         MenuView.exitMessage();
         System.exit(1);
@@ -26,6 +39,7 @@ public class Menu {
 
     
     /** 
+     * main program execution
      * @param args
      */
     public static void main(String[] args)

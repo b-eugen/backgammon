@@ -1,3 +1,13 @@
+/**
+ * Represents the view class (MVC) of the match 
+ * @version 1 2022-21-11
+ * @author Aness Al-Qawlaq
+ */
+
+ /**
+ * {@code MenuView} is the (MVC) view of the Menu object
+ */
+
 public class MenuView {
     public static void welcomeMessage(){
         System.out.println("\nWelcome to Backgammon. Enter quit at any time to exit.");
@@ -5,9 +15,10 @@ public class MenuView {
 
     
     /** 
-     * @param in
-     * @param menu
-     * @return boolean
+     * method to ask whether the players want to start a new match in the main menu
+     * @param in - input scanenr
+     * @param menu - the menu object
+     * @return boolean - true if the players want to start a new match
      */
     public static boolean askNewMatch(MultiScanner in, Menu menu){
         String userInput;
@@ -21,6 +32,9 @@ public class MenuView {
         return (!userInput.toLowerCase().equals("no"));
     }
 
+    /** 
+     * method to notify players that the program was terminated
+     */
     public static void exitMessage(){
         System.out.println("\n\nYou have quit backgammon.\n\n");
     }
