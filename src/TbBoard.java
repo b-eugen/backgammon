@@ -433,6 +433,27 @@
 
          ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result = board.getAllPossibleMovesWrapper(Checker.Color.BLACK, moves);
          assertEquals(result.size(), 8);
+
+         //test bering off
+         board.autoWin(Checker.Color.RED);
+         board.autoWin(Checker.Color.BLACK);
+
+
+         board.getPoints()[0].append(new Checker(Checker.Color.BLACK));
+         board.getPoints()[1].append(new Checker(Checker.Color.BLACK));
+         result = board.getAllPossibleMovesWrapper(Checker.Color.BLACK, moves);
+         ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>> result2 = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+         AbstractMap.SimpleEntry<Integer,Integer> a =new AbstractMap.SimpleEntry<Integer,Integer>(2, 0);
+         AbstractMap.SimpleEntry<Integer,Integer> b =new AbstractMap.SimpleEntry<Integer,Integer>(1, 0);
+         result2.add(new ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>());
+         result2.get(0).add(a);
+         result2.get(0).add(b);
+         assertEquals(result, result2);
+         result = new ArrayList<ArrayList<AbstractMap.SimpleEntry<Integer,Integer>>>();
+         assertEquals(result.size(), 0);
+
+
+
      }
 
      @Test
