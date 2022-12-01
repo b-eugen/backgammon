@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * This program is the Point class, which represents the point
  * @version 1 2022-21-11
  * @author Yevhenii Mormul

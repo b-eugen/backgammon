@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/* Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen*/
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 

@@ -16,6 +16,8 @@ dice -3 -3
 dice -3.0 -1.0
 dice 6 6
 XY
+double
+accept
 xyz
 ui
 oe

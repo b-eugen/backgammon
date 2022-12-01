@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * This program is the Die class, which allows to view the die
  * @version 1 2022-21-11
  * @author Aness Al-Qawlaq

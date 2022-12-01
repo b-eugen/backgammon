@@ -1,5 +1,7 @@
 
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * This program is the Bar class, which extends the checker column
  * @version 1 2022-21-11
  * @author Yevhenii Mormul

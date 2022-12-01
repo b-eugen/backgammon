@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * Represents a backgammon game view (MVC)
  * @version 1 2022-21-11
  * @author Aness Al-Qawlaq

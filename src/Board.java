@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * This program is the board class, which is a board in backgammon game
  * @version 1 2022-21-11
  * @author Yevhenii Mormul
@@ -170,7 +172,7 @@ public class Board{
                     }
                 }
 
-                if (berOff)//attempt ber-off
+                if (berOff)//hence attempt ber-off
                 {
                     for (int pipIndex = move;pipIndex>0; pipIndex--)
                     {

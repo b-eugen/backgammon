@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * This program is the CheckerColumn class, which represents the array of checkers
  * @version 1 2022-21-11
  * @author Yevhenii Mormul

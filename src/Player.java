@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * This program is the Player class, which represents the player
  * @version 1 2022-21-11
  * @author Yevhenii Mormul

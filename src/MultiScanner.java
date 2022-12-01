@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * Represents a user/file input scanner object
  * @version 1 2022-21-11
  * @author Aness Al-Qawlaq

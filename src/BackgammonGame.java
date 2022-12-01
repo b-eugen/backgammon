@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * Represents a backgammon game
  * @version 1 2022-21-11
  * @author Aness Al-Qawlaq
@@ -313,7 +315,7 @@ public class BackgammonGame {
 
     
     /** 
-     * Main orchestrator method where the game logic is called
+     * Main orchestrator method where the game logic is called (facade-like pattern for backgammon game logic)
      * @param in - input scanner
      * @param matchPlayers - players from match object
      * @param game - game instance

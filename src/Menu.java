@@ -1,4 +1,6 @@
 /**
+ * Group 47: Aness Al-Qawlaq, Yevhenii Mormul
+ * Github IDs: anessk01, b-eugen
  * Represents the main menu of the backgammon program 
  * @version 1 2022-21-11
  * @author Aness Al-Qawlaq
@@ -25,6 +27,9 @@ public class Menu {
             if(new File(userInput.replace("test ", "")).isFile()){
                 return true;
             }
+        }
+        else{
+            System.out.println("Please enter a valid command.");
         }
         return false;
     }
